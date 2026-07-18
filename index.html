@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>여행 가이드</title>
+<style>
+  /* v5 앱 문법 - 가이드(site.html.j2)와 같은 토큰: 회색 캔버스·무테두리 카드·잉크/보라 */
+  :root{--bg:#F2F3F6;--card:#FFFFFF;--ink:#191B1E;--cap:#6E737D;--pt:#7048E8;
+        --sh:0 1px 3px rgba(25,27,30,.05),0 12px 32px rgba(25,27,30,.06)}
+  @media (prefers-color-scheme: dark){
+    :root{--bg:#101114;--card:#1A1C20;--ink:#ECEDEF;--cap:#8B909A;--pt:#8B6CF0;
+          --sh:0 1px 3px rgba(0,0,0,.3),0 12px 32px rgba(0,0,0,.35)}
+  }
+  body{background:var(--bg);color:var(--ink);margin:0;padding:48px 20px;
+       font-family:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
+       font-size:14px;line-height:1.6;letter-spacing:-.01em}
+  main{max-width:560px;margin:0 auto}
+  h1{font-size:24px;font-weight:700;letter-spacing:-.02em;margin:0 0 20px}
+  a.trip{display:flex;align-items:center;justify-content:space-between;gap:10px;
+         min-height:56px;background:var(--card);border-radius:18px;box-shadow:var(--sh);
+         box-sizing:border-box;padding:16px 18px;color:var(--ink);text-decoration:none;
+         font-size:16px;font-weight:700;letter-spacing:-.015em;
+         -webkit-tap-highlight-color:transparent}
+  a.trip+a.trip{margin-top:10px}
+  a.trip::after{content:"";flex:0 0 auto;width:8px;height:8px;
+                border:solid var(--pt);border-width:2px 2px 0 0;transform:rotate(45deg)}
+  p.tip{color:var(--cap);font-size:12.5px;margin-top:24px;line-height:1.7}
+</style>
+</head>
+<body>
+<main>
+<h1>여행 가이드</h1>
+<a class="trip" href="./singapore-2026-08/">singapore-2026-08</a>
+<p class="tip">가이드를 연 뒤 폰 홈 화면에 추가해 두면 비행기 모드에서도 열려요.</p>
+</main>
+</body>
+</html>

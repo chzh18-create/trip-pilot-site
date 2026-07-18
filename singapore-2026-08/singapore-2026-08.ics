@@ -1,0 +1,544 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//trip-pilot//KO
+CALSCALE:GREGORIAN
+BEGIN:VTIMEZONE
+TZID:Asia/Singapore
+BEGIN:STANDARD
+DTSTART:19700101T000000
+TZOFFSETFROM:+0800
+TZOFFSETTO:+0800
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VTIMEZONE
+TZID:Asia/Seoul
+BEGIN:STANDARD
+DTSTART:19700101T000000
+TZOFFSETFROM:+0900
+TZOFFSETTO:+0900
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:singapore-2026-08/d1-e1@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Seoul:20260802T130000
+DTEND;TZID=Asia/Seoul:20260802T140000
+SUMMARY:인천공항 T1 도착\, 탑승 수속
+DESCRIPTION:항공사와 터미널을 예약 문자에서 한 번 더 확
+ 인하세요.\n항공사와 터미널이 아직 확정되지 않았어요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d1-e2@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Seoul:20260802T161000
+DTEND;TZID=Asia/Seoul:20260802T171000
+SUMMARY:인천 출발\, 싱가포르로
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d1-e3@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260802T213000
+DTEND;TZID=Asia/Singapore:20260802T223000
+SUMMARY:창이공항 도착
+DESCRIPTION:SG 입국카드를 미리 제출했는지 확인하세요.\n싱
+ 가포르는 한국보다 1시간 느려요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d1-e4@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260802T223000
+DTEND;TZID=Asia/Singapore:20260802T233000
+SUMMARY:팬 퍼시픽 싱가포르 체크인
+LOCATION:팬 퍼시픽 싱가포르 (Pan Pacific Singapore)\, 7 Raffles Bou
+ levard\, Marina Square\, Singapore
+DESCRIPTION:공항에서 호텔까지는 프라이빗 택시를 예약해
+ 뒀어요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d2-e1@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260803T070000
+DTEND;TZID=Asia/Singapore:20260803T080000
+SUMMARY:호텔 조식 — EDGE (3층)
+DESCRIPTION:아침 6시 반부터 10시 반까지 해요. 주문 마감은 
+ 10시 15분이에요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d2-e2@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260803T083000
+DTEND;TZID=Asia/Singapore:20260803T093000
+SUMMARY:호텔 수영과 휴식
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d2-e3@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260803T113000
+DTEND;TZID=Asia/Singapore:20260803T123000
+SUMMARY:점심 — 딘타이펑 (선텍시티)
+LOCATION:Din Tai Fung (Suntec City)\, Suntec City Tower 5 #02-302\, Singapo
+ re
+DESCRIPTION:호텔에서 실내 통로로 걸어갈 수 있어요. 줄이 
+ 길 수 있으니 11시 15분쯤 도착하면 편해요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d2-e4@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260803T130000
+DTEND;TZID=Asia/Singapore:20260803T140000
+SUMMARY:그랩으로 하버프론트 이동
+LOCATION:Singapore Cable Car HarbourFront Station\, 3 HarbourFront Place\, 
+ Singapore
+DESCRIPTION:20분쯤 걸려요. 케이블카 타는 곳은 하버프론트 
+ 타워2예요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d2-e5@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260803T133000
+DTEND;TZID=Asia/Singapore:20260803T143000
+SUMMARY:케이블카 타고 센토사 들어가기
+DESCRIPTION:케이블카 왕복권을 예매했는지 확인하세요.\n공
+ 중에서 바다를 건너 들어가는 코스예요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d2-e6@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260803T140000
+DTEND;TZID=Asia/Singapore:20260803T150000
+SUMMARY:임비아 룩아웃 — 실내에서 쉬어가기
+LOCATION:Imbiah Lookout\, Sentosa\, Singapore
+DESCRIPTION:하루 중 제일 더운 시간이라 실내와 카페 위주
+ 로 천천히 보내요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d2-e7@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260803T153000
+DTEND;TZID=Asia/Singapore:20260803T163000
+SUMMARY:팔라완 비치 — 출렁다리와 전망탑
+LOCATION:Palawan Beach\, Sentosa\, Singapore
+DESCRIPTION:비치 셔틀이 10분에서 15분 간격으로 다녀요. 무
+ 료예요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d2-e8@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260803T161500
+DTEND;TZID=Asia/Singapore:20260803T171500
+SUMMARY:실로소 비치 산책
+LOCATION:Siloso Beach\, Sentosa\, Singapore
+DESCRIPTION:팔라완에서 걸어서 15분쯤이에요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d2-e9@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260803T180000
+DTEND;TZID=Asia/Singapore:20260803T190000
+SUMMARY:저녁 — 트라피자
+LOCATION:Trapizza\, 101 Siloso Road\, Sentosa\, Singapore
+DESCRIPTION:트라피자 예약을 확인하세요.\n실로소 비치의 
+ 야외 피자집이에요. 공연장까지 걸어갈 수 있어서 골랐
+ 어요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d2-e10@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260803T194000
+DTEND;TZID=Asia/Singapore:20260803T204000
+SUMMARY:윙스 오브 타임 — 불꽃 분수 쇼
+LOCATION:Wings of Time\, 60 Siloso Beach Walk\, Sentosa\, Singapore
+DESCRIPTION:프리미엄석 예매를 확인하고\, 7시 25분까지는 
+ 자리에 앉으세요.\n바다 위에서 펼쳐지는 20분짜리 쇼예
+ 요. 자리가 선착순이라 15분 전에는 도착하는 게 좋아요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d2-e11@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260803T200500
+DTEND;TZID=Asia/Singapore:20260803T210500
+SUMMARY:센토사역으로 이동
+DESCRIPTION:공연장에서 케이블카역까지 25~40분 걸리는 구간
+ 이에요. 여유 있게 움직이세요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d2-e12@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260803T204500
+DTEND;TZID=Asia/Singapore:20260803T214500
+SUMMARY:케이블카 타고 나오기 — 야경 코스
+DESCRIPTION:마지막 탑승이 9시 반이니 시간만 지키면 여유 
+ 있어요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d2-e13@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260803T211500
+DTEND;TZID=Asia/Singapore:20260803T221500
+SUMMARY:그랩으로 호텔 복귀
+DESCRIPTION:9시 반에서 45분쯤 호텔 도착 예정이에요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d3-e1@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260804T070000
+DTEND;TZID=Asia/Singapore:20260804T080000
+SUMMARY:호텔 조식 — EDGE
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d3-e2@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260804T090000
+DTEND;TZID=Asia/Singapore:20260804T100000
+SUMMARY:가이드 픽업
+DESCRIPTION:가이드 계약 시간을 확인하세요. 밤 9시 종료 일
+ 정까지 포함되는지가 중요해요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d3-e3@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260804T093000
+DTEND;TZID=Asia/Singapore:20260804T103000
+SUMMARY:머라이언 공원
+LOCATION:Merlion Park\, 1 Fullerton Road\, Singapore
+DESCRIPTION:야외 명소는 오전이 가장 시원해요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d3-e4@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260804T110000
+DTEND;TZID=Asia/Singapore:20260804T120000
+SUMMARY:차량으로 마리나베이 한 바퀴
+DESCRIPTION:더숍스와 에스플러네이드를 차창으로 둘러봐요
+ .
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d3-e5@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260804T114500
+DTEND;TZID=Asia/Singapore:20260804T124500
+SUMMARY:점심 — 맥스웰 호커센터
+LOCATION:Maxwell Food Centre\, 1 Kadayanallur Street\, Singapore
+DESCRIPTION:더위와 줄을 피하려면 12시 전에 도착하는 게 좋
+ 아요. 가이드에게 미리 말해두세요.\n티엔티엔 치킨라이
+ 스가 유명한 호커센터예요. 화요일은 정상 영업해요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d3-e6@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260804T133000
+DTEND;TZID=Asia/Singapore:20260804T143000
+SUMMARY:실내 관광 — 국립박물관 또는 차이나타운
+DESCRIPTION:하루 중 제일 더운 시간대라 실내로 잡았어요. 
+ 둘 중 어디로 갈지는 출발 전에 함께 정해요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d3-e7@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260804T160000
+DTEND;TZID=Asia/Singapore:20260804T170000
+SUMMARY:가든스 바이 더 베이 — 두 개의 돔
+LOCATION:Gardens by the Bay\, 18 Marina Gardens Drive\, Singapore
+DESCRIPTION:돔 입장권 예매를 확인하세요.\n플라워돔과 클
+ 라우드포레스트를 이어서 봐요. 냉방이 잘 되는 곳이라 
+ 더운 오후에 딱 좋아요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d3-e8@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260804T194500
+DTEND;TZID=Asia/Singapore:20260804T204500
+SUMMARY:가든 랩소디 — 슈퍼트리 쇼
+DESCRIPTION:슈퍼트리 아래 잔디에 누워서 보는 무료 쇼예요
+ . 7시 15분쯤 미리 가서 자리를 잡으세요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d3-e9@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260804T200000
+DTEND;TZID=Asia/Singapore:20260804T210000
+SUMMARY:마리나베이 물가 산책
+DESCRIPTION:15분쯤 야경을 보며 걸어요. 근처에 사테 꼬치 
+ 간식집도 있어요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d3-e10@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260804T210000
+DTEND;TZID=Asia/Singapore:20260804T220000
+SUMMARY:스펙트라 — 분수 쇼
+DESCRIPTION:무료 분수 쇼예요. 매일 8시와 9시에 15분씩 해요
+ .
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d3-e11@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260804T214500
+DTEND;TZID=Asia/Singapore:20260804T224500
+SUMMARY:파울라너에서 맥주 한잔
+LOCATION:Paulaner Bräuhaus Singapore\, 9 Raffles Boulevard\, Millenia Walk
+ \, Singapore
+DESCRIPTION:스펙트라를 보고 나오면 걷기엔 멀어서 그랩으
+ 로 5분쯤 이동하는 게 편해요. 호텔에서 걸어서 3분이에
+ 요. 독일식 자가양조 맥주집이고 1층 바는 자정까지 열
+ 고\, 식사 주문은 밤 11시까지예요. 전화는 +65 6883 2572.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d4-e1@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260805T070000
+DTEND;TZID=Asia/Singapore:20260805T080000
+SUMMARY:호텔 조식 — EDGE
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d4-e2@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260805T093000
+DTEND;TZID=Asia/Singapore:20260805T103000
+SUMMARY:가이드 픽업
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d4-e3@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260805T100000
+DTEND;TZID=Asia/Singapore:20260805T110000
+SUMMARY:히타치 방문
+DESCRIPTION:방문 주소가 확정됐는지 확인하세요.\n주소와 
+ 소요 시간이 아직 정해지지 않았어요. 확정되면 오후 시
+ 간표를 다시 맞춰야 해요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d4-e4@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260805T120000
+DTEND;TZID=Asia/Singapore:20260805T130000
+SUMMARY:점심
+DESCRIPTION:어디서 먹을지는 아직 열어뒀어요. 히타치 방문
+ 이 끝나는 위치를 보고 정하는 게 편해요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d4-e5@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260805T133000
+DTEND;TZID=Asia/Singapore:20260805T143000
+SUMMARY:호텔에서 낮잠과 휴식
+DESCRIPTION:아이 낮잠 시간이에요. 마침 이 시간대가 하루 
+ 중 소나기도 가장 잦아서 쉬어가기 좋아요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d4-e6@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260805T160000
+DTEND;TZID=Asia/Singapore:20260805T170000
+SUMMARY:리버 크루즈
+LOCATION:WaterB River Cruise — Merlion Park 선착장\, Merlion Park\, 1 
+ Fullerton Road\, Singapore
+DESCRIPTION:크루즈 표를 확인하세요. 머라이언파크 선착장
+ 에서 타요.\n강을 따라 40분 도는 배예요. 머라이언파크
+ 에서 타고 제자리로 돌아오니\, 내려서 저녁 식당까지 2~
+ 3분이면 걸어가요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d4-e7@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260805T164500
+DTEND;TZID=Asia/Singapore:20260805T174500
+SUMMARY:머라이언파크와 원풀러턴 산책
+DESCRIPTION:저녁 시간까지 물가를 여유 있게 걸어요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d4-e8@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260805T183000
+DTEND;TZID=Asia/Singapore:20260805T193000
+SUMMARY:저녁 — 팜비치 시푸드
+LOCATION:Palm Beach Seafood\, 1 Fullerton Road #01-09\, One Fullerton\, Sin
+ gapore
+DESCRIPTION:테라스석 예약을 확인하세요.\n칠리크랩으로 유
+ 명한 집이에요. 마리나베이가 보이는 테라스 자리를 예
+ 약해 두면 최고예요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d4-e9@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260805T200000
+DTEND;TZID=Asia/Singapore:20260805T210000
+SUMMARY:스펙트라 — 자리에서 그대로 관람
+DESCRIPTION:팜비치 테라스에서 분수 쇼가 그대로 보여요. 
+ 움직일 필요가 없어요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d5-e1@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260806T070000
+DTEND;TZID=Asia/Singapore:20260806T080000
+SUMMARY:호텔 조식 — EDGE
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d5-e8@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260806T082000
+DTEND;TZID=Asia/Singapore:20260806T092000
+SUMMARY:그랩으로 버드 파라다이스 이동
+DESCRIPTION:20~35분 걸려요. 셔틀버스가 없어져서 그랩이나 
+ 택시로 가야 해요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d5-e9@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260806T090000
+DTEND;TZID=Asia/Singapore:20260806T120000
+SUMMARY:버드 파라다이스
+LOCATION:Bird Paradise (Mandai)\, 20 Mandai Lake Road\, Singapore
+DESCRIPTION:입장권을 확인하고\, 10시 반 먹이쇼 시간을 공
+ 식 앱에서 한 번 더 확인하세요.\n아시아에서 가장 큰 새
+  공원이에요. 문 여는 9시에 맞춰 들어가서 10시 반 맹금
+ 류 먹이쇼를 보고\, 12시쯤 나오는 코스예요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d5-e3@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260806T130000
+DTEND;TZID=Asia/Singapore:20260806T140000
+SUMMARY:점심 — 위스마 아트리아
+LOCATION:Wisma Atria\, 435 Orchard Road\, Singapore
+DESCRIPTION:딘타이펑과 파라다이스 다이너스티가 같은 건
+ 물에 있어요. 도착해서 줄이 짧은 쪽으로 들어가면 돼요
+ .
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d5-e2@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260806T143000
+DTEND;TZID=Asia/Singapore:20260806T153000
+SUMMARY:오차드 쇼핑
+DESCRIPTION:전부 실내라 시원하게 다닐 수 있어요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d5-e5@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260806T173000
+DTEND;TZID=Asia/Singapore:20260806T183000
+SUMMARY:호텔 복귀\, 옷 갈아입기
+DESCRIPTION:레벨33은 슬리퍼\, 민소매\, 수영복 차림은 안 돼
+ 요. 남성은 소매 있는 셔츠와 단정한 신발이 필요해요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d5-e6@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260806T183000
+DTEND;TZID=Asia/Singapore:20260806T193000
+SUMMARY:저녁 — 레벨33 루프탑
+LOCATION:LeVeL33\, 8 Marina Boulevard #33-01\, MBFC Tower 1\, Singapore
+DESCRIPTION:예약을 확인하세요. 테라스석은 최소 주문 금액
+ 과 카드 보증이 있어요.\n마리나베이가 한눈에 내려다보
+ 이는 33층 양조장이에요. 일몰이 7시 10분쯤이라 저녁과 
+ 노을을 같이 즐길 수 있어요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d5-e7@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260806T210000
+DTEND;TZID=Asia/Singapore:20260806T220000
+SUMMARY:스펙트라 — 루프탑에서 내려다보기
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d6-e1@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260807T070000
+DTEND;TZID=Asia/Singapore:20260807T080000
+SUMMARY:호텔 조식 — EDGE
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d6-e2@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260807T120000
+DTEND;TZID=Asia/Singapore:20260807T130000
+SUMMARY:체크아웃\, 짐 맡기기
+DESCRIPTION:짐 보관과 샤워 시설 이용을 프런트에 물어보세
+ 요.\n정식 체크아웃은 낮 12시예요. 2시까지 연장은 특정 
+ 객실만 가능해서\, 안 되면 짐을 맡기고 다니면 됩니다.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d6-e3@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260807T120000
+DTEND;TZID=Asia/Singapore:20260807T130000
+SUMMARY:점심 — 디엔샤오얼
+LOCATION:Dian Xiao Er (Marina Square)\, 6 Raffles Boulevard #02-200\, Marin
+ a Square\, Singapore
+DESCRIPTION:허브를 채워 구운 오리 요리집이에요. 호텔에서
+  걸어서 5분이라 마지막 반주 한잔에 딱 좋아요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d6-e4@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260807T133000
+DTEND;TZID=Asia/Singapore:20260807T143000
+SUMMARY:마리나베이에서 마지막 쇼핑
+DESCRIPTION:더숍스\, 마리나스퀘어\, 선텍이 전부 실내로 이
+ 어져 있어요. 짐 없이 가볍게 돌아요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d6-e5@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260807T170000
+DTEND;TZID=Asia/Singapore:20260807T180000
+SUMMARY:이른 저녁
+DESCRIPTION:공항으로 떠나기 전 마지막 식사예요. 어디서 
+ 먹을지는 아직 열어뒀어요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d6-e6@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260807T184000
+DTEND;TZID=Asia/Singapore:20260807T194000
+SUMMARY:호텔에서 짐 찾기
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d6-e7@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260807T190000
+DTEND;TZID=Asia/Singapore:20260807T200000
+SUMMARY:그랩으로 창이공항 이동
+DESCRIPTION:연휴 전날 밤이라 길이 막혀요. 7시 출발을 꼭 
+ 지켜주세요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d6-e8@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260807T194000
+DTEND;TZID=Asia/Singapore:20260807T204000
+SUMMARY:창이공항 도착\, 체크인
+LOCATION:Singapore Changi Airport\, Airport Boulevard\, Singapore
+DESCRIPTION:터미널 번호를 미리 확인하세요. 터미널이 다르
+ 면 이동 방법을 안내판에서 확인하세요. 터미널4는 스카
+ 이트레인이 아니라 셔틀버스로 연결돼요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d6-e9@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260807T202000
+DTEND;TZID=Asia/Singapore:20260807T212000
+SUMMARY:세금 환급과 면세 쇼핑
+DESCRIPTION:부가세 환급(eTRS) 키오스크는 출국 심사 전에 있
+ 어요. 부치는 짐에 넣을 물건은 체크인 전에 환급 처리
+ 를 끝내야 해요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d6-e10@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Singapore:20260807T225000
+DTEND;TZID=Asia/Singapore:20260807T235000
+SUMMARY:싱가포르 출발
+DESCRIPTION:밤 비행기예요. 다음 날 아침 인천에 도착해요.
+END:VEVENT
+BEGIN:VEVENT
+UID:singapore-2026-08/d7-e1@trip-pilot
+DTSTAMP:20260718T082648Z
+DTSTART;TZID=Asia/Seoul:20260808T064000
+DTEND;TZID=Asia/Seoul:20260808T074000
+SUMMARY:인천공항 도착
+DESCRIPTION:토요일 아침이에요. 고생 많으셨어요!
+END:VEVENT
+END:VCALENDAR
