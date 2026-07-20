@@ -1,0 +1,2605 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>싱가포르 가족 여행 가이드</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icon-180.png">
+<meta name="theme-color" content="#F2F3F6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101114" media="(prefers-color-scheme: dark)">
+<style>
+  /* v5 앱 문법 - 시스템 산세리프만 사용 (세리프·폰트 서브셋 파이프라인 미사용) */
+  :root{
+    --bg:#F2F3F6; --card:#FFFFFF; --ink:#191B1E; --ink-2:#5B6068; --sub:#8A8F98;
+    --sub-ink:#6E737C; --faint:#B4B8C0; --cap:#6E737D; --div:#F5F6F8; --soft:#F7F8FA;
+    --pt:#7048E8; --pt-soft:#F4F1FD; --on-pt:#FFFFFF; --ok:#12B76A; --ok-ink:#067647;
+    --warn:#96640A; --warn-bg:#FAF1DE; --danger:#D92D20; --danger-bg:#FDEEEC;
+    --dday-bg:#191B1E; --dday-ink:#FFFFFF;
+    --sh-card:0 1px 3px rgba(25,27,30,.05),0 12px 32px rgba(25,27,30,.06);
+    --sh-float:0 2px 6px rgba(25,27,30,.06),0 14px 36px rgba(25,27,30,.12);
+    --bar-bg:rgba(242,243,246,.9);
+    --mono:ui-monospace,"SF Mono","JetBrains Mono","Roboto Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",Roboto,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#101114; --card:#1A1C20; --ink:#ECEDEF; --ink-2:#9CA1AB; --sub:#787D87;
+      --sub-ink:#8B909A; --faint:#4A4E56; --cap:#8B909A; --div:#24262B; --soft:#202226;
+      /* 다크 --pt 는 텍스트 링크가 카드(#1A1C20) 위에서 4.5:1 을 넘도록 #8B6CF0 에서 소폭 상향 */
+      --pt:#9075F1; --pt-soft:#2A2440; --on-pt:#FFFFFF; --ok:#3DCF8E; --ok-ink:#3DCF8E;
+      --warn:#E0B25C; --warn-bg:#2E2712; --danger:#F08578; --danger-bg:#3A211E;
+      --dday-bg:#E8B84B; --dday-ink:#101114;
+      --bar-bg:rgba(16,17,20,.88);
+    }
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.6;letter-spacing:-.01em;padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+  ::selection{background:var(--pt-soft)}
+  [hidden]{display:none!important}
+  :focus-visible{outline:2px solid var(--pt);outline-offset:2px}
+  .wrap{max-width:680px;margin:0 auto;padding:0 16px}
+  .ic{width:14px;height:14px;vertical-align:-2px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  section[id],.day,.evcard{scroll-margin-top:82px}
+
+  /* ---------- 카드 ---------- */
+  .card{background:var(--card);border-radius:20px;box-shadow:var(--sh-card);padding:18px;margin-top:12px}
+  .sub{font-size:15px;font-weight:700;letter-spacing:-.01em}
+  .card>.sub{margin-bottom:12px}
+  .hint{font-size:12px;color:var(--cap);margin:-4px 0 6px}
+
+  /* ---------- 상단 ---------- */
+  .hero{position:relative;overflow:hidden;padding-top:30px;padding-bottom:18px}
+  .hero-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .eyebrow{font-size:12.5px;font-weight:700;color:var(--ink-2)}
+  .pill-dday{display:inline-flex;align-items:center;border-radius:999px;background:var(--dday-bg);color:var(--dday-ink);padding:7px 12px;font-size:12px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .hero h1{font-size:26px;font-weight:700;letter-spacing:-.02em;line-height:1.28;margin-top:10px}
+  .period{font-family:var(--mono);font-size:13px;color:var(--ink-2);margin-top:7px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .motif{position:absolute;right:14px;bottom:6px;z-index:-1;width:clamp(110px,22vw,150px);opacity:.14;color:var(--pt);pointer-events:none}
+  .motif svg{display:block;width:100%;height:auto}
+
+  /* ---------- 여행 정보 카드 ---------- */
+  .infocard{display:grid;gap:16px}
+  .ib-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+  .ib-h{font-size:12.5px;font-weight:700;color:var(--cap)}
+  .ib-cap{font-size:11.5px;color:var(--sub-ink);font-variant-numeric:tabular-nums}
+  .wx-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:2px;margin-top:9px}
+  .wx-c{display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 0;border-radius:12px}
+  .wx-w{font-size:10.5px;font-weight:600;color:var(--cap)}
+  .wx-i{width:22px;height:22px;fill:none;stroke:var(--ink-2);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  .wx-hi{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
+  .wx-lo{font-size:11px;color:var(--cap);font-variant-numeric:tabular-nums}
+  .wx-na{margin:auto 0;font-size:14px;font-weight:600;color:var(--faint)}
+  .fx-main{font-size:20px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:7px}
+  .fx-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
+  .fx-cell{background:var(--soft);border-radius:12px;padding:9px 8px;text-align:center}
+  .fx-b{display:block;font-size:11px;font-weight:600;color:var(--cap)}
+  .fx-v{display:block;font-size:13px;font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums}
+  .tinfo summary{display:flex;align-items:center;gap:7px;min-height:44px;border-radius:14px;background:var(--soft);padding:0 13px;font-size:13.5px;font-weight:700;color:var(--pt);cursor:pointer;list-style:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+  .tinfo summary::-webkit-details-marker{display:none}
+  .tinfo summary .ic{width:12px;height:12px;color:var(--sub);transition:transform .15s ease}
+  .tinfo[open]>summary .ic{transform:rotate(90deg)}
+  .ti-row{padding:11px 2px}
+  .ti-row+.ti-row{border-top:1px solid var(--div)}
+  .ti-label{font-size:13px;font-weight:700}
+  .ti-text{font-size:13.5px;line-height:1.65;color:var(--ink-2);margin-top:2px;white-space:pre-line}
+
+  /* ---------- 머무는 곳 ---------- */
+  .stay+.stay{margin-top:14px;padding-top:14px;border-top:1px solid var(--div)}
+  .stay-name{font-size:16px;font-weight:700;letter-spacing:-.015em}
+  .stay-addr{font-size:13px;line-height:1.55;color:var(--ink-2);margin-top:3px}
+  .stay-addr a{display:inline-flex;align-items:center;gap:4px;min-height:40px;padding:0 6px;margin:-10px -2px;color:var(--pt);text-decoration:none;font-weight:700;white-space:nowrap;font-size:12.5px}
+  .stay-dates{font-size:13px;color:var(--cap);margin-top:6px}
+
+  /* ---------- 일자 세그먼트 바 ---------- */
+  .daybar{position:sticky;top:0;z-index:30;background:var(--bar-bg);padding:10px 0}
+  @supports ((backdrop-filter:blur(10px)) or (-webkit-backdrop-filter:blur(10px))){
+    .daybar{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+  }
+  .dayrow{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:5px;max-width:680px;margin:0 auto;padding:0 16px}
+  .dayrow.scroll{display:flex;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .dayrow.scroll::-webkit-scrollbar{display:none}
+  .dayrow.scroll a{flex:0 0 56px}
+  .dayrow a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-height:50px;border-radius:14px;background:var(--card);box-shadow:0 1px 2px rgba(25,27,30,.04);text-decoration:none;-webkit-tap-highlight-color:transparent}
+  .db-d{font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-.01em;font-variant-numeric:tabular-nums;line-height:1.2}
+  .db-w{font-size:10.5px;font-weight:600;color:var(--ink-2);line-height:1.2}
+  .dayrow a.on{background:var(--ink)}
+  .dayrow a.on .db-d{color:var(--card)}
+  .dayrow a.on .db-w{color:var(--card);opacity:.72}
+  .dayrow a.today::after{content:"";width:4px;height:4px;border-radius:50%;background:var(--ok);margin-top:1px}
+
+  /* ---------- 함께 정할 것 (tbd 요약 카드) ---------- */
+  .tbd{list-style:none;margin-top:2px}
+  .tbd li+li{border-top:1px solid var(--div)}
+  .tbd a{display:flex;align-items:center;gap:9px;min-height:44px;padding:3px 0;font-size:13.5px;line-height:1.5;color:var(--ink);text-decoration:none}
+  .tbd a::before{content:"";flex:0 0 auto;width:7px;height:7px;border-radius:50%;background:var(--warn);opacity:.85}
+  .tbd a .ic{flex:0 0 auto;width:12px;height:12px;margin-left:auto;color:var(--pt)}
+  .tbd-note{font-size:12px;color:var(--cap);margin-top:10px}
+
+  /* ---------- 본문 문단 (notes 첫 문단) ---------- */
+  .lead{font-size:14px;font-weight:400;line-height:1.7;color:var(--ink-2);white-space:pre-line}
+  .lead a,.box a,.ti-text a,.os-text a{color:var(--pt);font-weight:600;text-decoration:underline;text-underline-offset:2px;word-break:break-all}
+
+  /* ---------- 접는 참고 ---------- */
+  .more{margin-top:8px}
+  .more summary{display:inline-flex;align-items:center;gap:5px;min-height:40px;font-size:12.5px;font-weight:700;color:var(--pt);cursor:pointer;list-style:none;-webkit-user-select:none;user-select:none;padding:3px 0;-webkit-tap-highlight-color:transparent}
+  .more summary::-webkit-details-marker{display:none}
+  .more summary .ic{width:12px;height:12px;transition:transform .15s ease}
+  .more[open]>summary .ic{transform:rotate(90deg)}
+  .more .box{margin-top:6px;background:var(--soft);border-radius:14px;padding:11px 13px;font-size:13.5px;line-height:1.7;color:var(--ink-2);white-space:pre-line}
+  .day-more .box{background:var(--card);box-shadow:var(--sh-card)}
+
+  /* ---------- 일자 섹션 ---------- */
+  .day{margin-top:36px}
+  .day-title{font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.3}
+  .day-theme{font-size:13.5px;color:var(--ink-2);margin-top:4px}
+  .day-lead{margin-top:10px}
+  .evs{margin-top:12px}
+
+  /* ---------- 동선 지도 카드 ---------- */
+  .mapcard{padding:14px 14px 14px}
+  .daymap img{display:block;width:100%;height:auto;border-radius:14px}
+  .daymap figcaption{font-size:11.5px;line-height:1.6;color:var(--cap);margin-top:10px;padding:0 2px}
+  .daymap figcaption a{color:var(--pt);font-weight:700;text-decoration:none}
+  .maplegend{list-style:none;margin-top:11px;padding:0 2px}
+  .maplegend li{display:flex;align-items:center;gap:8px;font-size:12.5px;line-height:1.45}
+  .maplegend li+li{margin-top:7px}
+  .mlnum{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--pt);color:var(--on-pt);font:700 10.5px var(--mono)}
+  .mlnum.start{background:var(--card);color:var(--pt);border:1.5px solid var(--pt)}
+  .mltime{flex:0 0 auto;font:11px var(--mono);color:var(--cap);font-variant-numeric:tabular-nums}
+  .routebtn{display:flex;align-items:center;justify-content:center;gap:7px;min-height:48px;margin-top:12px;border-radius:15px;background:var(--pt-soft);color:var(--pt);font-size:13.5px;font-weight:700;text-decoration:none;-webkit-tap-highlight-color:transparent}
+  .routebtn.solo{background:var(--card);box-shadow:var(--sh-card)}
+
+  /* ---------- 이벤트 카드 ---------- */
+  .evcard{position:relative;overflow:hidden;background:var(--card);border-radius:20px;box-shadow:var(--sh-card);padding:16px 18px 18px;margin-top:10px}
+  .evcard.now::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--pt)}
+  .ev-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .t{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1.3}
+  .t-end{font-size:12.5px;font-weight:600;color:var(--ink-2);font-variant-numeric:tabular-nums}
+  .t-tz{font-size:11px;font-weight:600;color:var(--cap)}
+  .ev-flex{flex:1 1 auto}
+  .stchip{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--ink-2);white-space:nowrap}
+  .stdot{width:6px;height:6px;border-radius:50%;background:var(--ok)}
+  .tbdpill{display:inline-flex;align-items:center;border-radius:999px;background:var(--warn-bg);color:var(--warn);padding:5px 10px;font-size:11.5px;font-weight:600;line-height:1;white-space:nowrap}
+  .nowpill,.nextpill{display:inline-flex;align-items:center;border-radius:999px;padding:5px 10px;font-size:11px;font-weight:700;line-height:1;letter-spacing:.01em}
+  .nowpill{background:var(--pt);color:var(--on-pt)}
+  .nextpill{background:var(--soft);color:var(--ink-2)}
+  .ev-h{font-size:17.5px;font-weight:700;letter-spacing:-.015em;line-height:1.35;margin-top:6px}
+  .ev-venue{display:flex;align-items:flex-start;gap:12px;margin-top:8px}
+  .ev-vmain{flex:1 1 auto;min-width:0}
+  .vname{font-size:13.5px;font-weight:600;color:var(--ink-2);line-height:1.5}
+  .vok{display:inline-flex;align-items:center;gap:4px;margin-left:7px;font-size:11.5px;font-weight:700;color:var(--ok-ink);white-space:nowrap}
+  .vok .stdot{width:5px;height:5px}
+  .vaddr{font-size:12px;color:var(--cap);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .vlinks{display:flex;gap:2px;margin-top:2px;margin-left:-8px}
+  .vlinks a{display:inline-flex;align-items:center;gap:4px;min-height:40px;padding:0 8px;font-size:12.5px;font-weight:700;color:var(--pt);text-decoration:none;-webkit-tap-highlight-color:transparent}
+  .vlinks a .ic{width:13px;height:13px}
+  .vthumb{position:relative;flex:0 0 auto;width:62px;height:62px;border-radius:14px;overflow:hidden;background:var(--soft)}
+  .vthumb img{display:block;width:62px;height:62px}
+  .vthumb::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--pt);border:2.5px solid var(--card);box-shadow:0 1px 4px rgba(25,27,30,.35)}
+  .vt-go{position:absolute;right:4px;bottom:4px;width:16px;height:16px;padding:3px;border-radius:50%;background:var(--card);color:var(--pt);stroke-width:2.4;box-shadow:0 1px 3px rgba(25,27,30,.28)}
+  .closedbar{background:var(--danger-bg);color:var(--danger);font-size:13px;font-weight:600;line-height:1.55;border-radius:14px;padding:11px 13px;margin-top:10px}
+  .brief{display:flex;align-items:flex-start;gap:8px;background:var(--warn-bg);color:var(--warn);font-size:13px;line-height:1.55;border-radius:14px;padding:10px 12px;margin-top:10px}
+  .brief .ic{flex:0 0 auto;margin-top:3px}
+  .evcard .lead{margin-top:10px}
+  .evcard.empty{padding:22px 18px}
+  .noev{font-size:13.5px;color:var(--cap);text-align:center}
+
+  /* ---------- 현장 가이드 (카드 하단 접이 영역) ---------- */
+  .os-band{height:8px;background:var(--soft);margin:16px -18px 0}
+  .onsite{margin:0 -18px -18px}
+  .onsite summary{display:flex;align-items:center;gap:7px;min-height:52px;padding:6px 18px;font-size:13.5px;font-weight:700;cursor:pointer;list-style:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+  .onsite summary::-webkit-details-marker{display:none}
+  .onsite summary>.ic{flex:0 0 auto;color:var(--sub)}
+  .os-sum{white-space:nowrap;color:var(--pt)}
+  .os-src{margin-left:auto;font-size:11.5px;font-weight:500;color:var(--cap);min-width:0;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .os-chev{flex:0 0 auto;width:12px;height:12px;margin-left:auto;transition:transform .15s ease}
+  .os-src~.os-chev{margin-left:2px}
+  .onsite[open] .os-chev{transform:rotate(90deg)}
+  .os-box{padding:2px 18px 16px}
+  .os-menu{margin-top:2px}
+  .mrow{display:flex;align-items:center;gap:11px;padding:9px 0}
+  .mrow+.mrow{border-top:1px solid var(--div)}
+  .mtile{flex:0 0 auto;display:grid;place-items:center;width:40px;height:40px;border-radius:13px;background:var(--pt-soft);color:var(--pt)}
+  .mtile .ic{width:19px;height:19px}
+  .mmain{flex:1 1 auto;min-width:0}
+  .mname{display:block;font-size:14px;font-weight:600;line-height:1.45}
+  .mnote{display:block;font-size:12.5px;color:var(--cap);line-height:1.5;margin-top:1px}
+  .mprice{flex:0 0 auto;font-size:14px;font-weight:700;font-variant-numeric:tabular-nums}
+  .os-budget{background:var(--soft);border-radius:14px;padding:14px 16px;margin-top:10px}
+  .oblabel{font-size:12.5px;font-weight:600;color:var(--cap)}
+  .obvalue{font-size:26px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:2px}
+  .obcap{font-size:12.5px;color:var(--cap);margin-top:3px;line-height:1.55}
+  .os-tip{display:flex;align-items:flex-start;gap:10px;background:var(--soft);border-radius:14px;padding:12px 13px;margin-top:10px}
+  .os-tic{flex:0 0 auto;width:16px;height:16px;color:var(--pt);margin-top:2px}
+  .os-tbody{flex:1 1 auto;min-width:0}
+  .os-label{font-size:13px;font-weight:700}
+  .os-text{font-size:13.5px;line-height:1.65;color:var(--ink-2);margin-top:2px;white-space:pre-line}
+  .os-illust{margin-top:10px;color:var(--pt)}
+  .os-illust svg{display:block;width:100%;max-width:220px;height:auto}
+  .os-cta{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:15px;background:var(--pt);color:var(--on-pt);font-size:14px;font-weight:700;text-decoration:none;margin-top:12px;-webkit-tap-highlight-color:transparent}
+  .os-cta.alt{background:var(--soft);color:var(--ink)}
+
+  /* ---------- 바로 걸기 ---------- */
+  .tel{list-style:none;margin-top:2px}
+  .tel li+li{border-top:1px solid var(--div)}
+  .tel a{display:flex;align-items:center;gap:12px;min-height:52px;padding:4px 0;text-decoration:none;color:var(--ink)}
+  .ticon{flex:0 0 auto;display:grid;place-items:center;width:40px;height:40px;border-radius:13px;background:var(--soft);color:var(--ink-2)}
+  .ticon .ic{width:17px;height:17px}
+  .tel .who{flex:1 1 auto;min-width:0;font-size:14px;font-weight:600;line-height:1.45}
+  .tel .num{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--pt);white-space:nowrap;font-variant-numeric:tabular-nums}
+
+  /* ---------- 준비물 체크리스트 ---------- */
+  .chk-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .prog{font-size:12.5px;font-weight:700;color:var(--ink-2);font-variant-numeric:tabular-nums}
+  .pbar{height:4px;border-radius:999px;background:var(--soft);overflow:hidden;margin-top:10px}
+  .pbar span{display:block;height:100%;width:0;border-radius:999px;background:var(--ok);transition:width .2s ease}
+  .pbar+.hint{margin-top:8px}
+  .chk{list-style:none;margin-top:2px}
+  .chk li{display:grid;grid-template-columns:1fr auto;column-gap:10px;align-items:start;padding:11px 0}
+  .chk li+li{border-top:1px solid var(--div)}
+  .chk label{position:relative;display:grid;grid-template-columns:22px 1fr;column-gap:11px;align-items:start;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .chk input{position:absolute;top:0;left:0;width:22px;height:22px;margin:0;opacity:0}
+  .chk .box{width:22px;height:22px;border:1.5px solid var(--faint);border-radius:7px;background:var(--card);display:grid;place-items:center;margin-top:1px;transition:background .12s ease,border-color .12s ease}
+  .chk .box .ic{width:12px;height:12px;stroke-width:2.6;color:#FFFFFF;opacity:0}
+  .chk input:checked + .box{background:var(--ok);border-color:var(--ok)}
+  .chk input:checked + .box .ic{opacity:1}
+  .chk input:focus-visible + .box{outline:2px solid var(--pt);outline-offset:2px}
+  .chk .txt{font-size:14px;line-height:1.55}
+  .chk input:checked ~ .txt{color:var(--sub);text-decoration:line-through}
+  .due{font-size:12px;font-weight:600;color:var(--ink-2);background:var(--soft);border-radius:999px;padding:5px 10px;white-space:nowrap;margin-top:1px}
+  .due.late{background:var(--danger-bg);color:var(--danger);font-weight:700}
+
+  /* ---------- 푸터 ---------- */
+  footer{margin-top:40px;padding:0 2px;font-size:12px;line-height:1.8;color:var(--cap)}
+  footer p{margin-bottom:8px}
+  footer .ic{width:13px;height:13px;color:var(--sub)}
+  footer a{color:var(--pt);font-weight:700;text-decoration:none}
+
+  /* ---------- 플로팅 바 ---------- */
+  .fab{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom));z-index:40;display:flex;gap:2px;background:var(--card);border-radius:999px;box-shadow:var(--sh-float);padding:5px}
+  .fab a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:62px;min-height:44px;border-radius:999px;color:var(--sub);text-decoration:none;-webkit-tap-highlight-color:transparent}
+  .fab a .ic{width:19px;height:19px}
+  .fab a span{font-size:10px;font-weight:700;line-height:1;color:var(--sub-ink)}
+  .fab a.on{color:var(--ink);background:var(--soft)}
+  .fab a.on span{color:inherit}
+
+  /* ---------- 지도 모드 (플로팅 바 지도 탭 - body[data-view] 전환) ---------- */
+  .mappanel{display:none}
+  body[data-view="map"] .hero,
+  body[data-view="map"] .overview,
+  body[data-view="map"] main.wrap>*:not(.mappanel){display:none}
+  body[data-view="map"] .mappanel{display:block;animation:mp-in .2s ease}
+  @keyframes mp-in{from{opacity:0}to{opacity:1}}
+  @media (prefers-reduced-motion: reduce){body[data-view="map"] .mappanel{animation:none}}
+  .mp-title{font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.3;margin:14px 2px 0}
+  .mp-empty{padding:26px 18px}
+
+  /* ---------- 탭 어포던스 (보라 = 누를 수 있다 · 눌림/호버 피드백) ---------- */
+  .vlinks a,.stay-addr a,.more summary,.tinfo summary,.onsite summary,.tbd a,.tel a,.chk label,.routebtn,.os-cta,.dayrow a,.fab a,.vthumb,.daymap figcaption a,footer a,.lead a,.box a,.ti-text a,.os-text a{transition:opacity .12s ease,background-color .12s ease,transform .12s ease}
+  .vlinks a:active,.stay-addr a:active,.more summary:active,.daymap figcaption a:active,footer a:active,.lead a:active,.box a:active,.ti-text a:active,.os-text a:active{opacity:.6}
+  .tbd a:active,.tel a:active,.chk label:active{background:var(--soft);border-radius:12px}
+  .onsite summary:active{background:var(--soft)}
+  .tinfo summary:active{background:var(--div);transform:scale(.98)}
+  .routebtn:active,.os-cta:active{transform:scale(.98)}
+  .dayrow a:active,.fab a:active{transform:scale(.94)}
+  .vthumb:active{transform:scale(.96)}
+  @media (hover:hover) and (pointer:fine){
+    .vlinks a,.stay-addr a,.more summary,.tinfo summary,.onsite summary,.tbd a,.tel a,.chk label,.routebtn,.os-cta,.dayrow a,.fab a,.vthumb,.daymap figcaption a,footer a,.lead a,.box a,.ti-text a,.os-text a{cursor:pointer}
+    .vlinks a:hover,.stay-addr a:hover,.more summary:hover,.daymap figcaption a:hover,footer a:hover,.lead a:hover,.box a:hover,.ti-text a:hover,.os-text a:hover{opacity:.75}
+    .tbd a:hover,.tel a:hover,.chk label:hover{background:var(--soft);border-radius:12px}
+    .onsite summary:hover{background:var(--soft)}
+    .tinfo summary:hover{background:var(--div)}
+    .dayrow a:not(.on):hover{background:var(--soft)}
+    .fab a:not(.on):hover{background:var(--soft)}
+    .routebtn:hover,.os-cta:hover,.vthumb:hover{opacity:.9}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .tinfo summary:active,.routebtn:active,.os-cta:active,.dayrow a:active,.fab a:active,.vthumb:active{transform:none}
+  }
+
+  /* ---------- 인쇄 ---------- */
+  @media print{
+    body{background:#FFFFFF;padding-bottom:0}
+    .daybar,.fab,.pill-dday{display:none}
+    /* 지도 모드 상태로 인쇄해도 본문(일정)이 나오게 - 지도 패널은 빼고 되살린다 */
+    .mappanel,body[data-view="map"] .mappanel{display:none}
+    body[data-view="map"] .hero,
+    body[data-view="map"] .overview,
+    body[data-view="map"] main.wrap>*:not(.mappanel){display:block}
+    .card,.evcard{box-shadow:none;border:1px solid #DDDDDD}
+    details>*{display:block}
+    .day{break-inside:avoid}
+  }
+</style>
+</head>
+<body data-view="schedule">
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 22s-7.5-5.7-7.5-11.7a7.5 7.5 0 0 1 15 0C19.5 16.3 12 22 12 22z"/><circle cx="12" cy="10.3" r="2.8"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4.5 12.5l5 5L19.5 7"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 5.5l6.5 6.5L9 18.5"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8.2 2.8v4.4M15.8 2.8v4.4"/></symbol>
+  <symbol id="i-tel" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.2"/><path d="M15.7 8.3l-2.2 5.2-5.2 2.2 2.2-5.2z"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M8.5 6h12M8.5 12h12M8.5 18h12"/><path d="M3.8 6h.01M3.8 12h.01M3.8 18h.01"/></symbol>
+  <symbol id="i-map" viewBox="0 0 24 24"><path d="M9.3 4.4 4 6.2v13.4l5.3-1.8 5.4 1.8 5.3-1.8V4.4l-5.3 1.8z"/><path d="M9.3 4.4v13.4M14.7 6.2v13.4"/></symbol>
+  <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M4 8.8a2.3 2.3 0 0 1 2.3-2.3h11.4A2.3 2.3 0 0 1 20 8.8v1a2.2 2.2 0 0 0 0 4.4v1a2.3 2.3 0 0 1-2.3 2.3H6.3A2.3 2.3 0 0 1 4 15.2v-1a2.2 2.2 0 0 0 0-4.4z"/><path d="M14.2 6.5v2.1M14.2 11v2M14.2 15.4v2.1"/></symbol>
+  <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="2.2"/><circle cx="18" cy="5" r="2.2"/><path d="M8.2 19H15a3.5 3.5 0 0 0 0-7H9a3.5 3.5 0 0 1 0-7h6.8"/></symbol>
+  <symbol id="i-qr" viewBox="0 0 24 24"><rect x="4" y="4" width="6.4" height="6.4" rx="1.2"/><rect x="13.6" y="4" width="6.4" height="6.4" rx="1.2"/><rect x="4" y="13.6" width="6.4" height="6.4" rx="1.2"/><path d="M13.6 13.6h2.6v2.6h-2.6zM20 14v2.2M14 20h2.2M17.6 17.6l2.4 2.4"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M12 3.2a5.8 5.8 0 0 1 3.5 10.4c-.6.5-.9 1.2-.9 2v.4h-5.2v-.4c0-.8-.3-1.5-.9-2A5.8 5.8 0 0 1 12 3.2z"/><path d="M9.8 19.4h4.4M10.6 21.6h2.8"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.2" r="3.3"/><path d="M3.6 20.2c.5-3.4 2.6-5.4 5.4-5.4s4.9 2 5.4 5.4"/><path d="M15.4 5.3a3.3 3.3 0 0 1 0 5.8M16.8 14.9c2.2.6 3.5 2.4 3.9 5.3"/></symbol>
+  <symbol id="i-fork" viewBox="0 0 24 24"><path d="M6.2 3v5.4a2.6 2.6 0 0 0 5.2 0V3M8.8 3v18"/><path d="M17.8 3c-2 .9-3.1 2.9-3.1 5.6 0 2.1.9 3.6 3.1 3.6V21"/></symbol>
+  <symbol id="i-wx-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.8v2.2M12 19v2.2M2.8 12h2.2M19 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6"/></symbol>
+  <symbol id="i-wx-part" viewBox="0 0 24 24"><circle cx="8" cy="8" r="3"/><path d="M8 2.6v1.6M2.6 8h1.6M4.2 4.2l1.1 1.1M11.8 4.2l-1.1 1.1"/><path d="M9.5 20h8a3.2 3.2 0 0 0 .6-6.35 4.6 4.6 0 0 0-8.9-1.1A3.6 3.6 0 0 0 9.5 20z"/></symbol>
+  <symbol id="i-wx-cloud" viewBox="0 0 24 24"><path d="M7 19h9.5a3.7 3.7 0 0 0 .7-7.34 5.2 5.2 0 0 0-10.1-1.2A4.1 4.1 0 0 0 7 19z"/></symbol>
+  <symbol id="i-wx-rain" viewBox="0 0 24 24"><path d="M7 15h9.5a3.7 3.7 0 0 0 .7-7.34 5.2 5.2 0 0 0-10.1-1.2A4.1 4.1 0 0 0 7 15z"/><path d="M8.5 18l-1 3M12.5 18l-1 3M16.5 18l-1 3"/></symbol>
+  <symbol id="i-wx-shower" viewBox="0 0 24 24"><path d="M7 14.6h9.5a3.7 3.7 0 0 0 .7-7.34 5.2 5.2 0 0 0-10.1-1.2A4.1 4.1 0 0 0 7 14.6z"/><path d="M8.4 17.2l-.6 1.8M12.4 17.2l-.6 1.8M16.4 17.2l-.6 1.8M10.3 20.6l-.4 1.2M14.3 20.6l-.4 1.2"/></symbol>
+  <symbol id="i-wx-thunder" viewBox="0 0 24 24"><path d="M7 14.5h9.5a3.7 3.7 0 0 0 .7-7.34 5.2 5.2 0 0 0-10.1-1.2A4.1 4.1 0 0 0 7 14.5z"/><path d="M12.8 15.5l-2.3 3.6h2.6l-1.6 3.2"/></symbol>
+</svg>
+
+<header class="hero wrap">
+  <div class="motif" aria-hidden="true"><svg viewBox="0 0 200 64" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18 52 L18 30 L26 30 L26 52"/>
+    <path d="M34 52 L34 24 L42 24 L42 52"/>
+    <path d="M50 52 L50 30 L58 30 L58 52"/>
+    <path d="M12 28 C30 14 46 14 64 28"/>
+    <path d="M84 52 C92 40 104 40 112 52"/>
+    <circle cx="98" cy="34" r="5"/>
+    <path d="M128 46 C144 30 160 42 176 24"/>
+    <path d="M170 22 L178 22 L177 30"/>
+  </g>
+  <g fill="currentColor">
+    <circle cx="128" cy="46" r="2.4"/><circle cx="150" cy="37" r="2.4"/>
+  </g>
+</svg></div>
+  <div class="hero-top">
+    <p class="eyebrow">여행 플래너 신청소 · 예시 가이드</p>
+  </div>
+  <h1>싱가포르, 여름의 일주일</h1>
+  <p class="period">6박 7일 · 성인 2, 유아 1</p>
+</header>
+
+<div class="wrap overview">
+
+  <section class="card infocard" id="tripinfo" data-fx-base="SGD" data-fx-symbol="S$">
+    <div class="ib" id="fx" hidden>
+      <div class="ib-head"><span class="ib-h">환율</span><span class="ib-cap" id="fxcap" hidden></span></div>
+      <p class="fx-main" id="fxmain"></p>
+      <div class="fx-grid" id="fxgrid"></div>
+    </div>
+    <details class="tinfo">
+      <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>알아두면 좋은 것</summary>
+      <div class="ti-rows">
+        <div class="ti-row">
+          <p class="ti-label">시차</p>
+          <p class="ti-text">한국보다 1시간 느려요. 한국 오후 1시가 싱가포르 낮 12시예요.</p>
+        </div>
+        <div class="ti-row">
+          <p class="ti-label">전압·플러그</p>
+          <p class="ti-text">230V에 영국식 3핀(BF) 콘센트라 멀티 어댑터가 필요해요.</p>
+        </div>
+        <div class="ti-row">
+          <p class="ti-label">비상 연락</p>
+          <p class="ti-text">경찰은 999, 구급과 소방은 995예요. 주싱가포르 한국대사관은 <a href="tel:+6562561188">+65 6256 1188</a>이고, 근무시간 외 긴급 전화는 <a href="tel:+6596543528">+65 9654 3528</a>이에요.</p>
+        </div>
+        <div class="ti-row">
+          <p class="ti-label">수돗물</p>
+          <p class="ti-text">수돗물은 그냥 마셔도 돼요. 그래도 아이 물은 편의점 생수가 마음 편해요.</p>
+        </div>
+        <div class="ti-row">
+          <p class="ti-label">계산 문화</p>
+          <p class="ti-text">음식점 영수증엔 봉사료 10%와 세금 9%가 이미 붙어 나와요. 따로 팁은 없어요.</p>
+        </div>
+        <div class="ti-row">
+          <p class="ti-label">결제</p>
+          <p class="ti-text">카드가 거의 다 되고, 호커센터는 현금이나 페이나우가 편해요. 그랩 앱에 카드를 미리 등록해 두세요.</p>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <section class="card">
+    <h2 class="sub">머무는 곳</h2>
+    <div class="stay">
+      <p class="stay-name">마리나베이 인근 호텔</p>
+      <p class="stay-addr"><a href="https://www.google.com/maps/search/?api=1&amp;query=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도 보기</a></p>
+      <p class="stay-dates">5박</p>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 class="sub">여행 전 알아두기</h2>
+    <p class="lead">이틀은 가이드와 차량이 함께하는 일정이에요.</p>
+    <details class="more">
+      <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>더 알아두기</summary>
+      <div class="box">싱가포르는 한국보다 1시간 느려요. 여행 마지막 날 밤에는 공항이 평소보다 붐빌 수 있어서 조금 일찍 움직이는 게 좋아요.
+
+숙소가 대형 쇼핑몰과 실내로 연결된 곳이라 한낮 더위와 소나기를 피해 다닐 수 있어요. 8월 오후 소나기는 보통 30분에서 1시간이면 지나갑니다.
+
+배달은 GrabFood가 제일 편해요. 한국어가 지원되고 해외 카드로 바로 결제돼요. 호텔로 시킬 땐 주문 메모에 &#34;Meet at hotel lobby&#34;라고 적고 로비에서 받으면 됩니다.</div>
+    </details>
+  </section>
+
+</div>
+
+<nav class="daybar" aria-label="일자 이동">
+  <div class="dayrow" id="navrow">
+    <a href="#d1" data-spy="d1" aria-label="1일차"><span class="db-d">1</span><span class="db-w">일차</span></a>
+    <a href="#d2" data-spy="d2" aria-label="2일차"><span class="db-d">2</span><span class="db-w">일차</span></a>
+    <a href="#d3" data-spy="d3" aria-label="3일차"><span class="db-d">3</span><span class="db-w">일차</span></a>
+    <a href="#d4" data-spy="d4" aria-label="4일차"><span class="db-d">4</span><span class="db-w">일차</span></a>
+    <a href="#d5" data-spy="d5" aria-label="5일차"><span class="db-d">5</span><span class="db-w">일차</span></a>
+    <a href="#d6" data-spy="d6" aria-label="6일차"><span class="db-d">6</span><span class="db-w">일차</span></a>
+    <a href="#d7" data-spy="d7" aria-label="7일차"><span class="db-d">7</span><span class="db-w">일차</span></a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <section class="mappanel" id="mappanel" role="region" aria-label="일자별 동선 지도">
+    <h2 class="mp-title" id="mp-title"></h2>
+    <div id="mp-body"></div>
+    <div class="card mp-empty" id="mp-empty" hidden>
+      <p class="noev">이 날은 장소가 등록된 일정이 없어 지도가 없어요. 시간표에서 일정을 확인하세요.</p>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 class="sub">함께 정할 것 3가지</h2>
+    <ul class="tbd">
+      <li><a href="#d3">3일차 13:30 — 실내 관광 — 국립박물관 또는 차이나타운<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></a></li>
+      <li><a href="#d4">4일차 12:00 — 점심<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></a></li>
+      <li><a href="#d6">6일차 17:00 — 이른 저녁<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></a></li>
+    </ul>
+    <p class="tbd-note">정해지면 이 가이드와 캘린더가 함께 갱신돼요.</p>
+  </section>
+
+  <section class="day" id="d1">
+    <h2 class="day-title">1일차</h2>
+<p class="day-theme">이동하는 날</p><p class="lead day-lead">밤에 도착하는 날이에요. 무리하지 않는 게 목표입니다.</p>    <details class="more day-more">
+      <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+      <div class="box">늦은 야식이 필요하면 룸서비스가 24시간 열려 있어요(맥주도 됩니다). GrabFood로 스위춘 딤섬(늦은 시간까지 해요)을 시켜 로비에서 받는 방법도 있어요. 힘이 남으면 라우파삿의 사테 꼬치를 포장해 오는 것도 좋아요. 그랩으로 편도 6~8분, 새벽 3시까지 해요. 글루턴스 베이는 10시 반에 주문이 끝나서 이 날은 어렵습니다.</div>
+    </details>
+    <div class="evs">
+      <article class="evcard" data-time="13:00">
+        <div class="ev-top">
+          <span class="t">13:00</span>
+<span class="t-tz">한국 시각</span>          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">인천공항 T1 도착, 탑승 수속</h3>
+        <p class="brief"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span>항공사와 터미널을 미리 확인하세요.</span></p>
+<p class="lead">출발 전 항공사와 터미널을 확인해 두면 편해요.</p>      </article>
+      <article class="evcard" data-time="16:10">
+        <div class="ev-top">
+          <span class="t">16:10</span>
+<span class="t-tz">한국 시각</span>          <span class="ev-flex"></span>
+<span class="stchip"><span class="stdot"></span>확정</span>        </div>
+        <h3 class="ev-h">인천 출발, 싱가포르로</h3>
+      </article>
+      <article class="evcard" data-time="21:30">
+        <div class="ev-top">
+          <span class="t">21:30</span>
+          <span class="ev-flex"></span>
+<span class="stchip"><span class="stdot"></span>확정</span>        </div>
+        <h3 class="ev-h">창이공항 도착</h3>
+        <p class="brief"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span>SG 입국카드를 미리 제출했는지 확인하세요.</span></p>
+<p class="lead">싱가포르는 한국보다 1시간 느려요.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">입국카드(SG Arrival Card)는 도착일을 포함해 3일 전부터 온라인으로 제출할 수 있어요.</div>
+        </details>
+      </article>
+      <article class="evcard" data-time="22:30">
+        <div class="ev-top">
+          <span class="t">22:30</span>
+          <span class="ev-flex"></span>
+<span class="stchip"><span class="stdot"></span>확정</span>        </div>
+        <h3 class="ev-h">호텔 체크인</h3>
+<p class="lead">공항에서 숙소까지는 택시로 이동해요.</p>      </article>
+    </div>
+  </section>
+  <section class="day" id="d2">
+    <h2 class="day-title">2일차</h2>
+<p class="day-theme">센토사</p><p class="lead day-lead">더위를 피하면서 저녁 7시 40분 공연 시간을 지키는 날이에요. 한낮 2~5시는 실내 위주로 움직입니다.</p>    <details class="more day-more">
+      <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+      <div class="box">비가 오면 비치 대신 S.E.A. 아쿠아리움이나 리조트월드 실내로 바꾸세요. 공연이 취소되면 8시 40분 회차로 미루고, 그것도 안 되면 환불을 요청하면 돼요. 케이블카가 멈추면 비보시티 3층에서 센토사 익스프레스(S$4)를 타면 됩니다. 공연이 끝난 직후엔 그랩 요금이 치솟으니 10분쯤 걷거나 기다렸다 부르세요.</div>
+    </details>
+    <section class="card mapcard">
+      <figure class="daymap">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="./map-d2-dark.png">
+          <img src="./map-d2.png" alt="2일차 동선 지도" width="680" height="420" loading="lazy">
+        </picture>
+        <ol class="maplegend">
+          <li><span class="mlnum start">1</span><span class="mltime">11:30</span>점심 — 딘타이펑 (선텍시티)</li>
+          <li><span class="mlnum">2</span><span class="mltime">13:00</span>그랩으로 하버프론트 이동</li>
+          <li><span class="mlnum">3</span><span class="mltime">14:00</span>임비아 룩아웃 — 실내에서 쉬어가기</li>
+          <li><span class="mlnum">4</span><span class="mltime">15:30</span>팔라완 비치 — 출렁다리와 전망탑</li>
+          <li><span class="mlnum">5</span><span class="mltime">16:15</span>실로소 비치 산책</li>
+          <li><span class="mlnum">6</span><span class="mltime">18:00</span>저녁 — 트라피자</li>
+          <li><span class="mlnum">7</span><span class="mltime">19:40</span>윙스 오브 타임 — 불꽃 분수 쇼</li>
+        </ol>
+        <figcaption>장소(📍)가 등록된 일정만 방문 순서로 이었어요 — 식사·이동·휴식처럼 위치가 없는 일정은 시간표에서 확인하세요 · 연결선은 실제 도로 경로가 아니에요 · 지도 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></figcaption>
+      </figure>
+      <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94&amp;destination=Wings%20of%20Time%2C%2060%20Siloso%20Beach%20Walk%2C%20Sentosa%2C%20Singapore&amp;waypoints=Din%20Tai%20Fung%20%28Suntec%20City%29%2C%20Suntec%20City%20Tower%205%20%2302-302%2C%20Singapore%7CSingapore%20Cable%20Car%20HarbourFront%20Station%2C%203%20HarbourFront%20Place%2C%20Singapore%7CImbiah%20Lookout%2C%20Sentosa%2C%20Singapore%7CPalawan%20Beach%2C%20Sentosa%2C%20Singapore%7CSiloso%20Beach%2C%20Sentosa%2C%20Singapore%7CTrapizza%2C%20101%20Siloso%20Road%2C%20Sentosa%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>오늘 동선 지도로 열기</a>
+    </section>
+    <div class="evs">
+      <article class="evcard" data-time="07:00">
+        <div class="ev-top">
+          <span class="t">07:00</span>
+          <span class="ev-flex"></span>
+<span class="stchip"><span class="stdot"></span>확정</span>        </div>
+        <h3 class="ev-h">호텔 조식</h3>
+<p class="lead">아침 6시 반부터 10시 반까지 해요. 주문 마감은 10시 15분이에요.</p>      </article>
+      <article class="evcard" data-time="08:30">
+        <div class="ev-top">
+          <span class="t">08:30</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">호텔 수영과 휴식</h3>
+      </article>
+      <article class="evcard" data-time="11:30">
+        <div class="ev-top">
+          <span class="t">11:30</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">점심 — 딘타이펑 (선텍시티)</h3>
+        <div class="ev-venue">
+          <div class="ev-vmain">
+            <p class="vname">Din Tai Fung (Suntec City) <span class="vok"><span class="stdot"></span>영업 확인</span></p>
+<p class="vaddr">Suntec City Tower 5 #02-302, Singapore</p>            <p class="vlinks">
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Din%20Tai%20Fung%20%28Suntec%20City%29%20Suntec%20City%20Tower%205%20%2302-302%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94&amp;destination=Din%20Tai%20Fung%20%28Suntec%20City%29%2C%20Suntec%20City%20Tower%205%20%2302-302%2C%20Singapore&amp;travelmode=transit" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
+          </div>
+          <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=Din%20Tai%20Fung%20%28Suntec%20City%29%20Suntec%20City%20Tower%205%20%2302-302%2C%20Singapore" target="_blank" rel="noopener" aria-label="Din Tai Fung (Suntec City) 지도 열기">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./thumb-d2-e3-dark.png">
+              <img src="./thumb-d2-e3.png" alt="" width="62" height="62" loading="lazy">
+            </picture>
+            <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
+          </a>
+        </div>
+<p class="lead">숙소에서 실내로 이어져 걷기 편해요. 줄이 길 수 있으니 11시 15분쯤 도착하면 편해요.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">아이가 힘들어하면 같은 건물의 마르쉐(실내 놀이터와 아기의자가 있어요)나 지하 푸드코트로 바꿔도 좋아요.</div>
+        </details>
+        <div class="os-band" aria-hidden="true"></div>
+        <details class="onsite">
+          <summary>
+            <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>
+            <span class="os-sum">현장 가이드 · 메뉴와 팁 6개</span>
+<span class="os-src">후기 6편 · 공식 메뉴 페이지</span>            <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+          </summary>
+          <div class="os-box">
+            <div class="os-illust" aria-hidden="true"><svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M46 30c-3-4 3-8 0-12"/>
+  <path d="M64 28c3-4-3-8 0-12"/>
+  <path d="M22 51a12 14 0 0 1 24 0"/>
+  <path d="M28 44l6-6M34 45v-7M40 44l-6-6"/>
+  <path d="M48 51a12 14 0 0 1 24 0"/>
+  <path d="M54 44l6-6M60 45v-7M66 44l-6-6"/>
+  <path d="M74 51a12 14 0 0 1 24 0"/>
+  <path d="M80 44l6-6M86 45v-7M92 44l-6-6"/>
+  <ellipse cx="60" cy="53" rx="46" ry="8"/>
+  <path d="M14 53v8c0 7 21 12 46 12s46-5 46-12v-8"/>
+  <path d="M36 67v5M60 69v5M84 67v5"/>
+</svg></div>
+            <div class="os-menu">
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">돼지고기 샤오롱바오 6개</span><span class="mnote">육즙 가득한 대표 메뉴예요.</span></span>
+<span class="mprice">약 S$12</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">돼지갈비 계란볶음밥</span><span class="mnote">단짠 간이라 아이도 잘 먹는다는 후기가 많아요.</span></span>
+<span class="mprice">약 S$17.4</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">새우 완탕면</span><span class="mnote">아이 국수가 필요할 때 직원들이 추천해 주는 메뉴예요.</span></span>
+<span class="mprice">약 S$13</span>              </div>
+            </div>
+            <div class="os-budget">
+              <p class="oblabel">예산</p>
+              <p class="obvalue">S$55~70</p>
+<p class="obcap">셋이 배불리 먹는 기준이에요. 봉사료 10%와 세금 9%가 계산서에 붙어요 · 약 6만 5천~8만 원</p>            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-qr"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">주문 방법</p>
+                <p class="os-text">자리에 앉아 테이블의 QR코드로 주문하고, 계산은 나갈 때 카운터에서 해요. 물이 따로 나오지 않으니 물통을 챙겨 가면 좋아요.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">예약과 웨이팅</p>
+                <p class="os-text">입구에서 QR로 인원을 등록하면 인원수별로 줄을 세워요. 11시 15분쯤 도착하면 길어야 15분 안에 들어간다는 후기가 대부분이에요. 자리 안내를 받을 때 아기의자를 요청하면 아기용 그릇과 스푼까지 챙겨 줘요.</p>
+              </div>
+            </div>
+            <a class="os-cta" href="https://www.dintaifung.com.sg/menu/" target="_blank" rel="noopener">메뉴판·사진 보기</a>
+          </div>
+        </details>
+      </article>
+      <article class="evcard" data-time="13:00">
+        <div class="ev-top">
+          <span class="t">13:00</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">그랩으로 하버프론트 이동</h3>
+        <div class="ev-venue">
+          <div class="ev-vmain">
+            <p class="vname">Singapore Cable Car HarbourFront Station <span class="vok"><span class="stdot"></span>영업 확인</span></p>
+<p class="vaddr">3 HarbourFront Place, Singapore</p>            <p class="vlinks">
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Singapore%20Cable%20Car%20HarbourFront%20Station%203%20HarbourFront%20Place%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Din%20Tai%20Fung%20%28Suntec%20City%29%2C%20Suntec%20City%20Tower%205%20%2302-302%2C%20Singapore&amp;destination=Singapore%20Cable%20Car%20HarbourFront%20Station%2C%203%20HarbourFront%20Place%2C%20Singapore&amp;travelmode=transit" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
+          </div>
+          <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=Singapore%20Cable%20Car%20HarbourFront%20Station%203%20HarbourFront%20Place%2C%20Singapore" target="_blank" rel="noopener" aria-label="Singapore Cable Car HarbourFront Station 지도 열기">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./thumb-d2-e4-dark.png">
+              <img src="./thumb-d2-e4.png" alt="" width="62" height="62" loading="lazy">
+            </picture>
+            <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
+          </a>
+        </div>
+<p class="lead">20분쯤 걸려요. 케이블카 타는 곳은 하버프론트 타워2예요.</p>      </article>
+      <article class="evcard" data-time="13:30">
+        <div class="ev-top">
+          <span class="t">13:30</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">케이블카 타고 센토사 들어가기</h3>
+        <p class="brief"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span>왕복권은 미리 예매하면 편해요.</span></p>
+<p class="lead">공중에서 바다를 건너 들어가는 코스예요.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">왕복 S$33(성인)이고 편도표는 팔지 않아요. 밤 10시까지 운행하고 마지막 탑승은 9시 반이에요. 날씨가 나쁘면 멈출 수 있어요.</div>
+        </details>
+        <div class="os-band" aria-hidden="true"></div>
+        <details class="onsite">
+          <summary>
+            <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>
+            <span class="os-sum">현장 가이드 · 메뉴와 팁 7개</span>
+<span class="os-src">공식 요금 안내 · 후기 4편</span>            <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+          </summary>
+          <div class="os-box">
+            <div class="os-menu">
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-ticket"/></svg></span>
+                <span class="mmain"><span class="mname">스카이패스 성인</span><span class="mnote">공식 온라인 예매가예요. 현장 정가는 35달러라 예매가 싸요.</span></span>
+<span class="mprice">S$32.90</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-ticket"/></svg></span>
+                <span class="mmain"><span class="mname">스카이패스 어린이(4~12세)</span><span class="mnote">현장 정가는 25달러예요.</span></span>
+<span class="mprice">S$23.50</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-ticket"/></svg></span>
+                <span class="mmain"><span class="mname">네 살 미만</span><span class="mnote">표 없이 함께 타요.</span></span>
+<span class="mprice">무료</span>              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-ticket"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">예매 팁</p>
+                <p class="os-text">왕복권 한 장으로 본섬 노선과 센토사 안 노선까지 다 탈 수 있고, 편도표는 팔지 않아요. 클룩이나 마이리얼트립 같은 한국 예매 채널에서는 공식 온라인 예매보다 둘이 만 원 가까이 더 아껴요.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-route"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">타는 곳</p>
+                <p class="os-text">하버프론트 타워2의 15층이 탑승장이에요. 지하철 하버프론트역 B출구에서 케이블카 표지판만 따라가면 돼요. 예매해 뒀다면 표 교환 없이 탑승구에서 QR을 찍고 바로 타요.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-users"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">아이와 함께</p>
+                <p class="os-text">네 살 미만은 무료예요. 유모차는 접지 않고 그대로 밀고 타면 되고, 역마다 엘리베이터가 있어요.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">실전 팁</p>
+                <p class="os-text">저녁 7시 45분부터는 그룹마다 UV 손전등을 나눠줘요. 캐빈 안 숨은 그림을 비춰 보는 재미가 있어서 돌아오는 밤 코스가 심심하지 않아요.</p>
+              </div>
+            </div>
+            <a class="os-cta" href="https://www.google.com/maps/@?api=1&amp;map_action=pano&amp;viewpoint=1.2644666,103.8186813" target="_blank" rel="noopener">타는 곳 미리 보기</a>
+          </div>
+        </details>
+      </article>
+      <article class="evcard" data-time="14:00">
+        <div class="ev-top">
+          <span class="t">14:00</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">임비아 룩아웃 — 실내에서 쉬어가기</h3>
+        <div class="ev-venue">
+          <div class="ev-vmain">
+            <p class="vname">Imbiah Lookout <span class="vok"><span class="stdot"></span>영업 확인</span></p>
+<p class="vaddr">Sentosa, Singapore</p>            <p class="vlinks">
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Imbiah%20Lookout%20Sentosa%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Singapore%20Cable%20Car%20HarbourFront%20Station%2C%203%20HarbourFront%20Place%2C%20Singapore&amp;destination=Imbiah%20Lookout%2C%20Sentosa%2C%20Singapore&amp;travelmode=transit" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
+          </div>
+          <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=Imbiah%20Lookout%20Sentosa%2C%20Singapore" target="_blank" rel="noopener" aria-label="Imbiah Lookout 지도 열기">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./thumb-d2-e6-dark.png">
+              <img src="./thumb-d2-e6.png" alt="" width="62" height="62" loading="lazy">
+            </picture>
+            <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
+          </a>
+        </div>
+<p class="lead">하루 중 제일 더운 시간이라 실내와 카페 위주로 천천히 보내요.</p>      </article>
+      <article class="evcard" data-time="15:30">
+        <div class="ev-top">
+          <span class="t">15:30</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">팔라완 비치 — 출렁다리와 전망탑</h3>
+        <div class="ev-venue">
+          <div class="ev-vmain">
+            <p class="vname">Palawan Beach <span class="vok"><span class="stdot"></span>영업 확인</span></p>
+<p class="vaddr">Sentosa, Singapore</p>            <p class="vlinks">
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Palawan%20Beach%20Sentosa%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Imbiah%20Lookout%2C%20Sentosa%2C%20Singapore&amp;destination=Palawan%20Beach%2C%20Sentosa%2C%20Singapore&amp;travelmode=transit" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
+          </div>
+          <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=Palawan%20Beach%20Sentosa%2C%20Singapore" target="_blank" rel="noopener" aria-label="Palawan Beach 지도 열기">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./thumb-d2-e7-dark.png">
+              <img src="./thumb-d2-e7.png" alt="" width="62" height="62" loading="lazy">
+            </picture>
+            <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
+          </a>
+        </div>
+<p class="lead">비치 셔틀이 10분에서 15분 간격으로 다녀요. 무료예요.</p>      </article>
+      <article class="evcard" data-time="16:15">
+        <div class="ev-top">
+          <span class="t">16:15</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">실로소 비치 산책</h3>
+        <div class="ev-venue">
+          <div class="ev-vmain">
+            <p class="vname">Siloso Beach <span class="vok"><span class="stdot"></span>영업 확인</span></p>
+<p class="vaddr">Sentosa, Singapore</p>            <p class="vlinks">
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Siloso%20Beach%20Sentosa%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Palawan%20Beach%2C%20Sentosa%2C%20Singapore&amp;destination=Siloso%20Beach%2C%20Sentosa%2C%20Singapore&amp;travelmode=transit" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
+          </div>
+          <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=Siloso%20Beach%20Sentosa%2C%20Singapore" target="_blank" rel="noopener" aria-label="Siloso Beach 지도 열기">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./thumb-d2-e8-dark.png">
+              <img src="./thumb-d2-e8.png" alt="" width="62" height="62" loading="lazy">
+            </picture>
+            <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
+          </a>
+        </div>
+<p class="lead">팔라완에서 걸어서 15분쯤이에요.</p>      </article>
+      <article class="evcard" data-time="18:00">
+        <div class="ev-top">
+          <span class="t">18:00</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">저녁 — 트라피자</h3>
+        <div class="ev-venue">
+          <div class="ev-vmain">
+            <p class="vname">Trapizza <span class="vok"><span class="stdot"></span>영업 확인</span></p>
+<p class="vaddr">101 Siloso Road, Sentosa, Singapore</p>            <p class="vlinks">
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Trapizza%20101%20Siloso%20Road%2C%20Sentosa%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Siloso%20Beach%2C%20Sentosa%2C%20Singapore&amp;destination=Trapizza%2C%20101%20Siloso%20Road%2C%20Sentosa%2C%20Singapore&amp;travelmode=transit" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
+          </div>
+          <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=Trapizza%20101%20Siloso%20Road%2C%20Sentosa%2C%20Singapore" target="_blank" rel="noopener" aria-label="Trapizza 지도 열기">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./thumb-d2-e9-dark.png">
+              <img src="./thumb-d2-e9.png" alt="" width="62" height="62" loading="lazy">
+            </picture>
+            <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
+          </a>
+        </div>
+        <p class="brief"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span>미리 예약하면 자리가 편해요.</span></p>
+<p class="lead">실로소 비치의 야외 피자집이에요. 공연장까지 걸어갈 수 있어서 골랐어요.</p>        <div class="os-band" aria-hidden="true"></div>
+        <details class="onsite">
+          <summary>
+            <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>
+            <span class="os-sum">현장 가이드 · 메뉴와 팁 7개</span>
+<span class="os-src">공식 메뉴판 3종 · 후기 4편</span>            <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+          </summary>
+          <div class="os-box">
+            <div class="os-illust" aria-hidden="true"><svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="45" cy="42" r="27"/>
+  <circle cx="45" cy="42" r="21"/>
+  <path d="M36 34q3-6 8-4q-1 6-8 4z"/>
+  <path d="M50 48q3-6 8-4q-1 6-8 4z"/>
+  <circle cx="34" cy="45" r="2.2" fill="currentColor" stroke="none"/>
+  <circle cx="48" cy="30" r="2.2" fill="currentColor" stroke="none"/>
+  <circle cx="41" cy="55" r="2.2" fill="currentColor" stroke="none"/>
+  <circle cx="56" cy="40" r="2.2" fill="currentColor" stroke="none"/>
+  <path d="M78 44l26-11a26 26 0 0 1 2 19z"/>
+  <circle cx="93" cy="44" r="2.2" fill="currentColor" stroke="none"/>
+</svg></div>
+            <div class="os-menu">
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">화덕 마르게리타 피자</span><span class="mnote">얇은 도우 기본 판이라 셋이 나눠 먹기 좋아요.</span></span>
+<span class="mprice">S$24</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">먹물 봉골레 파스타</span><span class="mnote">조개 감칠맛이 한국인 입에 잘 맞는다는 후기가 있어요.</span></span>
+<span class="mprice">S$25</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">키즈 벤토</span><span class="mnote">자동차 모양 도시락에 파스타와 미니 피자, 주스까지 담겨 나와요.</span></span>
+<span class="mprice">S$19</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">키즈 피자</span><span class="mnote">가볍게 먹을 땐 벤토 대신 이걸로도 충분해요.</span></span>
+<span class="mprice">S$13</span>              </div>
+            </div>
+            <div class="os-budget">
+              <p class="oblabel">예산</p>
+              <p class="obvalue">S$100~120</p>
+<p class="obcap">피자와 파스타에 키즈메뉴, 맥주 한 잔에 봉사료와 세금까지 더한 값이에요. 생맥주 한 잔이 19달러로 꽤 비싼 편이에요 · 약 11만 5천~14만 원</p>            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-users"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">아이와 함께</p>
+                <p class="os-text">주문은 자리의 QR코드로 하는데, 화덕 피자가 나오기까지 시간이 좀 걸려요. 식탁 바로 앞이 모래사장이라 아이가 놀면서 기다리기 좋아요. 키즈메뉴판에 색칠 그림이 있으니 색연필을 챙기면 더 좋아요.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-pin"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">자리 잡기</p>
+                <p class="os-text">해변 바로 앞 명당은 예약자에게 먼저 돌아가요. 저녁 6시면 아직 더우니 실내나 그늘 자리에서 시작하고, 해질 무렵 노을은 해변에 나가서 봐도 충분해요.</p>
+              </div>
+            </div>
+            <a class="os-cta" href="https://sitecore-cd.shangri-la.com/-/media/Shangri-La/singapore_rasasentosaresort/dining/restaurants/Trapizza/202512_SEN_TrapizzaFoodMenu_EN.pdf" target="_blank" rel="noopener">메뉴판·사진 보기</a>
+          </div>
+        </details>
+      </article>
+      <article class="evcard" data-time="19:40">
+        <div class="ev-top">
+          <span class="t">19:40</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">윙스 오브 타임 — 불꽃 분수 쇼</h3>
+        <div class="ev-venue">
+          <div class="ev-vmain">
+            <p class="vname">Wings of Time <span class="vok"><span class="stdot"></span>영업 확인</span></p>
+<p class="vaddr">60 Siloso Beach Walk, Sentosa, Singapore</p>            <p class="vlinks">
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Wings%20of%20Time%2060%20Siloso%20Beach%20Walk%2C%20Sentosa%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Trapizza%2C%20101%20Siloso%20Road%2C%20Sentosa%2C%20Singapore&amp;destination=Wings%20of%20Time%2C%2060%20Siloso%20Beach%20Walk%2C%20Sentosa%2C%20Singapore&amp;travelmode=transit" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
+          </div>
+          <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=Wings%20of%20Time%2060%20Siloso%20Beach%20Walk%2C%20Sentosa%2C%20Singapore" target="_blank" rel="noopener" aria-label="Wings of Time 지도 열기">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./thumb-d2-e10-dark.png">
+              <img src="./thumb-d2-e10.png" alt="" width="62" height="62" loading="lazy">
+            </picture>
+            <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
+          </a>
+        </div>
+        <p class="brief"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span>프리미엄석은 미리 예매하고, 7시 25분까지는 자리에 앉으세요.</span></p>
+<p class="lead">바다 위에서 펼쳐지는 20분짜리 쇼예요. 자리가 선착순이라 15분 전에는 도착하는 게 좋아요.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">회차는 7시 40분과 8시 40분 두 번이고, 날씨가 나쁘면 취소될 수 있어요. 프리미엄석은 현장에서 S$27, 공식 온라인 예매로는 S$24.30이에요.</div>
+        </details>
+        <div class="os-band" aria-hidden="true"></div>
+        <details class="onsite">
+          <summary>
+            <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>
+            <span class="os-sum">현장 가이드 · 메뉴와 팁 7개</span>
+<span class="os-src">공식 요금 안내 · 후기 6편</span>            <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+          </summary>
+          <div class="os-box">
+            <div class="os-menu">
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-ticket"/></svg></span>
+                <span class="mmain"><span class="mname">프리미엄석</span><span class="mnote">공식 온라인 예매가예요. 현장에선 27달러라 예매가 싸요.</span></span>
+<span class="mprice">S$24.30</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-ticket"/></svg></span>
+                <span class="mmain"><span class="mname">스탠다드석</span><span class="mnote">7시 40분 회차의 공식 온라인 예매가예요. 현장에선 22달러예요.</span></span>
+<span class="mprice">S$19.80</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-ticket"/></svg></span>
+                <span class="mmain"><span class="mname">네 살 미만</span><span class="mnote">표 없이 무릎에 앉혀서 봐요.</span></span>
+<span class="mprice">무료</span>              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-ticket"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">예매 팁</p>
+                <p class="os-text">클룩에서 샀다면 바우처의 예약 코드를 공식 예약 페이지에 넣어 회차를 지정해야 표가 완성돼요.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-route"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">타는 곳</p>
+                <p class="os-text">프리미엄석 입장은 3번 게이트예요. 비치스테이션 출구로 나오면 광장 바로 앞이에요. 5번 게이트는 일반석 줄이니 티켓의 게이트 번호부터 확인하세요.</p>
+                <div class="os-illust" aria-hidden="true"><svg viewBox="0 0 280 96" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="3" y="3" width="274" height="90" rx="10"/>
+  <path stroke-dasharray="4 5" d="M36 45 156 28"/>
+  <path stroke-dasharray="4 5" d="M36 51 156 68"/>
+  <circle cx="30" cy="48" r="4" fill="currentColor" stroke="none"/>
+  <circle cx="166" cy="28" r="9" fill="currentColor" stroke="none"/>
+  <circle cx="166" cy="68" r="9" fill="currentColor" stroke="none"/>
+  <text x="166" y="31.5" font-size="9" font-family="sans-serif" fill="#FFFFFF" stroke="none" text-anchor="middle">3</text>
+  <text x="166" y="71.5" font-size="9" font-family="sans-serif" fill="#FFFFFF" stroke="none" text-anchor="middle">5</text>
+  <text x="10" y="86" font-size="10" font-family="sans-serif" fill="currentColor" stroke="none">비치스테이션 출구</text>
+  <text x="182" y="31" font-size="10" font-family="sans-serif" fill="currentColor" stroke="none">Gate 3 프리미엄석</text>
+  <text x="182" y="71" font-size="10" font-family="sans-serif" fill="currentColor" stroke="none">Gate 5 스탠다드석</text>
+</svg></div>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-pin"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">자리 잡기</p>
+                <p class="os-text">자리는 같은 등급 안에서 선착순이에요. 7시 10분쯤 문이 열릴 때 들어가 중앙 중간쯤에 앉는 게 좋아요. 맨 앞줄은 물이 튀고 불꽃 열기도 세서 아이랑은 피하는 게 나아요.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-users"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">아이와 함께</p>
+                <p class="os-text">네 살 미만은 표 없이 무릎에 앉혀 무료로 볼 수 있어요. 불꽃 소리가 꽤 커서 아이가 놀라면 귀를 막아 줄 준비를 해 두세요.</p>
+              </div>
+            </div>
+            <a class="os-cta" href="https://www.google.com/maps/@?api=1&amp;map_action=pano&amp;viewpoint=1.2513337,103.8170772" target="_blank" rel="noopener">입구 미리 보기</a>
+          </div>
+        </details>
+      </article>
+      <article class="evcard" data-time="20:05">
+        <div class="ev-top">
+          <span class="t">20:05</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">센토사역으로 이동</h3>
+<p class="lead">공연장에서 케이블카역까지 25~40분 걸리는 구간이에요. 여유 있게 움직이세요.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">센토사 익스프레스로 임비아까지 간 다음 3~5분 걸어야 케이블카역이 나와요. 두 역은 이름이 비슷하지만 붙어 있지 않아요.</div>
+        </details>
+      </article>
+      <article class="evcard" data-time="20:45">
+        <div class="ev-top">
+          <span class="t">20:45</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">케이블카 타고 나오기 — 야경 코스</h3>
+<p class="lead">마지막 탑승이 9시 반이니 시간만 지키면 여유 있어요.</p>      </article>
+      <article class="evcard" data-time="21:15">
+        <div class="ev-top">
+          <span class="t">21:15</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">그랩으로 호텔 복귀</h3>
+<p class="lead">9시 반에서 45분쯤 호텔 도착 예정이에요.</p>      </article>
+    </div>
+  </section>
+  <section class="day" id="d3">
+    <h2 class="day-title">3일차</h2>
+<p class="day-theme">마리나베이 — 가이드와 함께</p><p class="lead day-lead">가이드와 차량이 함께하는 날이에요. 가든스 바이 더 베이는 오후 4시에 한 번만 가서, 돔과 야간 쇼를 이어서 봅니다. 저녁은 돔을 나와서 슈퍼트리 쇼가 시작되기 전에 가든스 안 사테 꼬치집에서 해결해요.</p>    <details class="more day-more">
+      <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+      <div class="box">비가 오면 슈퍼트리 쇼는 돔 관람을 늘린 뒤 8시 45분 회차로 미루면 돼요. 전부 취소되면 실내 통로로 이어진 쇼핑몰을 돌다가 들어와요.
+
+저녁을 마친 뒤 한 잔 더 하고 싶다면, 파울라너 옆 블록의 하이랜더가 새벽 2시까지 열어요. 9시 이후엔 라이브 공연으로 시끌벅적한 편이에요.</div>
+    </details>
+    <section class="card mapcard">
+      <figure class="daymap">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="./map-d3-dark.png">
+          <img src="./map-d3.png" alt="3일차 동선 지도" width="680" height="420" loading="lazy">
+        </picture>
+        <ol class="maplegend">
+          <li><span class="mlnum start">1</span><span class="mltime">09:30</span>머라이언 공원</li>
+          <li><span class="mlnum">2</span><span class="mltime">11:45</span>점심 — 맥스웰 호커센터</li>
+          <li><span class="mlnum">3</span><span class="mltime">16:00</span>가든스 바이 더 베이 — 두 개의 돔</li>
+          <li><span class="mlnum">4</span><span class="mltime">21:45</span>파울라너에서 맥주 한잔</li>
+        </ol>
+        <figcaption>장소(📍)가 등록된 일정만 방문 순서로 이었어요 — 식사·이동·휴식처럼 위치가 없는 일정은 시간표에서 확인하세요 · 연결선은 실제 도로 경로가 아니에요 · 지도 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></figcaption>
+      </figure>
+      <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94&amp;destination=Paulaner%20Br%C3%A4uhaus%20Singapore%2C%209%20Raffles%20Boulevard%2C%20Millenia%20Walk%2C%20Singapore&amp;waypoints=Merlion%20Park%2C%201%20Fullerton%20Road%2C%20Singapore%7CMaxwell%20Food%20Centre%2C%201%20Kadayanallur%20Street%2C%20Singapore%7CGardens%20by%20the%20Bay%2C%2018%20Marina%20Gardens%20Drive%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>오늘 동선 지도로 열기</a>
+    </section>
+    <div class="evs">
+      <article class="evcard" data-time="07:00">
+        <div class="ev-top">
+          <span class="t">07:00</span>
+          <span class="ev-flex"></span>
+<span class="stchip"><span class="stdot"></span>확정</span>        </div>
+        <h3 class="ev-h">호텔 조식</h3>
+      </article>
+      <article class="evcard" data-time="09:00">
+        <div class="ev-top">
+          <span class="t">09:00</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">가이드 픽업</h3>
+      </article>
+      <article class="evcard" data-time="09:30">
+        <div class="ev-top">
+          <span class="t">09:30</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">머라이언 공원</h3>
+        <div class="ev-venue">
+          <div class="ev-vmain">
+            <p class="vname">Merlion Park <span class="vok"><span class="stdot"></span>영업 확인</span></p>
+<p class="vaddr">1 Fullerton Road, Singapore</p>            <p class="vlinks">
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Merlion%20Park%201%20Fullerton%20Road%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94&amp;destination=Merlion%20Park%2C%201%20Fullerton%20Road%2C%20Singapore&amp;travelmode=transit" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
+          </div>
+          <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=Merlion%20Park%201%20Fullerton%20Road%2C%20Singapore" target="_blank" rel="noopener" aria-label="Merlion Park 지도 열기">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./thumb-d3-e3-dark.png">
+              <img src="./thumb-d3-e3.png" alt="" width="62" height="62" loading="lazy">
+            </picture>
+            <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
+          </a>
+        </div>
+<p class="lead">야외 명소는 오전이 가장 시원해요.</p>      </article>
+      <article class="evcard" data-time="11:00">
+        <div class="ev-top">
+          <span class="t">11:00</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">차량으로 마리나베이 한 바퀴</h3>
+<p class="lead">더숍스와 에스플러네이드를 차창으로 둘러봐요.</p>      </article>
+      <article class="evcard" data-time="11:45">
+        <div class="ev-top">
+          <span class="t">11:45</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">점심 — 맥스웰 호커센터</h3>
+        <div class="ev-venue">
+          <div class="ev-vmain">
+            <p class="vname">Maxwell Food Centre <span class="vok"><span class="stdot"></span>영업 확인</span></p>
+<p class="vaddr">1 Kadayanallur Street, Singapore</p>            <p class="vlinks">
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Maxwell%20Food%20Centre%201%20Kadayanallur%20Street%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Merlion%20Park%2C%201%20Fullerton%20Road%2C%20Singapore&amp;destination=Maxwell%20Food%20Centre%2C%201%20Kadayanallur%20Street%2C%20Singapore&amp;travelmode=transit" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
+          </div>
+          <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=Maxwell%20Food%20Centre%201%20Kadayanallur%20Street%2C%20Singapore" target="_blank" rel="noopener" aria-label="Maxwell Food Centre 지도 열기">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./thumb-d3-e5-dark.png">
+              <img src="./thumb-d3-e5.png" alt="" width="62" height="62" loading="lazy">
+            </picture>
+            <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
+          </a>
+        </div>
+        <p class="brief"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span>더위와 줄을 피하려면 12시 전에 도착하는 게 좋아요.</span></p>
+<p class="lead">티엔티엔 치킨라이스가 유명한 호커센터예요.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">에어컨이 없는 곳이라 12시 전에 도착하는 게 좋아요. 자리는 티슈를 올려두면 맡은 것으로 통해요. 너무 덥거나 아이가 힘들어하면 냉방이 되는 송파 바쿠테(차이나타운포인트)로 바꾸세요.</div>
+        </details>
+        <div class="os-band" aria-hidden="true"></div>
+        <details class="onsite">
+          <summary>
+            <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>
+            <span class="os-sum">현장 가이드 · 메뉴와 팁 6개</span>
+<span class="os-src">후기 4편 · 미쉐린 가이드</span>            <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+          </summary>
+          <div class="os-box">
+            <div class="os-illust" aria-hidden="true"><svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <ellipse cx="60" cy="59" rx="50" ry="12"/>
+  <ellipse cx="60" cy="59" rx="40" ry="8"/>
+  <path d="M24 56a16 13 0 0 1 32 0"/>
+  <path d="M43 47a9 8 0 0 1 15 5"/>
+  <rect x="65" y="39" width="9" height="17" rx="4.5" transform="rotate(14 69.5 47.5)"/>
+  <rect x="76" y="37" width="9" height="18" rx="4.5" transform="rotate(14 80.5 46)"/>
+  <rect x="87" y="39" width="9" height="16" rx="4.5" transform="rotate(14 91.5 47)"/>
+  <circle cx="70" cy="61" r="3"/>
+  <circle cx="79" cy="63" r="3"/>
+</svg></div>
+            <div class="os-menu">
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">스팀 치킨라이스 미디엄</span><span class="mnote">라지는 9달러예요. 아이와 나눠 먹는 쪽만 라지로 올리면 넉넉해요.</span></span>
+<span class="mprice">S$6</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">갑오징어 숙주무침</span><span class="mnote">작은 접시 기준이에요. 간장참기름 무침이라 한국인 입에 딱 맞아요.</span></span>
+<span class="mprice">S$4</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">라오반 두유 푸딩</span><span class="mnote">근처 라오반 가게의 후식인데 아이한테 그만이에요. 이 집은 현금만 받아요.</span></span>
+<span class="mprice">S$2</span>              </div>
+            </div>
+            <div class="os-budget">
+              <p class="oblabel">예산</p>
+              <p class="obvalue">S$25~30</p>
+<p class="obcap">셋이 배불리 먹고 음료까지 마셔도 이 정도예요. 호커센터라 봉사료와 세금이 붙지 않아요 · 약 3만~3만 5천 원</p>            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-qr"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">주문 방법</p>
+                <p class="os-text">파란 간판 매장 옆으로 줄을 서서 카운터에서 주문하고 바로 받아요. 줄 서기 전에 한 사람은 먼저 빈 테이블부터 맡아 두는 게 요령이에요. 치킨라이스집은 카드도 되지만 작은 가게들은 현금만 받으니 잔돈을 조금 챙겨 가세요.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">예약과 웨이팅</p>
+                <p class="os-text">회전이 빨라서 평일엔 10분 안팎이면 받지만 12시가 넘으면 줄이 길어져요. 근처에 똑같은 파란 간판 가게가 있으니 01-10 자리인지 확인하세요.</p>
+              </div>
+            </div>
+            <a class="os-cta" href="https://www.google.com/maps/search/?api=1&amp;query=Tian+Tian+Hainanese+Chicken+Rice+Maxwell+Food+Centre" target="_blank" rel="noopener">메뉴판·사진 보기</a>
+          </div>
+        </details>
+      </article>
+      <article class="evcard" data-time="13:30">
+        <div class="ev-top">
+          <span class="t">13:30</span>
+          <span class="ev-flex"></span>
+<span class="tbdpill">아직 정하지 않았어요</span>        </div>
+        <h3 class="ev-h">실내 관광 — 국립박물관 또는 차이나타운</h3>
+<p class="lead">하루 중 제일 더운 시간대라 실내로 잡았어요. 둘 중 어디로 갈지는 출발 전에 함께 정해요.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">국립박물관은 냉방이 잘 되고 유모차로 돌기 편해서 아이가 낮잠 전까지 쉬어가기 좋아요. 차이나타운은 점심 먹는 맥스웰에서 바로 이어져 걷는 거리가 짧고, 불아사와 기념품 골목을 함께 볼 수 있어요. 가이드 차량이 있는 날이라 어느 쪽이든 이동 부담은 크지 않아요.</div>
+        </details>
+      </article>
+      <article class="evcard" data-time="16:00">
+        <div class="ev-top">
+          <span class="t">16:00</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">가든스 바이 더 베이 — 두 개의 돔</h3>
+        <div class="ev-venue">
+          <div class="ev-vmain">
+            <p class="vname">Gardens by the Bay <span class="vok"><span class="stdot"></span>영업 확인</span></p>
+<p class="vaddr">18 Marina Gardens Drive, Singapore</p>            <p class="vlinks">
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Gardens%20by%20the%20Bay%2018%20Marina%20Gardens%20Drive%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Maxwell%20Food%20Centre%2C%201%20Kadayanallur%20Street%2C%20Singapore&amp;destination=Gardens%20by%20the%20Bay%2C%2018%20Marina%20Gardens%20Drive%2C%20Singapore&amp;travelmode=transit" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
+          </div>
+          <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=Gardens%20by%20the%20Bay%2018%20Marina%20Gardens%20Drive%2C%20Singapore" target="_blank" rel="noopener" aria-label="Gardens by the Bay 지도 열기">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./thumb-d3-e7-dark.png">
+              <img src="./thumb-d3-e7.png" alt="" width="62" height="62" loading="lazy">
+            </picture>
+            <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
+          </a>
+        </div>
+        <p class="brief"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span>돔 입장권은 미리 예매하면 편해요.</span></p>
+<p class="lead">플라워돔과 클라우드포레스트를 이어서 봐요. 냉방이 잘 되는 곳이라 더운 오후에 딱 좋아요.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">밤 9시까지 열어요. 클라우드포레스트 마지막 입장은 8시, 플라워돔은 8시 반이에요.</div>
+        </details>
+        <div class="os-band" aria-hidden="true"></div>
+        <details class="onsite">
+          <summary>
+            <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>
+            <span class="os-sum">현장 가이드 · 메뉴와 팁 9개</span>
+<span class="os-src">공식 요금 안내 · 후기 8편</span>            <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+          </summary>
+          <div class="os-box">
+            <div class="os-menu">
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-ticket"/></svg></span>
+                <span class="mmain"><span class="mname">두 돔 콤보 성인</span><span class="mnote">공식가예요. 클룩에서 날짜를 지정해 사면 한 명에 3만 원대 후반이에요.</span></span>
+<span class="mprice">S$46</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-ticket"/></svg></span>
+                <span class="mmain"><span class="mname">두 돔 콤보 어린이(3~12세)</span><span class="mnote">공식가 기준이에요.</span></span>
+<span class="mprice">S$32</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-ticket"/></svg></span>
+                <span class="mmain"><span class="mname">36개월 미만</span><span class="mnote">표 없이 함께 들어가요.</span></span>
+<span class="mprice">무료</span>              </div>
+            </div>
+            <div class="os-budget">
+              <p class="oblabel">예산</p>
+              <p class="obvalue">성인 둘 S$92</p>
+<p class="obcap">공식가 기준 총액이에요. 클룩으로 사면 7만 원대 중반까지 내려가요 · 약 10만 5천 원</p>            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-ticket"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">예매 팁</p>
+                <p class="os-text">두 돔은 묶음 한 장으로만 팔아요. 온라인으로 사면 이메일로 온 QR을 돔 입구에서 바로 찍고 들어가요.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">안에서 도는 순서</p>
+                <p class="os-text">플라워돔을 먼저 한 시간쯤 보고 클라우드포레스트로 넘어가면 뒤로 갈수록 웅장해져서 만족이 커요. 클라우드포레스트는 엘리베이터로 꼭대기까지 올라가 구름다리를 따라 내려오면서 봐요. 저녁 6시 정각에 안개가 뿜어져 나오니 그 시간엔 꼭 안에 있어 보세요.</p>
+                <div class="os-illust" aria-hidden="true"><svg viewBox="0 0 280 96" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="3" y="3" width="274" height="90" rx="10"/>
+  <path stroke-dasharray="4 5" d="M40 58 110 36 180 58 245 36"/>
+  <circle cx="40" cy="58" r="8" fill="currentColor" stroke="none"/>
+  <circle cx="110" cy="36" r="8" fill="currentColor" stroke="none"/>
+  <circle cx="180" cy="58" r="8" fill="currentColor" stroke="none"/>
+  <circle cx="245" cy="36" r="8" fill="currentColor" stroke="none"/>
+  <text x="40" y="61.5" font-size="9" font-family="sans-serif" fill="#FFFFFF" stroke="none" text-anchor="middle">1</text>
+  <text x="110" y="39.5" font-size="9" font-family="sans-serif" fill="#FFFFFF" stroke="none" text-anchor="middle">2</text>
+  <text x="180" y="61.5" font-size="9" font-family="sans-serif" fill="#FFFFFF" stroke="none" text-anchor="middle">3</text>
+  <text x="245" y="39.5" font-size="9" font-family="sans-serif" fill="#FFFFFF" stroke="none" text-anchor="middle">4</text>
+  <text x="40" y="79" font-size="10" font-family="sans-serif" fill="currentColor" stroke="none" text-anchor="middle">플라워돔</text>
+  <text x="110" y="21" font-size="10" font-family="sans-serif" fill="currentColor" stroke="none" text-anchor="middle">클라우드포레스트</text>
+  <text x="180" y="79" font-size="10" font-family="sans-serif" fill="currentColor" stroke="none" text-anchor="middle">사테 바이 더 베이</text>
+  <text x="245" y="21" font-size="10" font-family="sans-serif" fill="currentColor" stroke="none" text-anchor="middle">슈퍼트리</text>
+</svg></div>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-users"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">아이와 함께</p>
+                <p class="os-text">두 돔 모두 유모차로 돌 수 있고, 층을 오갈 땐 에스컬레이터 대신 엘리베이터를 타면 돼요. 안이 서늘하고 폭포 근처는 살짝 춥기까지 하니 아이 얇은 겉옷을 꼭 챙겨요. 지금 클라우드포레스트를 채운 쥬라기월드 공룡은 진짜처럼 움직이고 소리도 커서, 처음엔 조금 떨어져서 아이 반응을 보고 다가가요.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">뭘 시킬까</p>
+                <p class="os-text">저녁은 돔에서 걸어서 15분쯤 걸리는 사테 꼬치집에서 해결해요. 사테는 열 꼬치 단위 세트로 시키고 음료는 옆 음료 가게에서 따로 사요. 둘이 골고루 먹으면 25싱가포르달러 안팎이고, 아이용 낮은 의자도 있어요.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-pin"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">자리 잡기</p>
+                <p class="os-text">저녁을 마치면 7시 15분쯤에는 슈퍼트리 잔디로 출발하세요. 밤길이 어두우니 지도 앱을 켜고 표지판을 따라가면 돼요. 돗자리를 펴고 누워서 기다리면 편하고, 나무 바로 밑보다 조금 떨어진 자리가 전체가 잘 보여요.</p>
+              </div>
+            </div>
+            <a class="os-cta" href="https://maps.google.com/?q=Satay+by+the+Bay,+18+Marina+Gardens+Dr,+Singapore" target="_blank" rel="noopener">메뉴판·사진 보기</a>
+          </div>
+        </details>
+      </article>
+      <article class="evcard" data-time="19:45">
+        <div class="ev-top">
+          <span class="t">19:45</span>
+          <span class="ev-flex"></span>
+<span class="stchip"><span class="stdot"></span>확정</span>        </div>
+        <h3 class="ev-h">가든 랩소디 — 슈퍼트리 쇼</h3>
+<p class="lead">슈퍼트리 아래 잔디에 누워서 보는 무료 쇼예요. 7시 15분쯤 미리 가서 자리를 잡으세요.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">매일 7시 45분과 8시 45분, 하루 두 번 해요. 10~15분 정도예요.</div>
+        </details>
+      </article>
+      <article class="evcard" data-time="20:00">
+        <div class="ev-top">
+          <span class="t">20:00</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">마리나베이 물가 산책</h3>
+<p class="lead">15분쯤 야경을 보며 걸어요. 근처에 사테 꼬치 간식집도 있어요.</p>      </article>
+      <article class="evcard" data-time="21:00">
+        <div class="ev-top">
+          <span class="t">21:00</span>
+          <span class="ev-flex"></span>
+<span class="stchip"><span class="stdot"></span>확정</span>        </div>
+        <h3 class="ev-h">스펙트라 — 분수 쇼</h3>
+<p class="lead">무료 분수 쇼예요. 매일 8시와 9시에 15분씩 해요.</p>      </article>
+      <article class="evcard" data-time="21:45">
+        <div class="ev-top">
+          <span class="t">21:45</span>
+          <span class="ev-flex"></span>
+<span class="stchip"><span class="stdot"></span>확정</span>        </div>
+        <h3 class="ev-h">파울라너에서 맥주 한잔</h3>
+        <div class="ev-venue">
+          <div class="ev-vmain">
+            <p class="vname">Paulaner Bräuhaus Singapore <span class="vok"><span class="stdot"></span>영업 확인</span></p>
+<p class="vaddr">9 Raffles Boulevard, Millenia Walk, Singapore</p>            <p class="vlinks">
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Paulaner%20Br%C3%A4uhaus%20Singapore%209%20Raffles%20Boulevard%2C%20Millenia%20Walk%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Gardens%20by%20the%20Bay%2C%2018%20Marina%20Gardens%20Drive%2C%20Singapore&amp;destination=Paulaner%20Br%C3%A4uhaus%20Singapore%2C%209%20Raffles%20Boulevard%2C%20Millenia%20Walk%2C%20Singapore&amp;travelmode=transit" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
+          </div>
+          <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=Paulaner%20Br%C3%A4uhaus%20Singapore%209%20Raffles%20Boulevard%2C%20Millenia%20Walk%2C%20Singapore" target="_blank" rel="noopener" aria-label="Paulaner Bräuhaus Singapore 지도 열기">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./thumb-d3-e11-dark.png">
+              <img src="./thumb-d3-e11.png" alt="" width="62" height="62" loading="lazy">
+            </picture>
+            <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
+          </a>
+        </div>
+<p class="lead">스펙트라를 보고 나오면 걷기엔 멀어서 그랩으로 5분쯤 이동하는 게 편해요. 숙소에서 가까워요. 독일식 자가양조 맥주집이고 1층 바는 자정까지 열고, 식사 주문은 밤 11시까지예요. 전화는 <a href="tel:+6568832572">+65 6883 2572</a>.</p>        <div class="os-band" aria-hidden="true"></div>
+        <details class="onsite">
+          <summary>
+            <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>
+            <span class="os-sum">현장 가이드 · 메뉴와 팁 8개</span>
+<span class="os-src">후기 4편 · 공식 영업 안내</span>            <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+          </summary>
+          <div class="os-box">
+            <div class="os-menu">
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">뮌헨 라거</span><span class="mnote">여기서 직접 양조하는 세 가지 기본 맥주 중 첫 잔으로 가장 무난해요.</span></span>
+              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">바이스비어</span><span class="mnote">밀맥주를 좋아하면 이쪽이에요. 진한 쪽은 둔켈이에요.</span></span>
+              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">프레첼</span><span class="mnote">가볍게 한잔할 때 딱 좋은 짭짤한 안주예요.</span></span>
+              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">슈바인스학세 반 마리</span><span class="mnote">출출하면 반 마리 크기로 시켜 둘이 나누기 부담 없어요.</span></span>
+              </div>
+            </div>
+            <div class="os-budget">
+              <p class="oblabel">예산</p>
+              <p class="obvalue">1인 S$40~50</p>
+<p class="obcap">안주까지 곁들인 한 사람 평균이에요. 봉사료 10%와 세금은 따로 붙어요 · 한 사람 약 4만 5천~6만 원</p>            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">맥주 1+1</p>
+                <p class="os-text">맥주 한 잔 값에 두 잔을 주는 1+1 행사를 상시로 하고 있어요. 300ml와 500ml 잔이 대상이라 라거와 바이스비어를 하나씩 시켜 나눠 마시기 좋아요. 조건이 종종 바뀌니 주문 전에 한 번만 확인하세요.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">실전 팁</p>
+                <p class="os-text">1층 바는 자정까지 열어서 밤 9시 45분에 가도 넉넉해요. 다만 식사 주문 마감이 가까운 시간이라 안주는 자리 잡자마자 테이블 QR로 바로 주문하는 게 좋아요.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-users"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">아이와 함께</p>
+                <p class="os-text">가족 손님이 흔한 곳이라 유아 동반 입장은 문제없어요. 밤에는 바 쪽이 시끌벅적할 수 있으니 야외 비어가든이나 입구 쪽 테이블을 잡으면 한결 편해요.</p>
+              </div>
+            </div>
+            <a class="os-cta" href="https://www.paulaner-brauhaus-singapore.com/pages/beer" target="_blank" rel="noopener">메뉴판·사진 보기</a>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+  <section class="day" id="d4">
+    <h2 class="day-title">4일차</h2>
+<p class="day-theme">오전 개인 일정과 시내</p><p class="lead day-lead">오전 개인 일정을 마치고, 오후는 아이 낮잠을 지키면서 시내에서 여유 있게 보내는 날이에요. 저녁 6시 반 팜비치가 오늘의 고정 일정입니다.</p>    <details class="more day-more">
+      <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+      <div class="box">비가 오면 크루즈는 다음 배로 미뤄질 수 있어요. 지붕이 있는 배라 소나기 정도는 다녀요. 아예 취소되면 내셔널갤러리 같은 실내를 둘러보고 저녁 장소로 바로 가면 됩니다.
+
+저녁 후 한 잔 더는 파울라너(바는 자정까지)나 하이랜더(새벽 2시까지)가 가까워요.</div>
+    </details>
+    <section class="card mapcard">
+      <figure class="daymap">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="./map-d4-dark.png">
+          <img src="./map-d4.png" alt="4일차 동선 지도" width="680" height="420" loading="lazy">
+        </picture>
+        <ol class="maplegend">
+          <li><span class="mlnum start">1</span><span class="mltime">16:00</span>리버 크루즈</li>
+          <li><span class="mlnum">2</span><span class="mltime">18:30</span>저녁 — 팜비치 시푸드</li>
+        </ol>
+        <figcaption>장소(📍)가 등록된 일정만 방문 순서로 이었어요 — 식사·이동·휴식처럼 위치가 없는 일정은 시간표에서 확인하세요 · 연결선은 실제 도로 경로가 아니에요 · 지도 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></figcaption>
+      </figure>
+      <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94&amp;destination=Palm%20Beach%20Seafood%2C%201%20Fullerton%20Road%20%2301-09%2C%20One%20Fullerton%2C%20Singapore&amp;waypoints=WaterB%20River%20Cruise%20%E2%80%94%20Merlion%20Park%20%EC%84%A0%EC%B0%A9%EC%9E%A5%2C%20Merlion%20Park%2C%201%20Fullerton%20Road%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>오늘 동선 지도로 열기</a>
+    </section>
+    <div class="evs">
+      <article class="evcard" data-time="07:00">
+        <div class="ev-top">
+          <span class="t">07:00</span>
+          <span class="ev-flex"></span>
+<span class="stchip"><span class="stdot"></span>확정</span>        </div>
+        <h3 class="ev-h">호텔 조식</h3>
+      </article>
+      <article class="evcard" data-time="09:30">
+        <div class="ev-top">
+          <span class="t">09:30</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">가이드 픽업</h3>
+      </article>
+      <article class="evcard" data-time="10:00">
+        <div class="ev-top">
+          <span class="t">10:00</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">오전 개인 일정</h3>
+<p class="lead">오전은 개인 일정으로 비워둬요. 끝나는 위치에 따라 오후 동선을 맞춰요.</p>      </article>
+      <article class="evcard" data-time="12:00">
+        <div class="ev-top">
+          <span class="t">12:00</span>
+          <span class="ev-flex"></span>
+<span class="tbdpill">아직 정하지 않았어요</span>        </div>
+        <h3 class="ev-h">점심</h3>
+<p class="lead">어디서 먹을지는 아직 열어뒀어요. 오전 일정이 끝나는 위치를 보고 정하는 게 편해요.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">가이드가 현지에서 추천하는 식당을 따라가는 게 기본이고, 시내로 돌아온다면 냉방이 되는 송파 바쿠테(차이나타운포인트)나 미슐랭 출신 호커찬도 무난해요. 어디로 가든 아이 의자가 있는지만 미리 물어봐 주세요.</div>
+        </details>
+      </article>
+      <article class="evcard" data-time="13:30">
+        <div class="ev-top">
+          <span class="t">13:30</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">호텔에서 낮잠과 휴식</h3>
+<p class="lead">아이 낮잠 시간이에요. 마침 이 시간대가 하루 중 소나기도 가장 잦아서 쉬어가기 좋아요.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">컨디션이 좋다면 대신 제이콥 발라스 어린이가든도 좋아요. 물놀이터가 있는 무료 어린이 정원이에요(여벌 옷 필수). 보타닉가든역 A출구에서 걸어서 10분이에요.</div>
+        </details>
+      </article>
+      <article class="evcard" data-time="16:00">
+        <div class="ev-top">
+          <span class="t">16:00</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">리버 크루즈</h3>
+        <div class="ev-venue">
+          <div class="ev-vmain">
+            <p class="vname">WaterB River Cruise — Merlion Park 선착장 <span class="vok"><span class="stdot"></span>영업 확인</span></p>
+<p class="vaddr">Merlion Park, 1 Fullerton Road, Singapore</p>            <p class="vlinks">
+<a href="https://www.google.com/maps/search/?api=1&amp;query=WaterB%20River%20Cruise%20%E2%80%94%20Merlion%20Park%20%EC%84%A0%EC%B0%A9%EC%9E%A5%20Merlion%20Park%2C%201%20Fullerton%20Road%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94&amp;destination=WaterB%20River%20Cruise%20%E2%80%94%20Merlion%20Park%20%EC%84%A0%EC%B0%A9%EC%9E%A5%2C%20Merlion%20Park%2C%201%20Fullerton%20Road%2C%20Singapore&amp;travelmode=transit" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
+          </div>
+          <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=WaterB%20River%20Cruise%20%E2%80%94%20Merlion%20Park%20%EC%84%A0%EC%B0%A9%EC%9E%A5%20Merlion%20Park%2C%201%20Fullerton%20Road%2C%20Singapore" target="_blank" rel="noopener" aria-label="WaterB River Cruise — Merlion Park 선착장 지도 열기">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./thumb-d4-e6-dark.png">
+              <img src="./thumb-d4-e6.png" alt="" width="62" height="62" loading="lazy">
+            </picture>
+            <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
+          </a>
+        </div>
+        <p class="brief"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span>머라이언파크 선착장에서 타요.</span></p>
+<p class="lead">강을 따라 40분 도는 배예요. 머라이언파크에서 타고 제자리로 돌아오니, 내려서 저녁 식당까지 2~3분이면 걸어가요.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">배는 오후 2시부터 9시까지 30분마다 있어요. 성인 S$28부터, 3세 미만은 무료이고 아기 구명조끼도 줘요. 유모차를 배에 실을 수 있는지는 예약할 때 물어보세요.</div>
+        </details>
+        <div class="os-band" aria-hidden="true"></div>
+        <details class="onsite">
+          <summary>
+            <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>
+            <span class="os-sum">현장 가이드 · 메뉴와 팁 8개</span>
+<span class="os-src">공식 운항 안내 · 후기 3편</span>            <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+          </summary>
+          <div class="os-box">
+            <div class="os-menu">
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-ticket"/></svg></span>
+                <span class="mmain"><span class="mname">성인</span><span class="mnote">현장 결제도 되고, 클룩에서 미리 사면 둘이 삼사천 원쯤 아껴요.</span></span>
+<span class="mprice">S$28</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-ticket"/></svg></span>
+                <span class="mmain"><span class="mname">어린이(3~12세)</span><span class="mnote">공식가 기준이에요.</span></span>
+<span class="mprice">S$18</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-ticket"/></svg></span>
+                <span class="mmain"><span class="mname">세 돌 미만</span><span class="mnote">표 없이 함께 타요.</span></span>
+<span class="mprice">무료</span>              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-route"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">타는 곳</p>
+                <p class="os-text">머라이언 동상 바로 옆, 원 풀러턴의 모스버거 앞 강변에 매표 키오스크와 타는 계단이 있어요. 동상에서 사진 찍고 그대로 걸어가면 돼요.</p>
+                <div class="os-illust" aria-hidden="true"><svg viewBox="0 0 280 96" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="3" y="3" width="274" height="90" rx="10"/>
+  <path stroke-dasharray="4 5" d="M45 56 140 38 232 56"/>
+  <circle cx="45" cy="56" r="8" fill="currentColor" stroke="none"/>
+  <circle cx="140" cy="38" r="8" fill="currentColor" stroke="none"/>
+  <circle cx="232" cy="56" r="8" fill="currentColor" stroke="none"/>
+  <text x="45" y="59.5" font-size="9" font-family="sans-serif" fill="#FFFFFF" stroke="none" text-anchor="middle">1</text>
+  <text x="140" y="41.5" font-size="9" font-family="sans-serif" fill="#FFFFFF" stroke="none" text-anchor="middle">2</text>
+  <text x="232" y="59.5" font-size="9" font-family="sans-serif" fill="#FFFFFF" stroke="none" text-anchor="middle">3</text>
+  <text x="45" y="77" font-size="10" font-family="sans-serif" fill="currentColor" stroke="none" text-anchor="middle">머라이언 동상</text>
+  <text x="140" y="24" font-size="10" font-family="sans-serif" fill="currentColor" stroke="none" text-anchor="middle">모스버거 앞</text>
+  <text x="232" y="77" font-size="10" font-family="sans-serif" fill="currentColor" stroke="none" text-anchor="middle">WaterB 키오스크</text>
+</svg></div>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">표 받기</p>
+                <p class="os-text">예매 QR이 있어도 키오스크에서 실물 표로 바꾸면서 타는 시간을 정해요. 직원이 있어서 어렵지 않아요.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-users"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">아이와 함께</p>
+                <p class="os-text">세 돌 전 아이는 무료라 우리 셋이면 성인 두 장으로 충분해요. 줄에 끼어드는 단체가 종종 있으니 아이 손을 잡고 줄 안쪽에 서세요.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-pin"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">자리 잡기</p>
+                <p class="os-text">한낮엔 볕이 세니 그늘 쪽 뒷자리에 앉아 바람을 쐬다가, 마리나베이 샌즈가 보이면 뒤쪽 서는 공간으로 나가 사진을 찍으면 딱 좋아요.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">내리는 곳</p>
+                <p class="os-text">배는 탔던 자리로 돌아와요. 내려서 2~3분이면 저녁 식당까지 걸어가요.</p>
+              </div>
+            </div>
+            <a class="os-cta" href="https://www.google.com/maps/@?api=1&amp;map_action=pano&amp;viewpoint=1.2863665,103.8542939" target="_blank" rel="noopener">타는 곳 미리 보기</a>
+          </div>
+        </details>
+      </article>
+      <article class="evcard" data-time="16:45">
+        <div class="ev-top">
+          <span class="t">16:45</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">머라이언파크와 원풀러턴 산책</h3>
+<p class="lead">저녁 시간까지 물가를 여유 있게 걸어요.</p>      </article>
+      <article class="evcard" data-time="18:30">
+        <div class="ev-top">
+          <span class="t">18:30</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">저녁 — 팜비치 시푸드</h3>
+        <div class="ev-venue">
+          <div class="ev-vmain">
+            <p class="vname">Palm Beach Seafood <span class="vok"><span class="stdot"></span>영업 확인</span></p>
+<p class="vaddr">1 Fullerton Road #01-09, One Fullerton, Singapore</p>            <p class="vlinks">
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Palm%20Beach%20Seafood%201%20Fullerton%20Road%20%2301-09%2C%20One%20Fullerton%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=WaterB%20River%20Cruise%20%E2%80%94%20Merlion%20Park%20%EC%84%A0%EC%B0%A9%EC%9E%A5%2C%20Merlion%20Park%2C%201%20Fullerton%20Road%2C%20Singapore&amp;destination=Palm%20Beach%20Seafood%2C%201%20Fullerton%20Road%20%2301-09%2C%20One%20Fullerton%2C%20Singapore&amp;travelmode=transit" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
+          </div>
+          <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=Palm%20Beach%20Seafood%201%20Fullerton%20Road%20%2301-09%2C%20One%20Fullerton%2C%20Singapore" target="_blank" rel="noopener" aria-label="Palm Beach Seafood 지도 열기">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./thumb-d4-e8-dark.png">
+              <img src="./thumb-d4-e8.png" alt="" width="62" height="62" loading="lazy">
+            </picture>
+            <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
+          </a>
+        </div>
+        <p class="brief"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span>테라스석은 미리 예약하는 걸 추천해요.</span></p>
+<p class="lead">칠리크랩으로 유명한 집이에요. 마리나베이가 보이는 테라스 자리를 예약해 두면 최고예요.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">저녁 영업은 5시 반부터 10시 반까지예요. 예약 전화는 <a href="tel:+6563368118">+65 6336 8118</a>.</div>
+        </details>
+        <div class="os-band" aria-hidden="true"></div>
+        <details class="onsite">
+          <summary>
+            <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>
+            <span class="os-sum">현장 가이드 · 메뉴와 팁 7개</span>
+<span class="os-src">공식 메뉴판 · 후기 5편</span>            <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+          </summary>
+          <div class="os-box">
+            <div class="os-illust" aria-hidden="true"><svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <ellipse cx="44" cy="48" rx="19" ry="12"/>
+  <path d="M38 38v-6M50 38v-6"/>
+  <circle cx="38" cy="30" r="1.4" fill="currentColor" stroke="none"/>
+  <circle cx="50" cy="30" r="1.4" fill="currentColor" stroke="none"/>
+  <path d="M29 41c-8-2-13-8-11-15"/>
+  <path d="M18 26l-5-4M18 26l6-3"/>
+  <path d="M59 41c8-2 13-8 11-15"/>
+  <path d="M70 26l5-4M70 26l-6-3"/>
+  <path d="M28 55l-9 6M32 58l-7 8M37 60l-4 9"/>
+  <path d="M60 55l9 6M56 58l7 8M51 60l4 9"/>
+  <path d="M84 57h26"/>
+  <path d="M86 57c0 6 5 9 11 9s11-3 11-9"/>
+  <path d="M87 48a5 5 0 0 1 10 0"/>
+  <path d="M99 48a5 5 0 0 1 10 0"/>
+</svg></div>
+            <div class="os-menu">
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">칠리크랩</span><span class="mnote">주문 전에 오늘 kg당 가격을 물어보고 무게를 정해요. 어른 둘이면 1.2~1.4kg 한 마리로 충분해요.</span></span>
+<span class="mprice">시가</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">해산물 볶음밥</span><span class="mnote">작은 사이즈 기준이에요. 게딱지 소스에 비벼 먹으면 간장게장 비슷한 익숙한 맛이 나요.</span></span>
+<span class="mprice">S$22</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">튀김빵 만토우</span><span class="mnote">칠리크랩 소스에 찍어 먹는 한입 빵이에요.</span></span>
+              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">씨리얼새우</span><span class="mnote">작은 사이즈 기준이에요. 배가 남으면 더하는 한국인 단골 조합이에요.</span></span>
+<span class="mprice">S$25</span>              </div>
+            </div>
+            <div class="os-budget">
+              <p class="oblabel">예산</p>
+              <p class="obvalue">S$240~320</p>
+<p class="obcap">크랩 한 마리에 볶음밥과 음료, 봉사료와 세금까지 더한 값이에요 · 약 27만 5천~37만 원</p>            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-pin"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">자리 잡기</p>
+                <p class="os-text">예약을 해도 좌석 지정은 안 돼요. 테라스 맨 앞줄이 머라이언과 마리나베이 뷰 명당이라 예약 시간보다 조금 일찍 도착해 앞줄을 요청하는 게 좋아요. 15분 넘게 늦으면 예약이 취소되니 여유 있게 나서요.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-users"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">아이와 함께</p>
+                <p class="os-text">가족 손님이 많은 곳이고 볶음밥은 아이 입에도 잘 맞아요. 아기의자는 예약할 때 요청사항에 적어 두면 확실해요. 손이 많이 지저분해지는 메뉴인데 매장 물티슈는 유료라서, 물티슈를 챙겨 가면 요긴해요.</p>
+              </div>
+            </div>
+            <a class="os-cta" href="https://www.palmbeachseafood.com/Palm_Beach_Menu.pdf" target="_blank" rel="noopener">메뉴판·사진 보기</a>
+          </div>
+        </details>
+      </article>
+      <article class="evcard" data-time="20:00">
+        <div class="ev-top">
+          <span class="t">20:00</span>
+          <span class="ev-flex"></span>
+<span class="stchip"><span class="stdot"></span>확정</span>        </div>
+        <h3 class="ev-h">스펙트라 — 자리에서 그대로 관람</h3>
+<p class="lead">팜비치 테라스에서 분수 쇼가 그대로 보여요. 움직일 필요가 없어요.</p>      </article>
+    </div>
+  </section>
+  <section class="day" id="d5">
+    <h2 class="day-title">5일차</h2>
+<p class="day-theme">버드 파라다이스와 오차드</p><p class="lead day-lead">오전엔 새 공원, 오후엔 오차드 쇼핑, 저녁엔 33층 루프탑까지 꽉 찬 날이에요. 레벨33은 드레스코드가 있으니 5시 반까지는 호텔에 돌아와서 옷을 갈아입어요.</p>    <details class="more day-more">
+      <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+      <div class="box">아이 낮잠은 점심과 쇼핑 사이에 유모차에서 재우는 걸로 해요. 힘들어하면 쇼핑을 줄이고 호텔에서 쉬면 됩니다.
+
+비가 오면 새 공원은 실내가 적은 곳이라, 오전에 소나기 예보가 있으면 오차드와 순서를 바꾸는 것도 방법이에요. 레벨33 테라스도 비가 오면 실내석 상황에 따라 달라져요.
+
+저녁 후 한 잔 더는 하이랜더(새벽 2시까지)나 해리스 에스플러네이드(새벽 1시까지)가 열어 있어요.</div>
+    </details>
+    <section class="card mapcard">
+      <figure class="daymap">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="./map-d5-dark.png">
+          <img src="./map-d5.png" alt="5일차 동선 지도" width="680" height="420" loading="lazy">
+        </picture>
+        <ol class="maplegend">
+          <li><span class="mlnum start">1</span><span class="mltime">09:00</span>버드 파라다이스</li>
+          <li><span class="mlnum">2</span><span class="mltime">13:00</span>점심 — 위스마 아트리아</li>
+          <li><span class="mlnum">3</span><span class="mltime">18:30</span>저녁 — 레벨33 루프탑</li>
+        </ol>
+        <figcaption>장소(📍)가 등록된 일정만 방문 순서로 이었어요 — 식사·이동·휴식처럼 위치가 없는 일정은 시간표에서 확인하세요 · 연결선은 실제 도로 경로가 아니에요 · 지도 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></figcaption>
+      </figure>
+      <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94&amp;destination=LeVeL33%2C%208%20Marina%20Boulevard%20%2333-01%2C%20MBFC%20Tower%201%2C%20Singapore&amp;waypoints=Bird%20Paradise%20%28Mandai%29%2C%2020%20Mandai%20Lake%20Road%2C%20Singapore%7CWisma%20Atria%2C%20435%20Orchard%20Road%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>오늘 동선 지도로 열기</a>
+    </section>
+    <div class="evs">
+      <article class="evcard" data-time="07:00">
+        <div class="ev-top">
+          <span class="t">07:00</span>
+          <span class="ev-flex"></span>
+<span class="stchip"><span class="stdot"></span>확정</span>        </div>
+        <h3 class="ev-h">호텔 조식</h3>
+      </article>
+      <article class="evcard" data-time="08:20">
+        <div class="ev-top">
+          <span class="t">08:20</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">그랩으로 버드 파라다이스 이동</h3>
+<p class="lead">20~35분 걸려요. 셔틀버스가 없어져서 그랩이나 택시로 가야 해요.</p>      </article>
+      <article class="evcard" data-time="09:00">
+        <div class="ev-top">
+          <span class="t">09:00</span>
+<span class="t-end">– 12:00</span>          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">버드 파라다이스</h3>
+        <div class="ev-venue">
+          <div class="ev-vmain">
+            <p class="vname">Bird Paradise (Mandai) <span class="vok"><span class="stdot"></span>영업 확인</span></p>
+<p class="vaddr">20 Mandai Lake Road, Singapore</p>            <p class="vlinks">
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Bird%20Paradise%20%28Mandai%29%2020%20Mandai%20Lake%20Road%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94&amp;destination=Bird%20Paradise%20%28Mandai%29%2C%2020%20Mandai%20Lake%20Road%2C%20Singapore&amp;travelmode=transit" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
+          </div>
+          <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=Bird%20Paradise%20%28Mandai%29%2020%20Mandai%20Lake%20Road%2C%20Singapore" target="_blank" rel="noopener" aria-label="Bird Paradise (Mandai) 지도 열기">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./thumb-d5-e9-dark.png">
+              <img src="./thumb-d5-e9.png" alt="" width="62" height="62" loading="lazy">
+            </picture>
+            <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
+          </a>
+        </div>
+        <p class="brief"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span>10시 반 먹이쇼 시간을 공식 앱에서 한 번 더 확인하세요.</span></p>
+<p class="lead">아시아에서 가장 큰 새 공원이에요. 문 여는 9시에 맞춰 들어가서 10시 반 맹금류 먹이쇼를 보고, 12시쯤 나오는 코스예요.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">입장권은 성인 S$49이고 36개월 미만은 무료예요. 유모차 대신 빌리는 왜건은 입구에서 S$18이에요. 더울 땐 펭귄관이 시원한 피난처예요. 낮 12시쯤 나오면 택시 할증이 없어요. 오후 1시를 넘겨 나오면 그랩과 택시에 S$5 할증이 붙어요.</div>
+        </details>
+        <div class="os-band" aria-hidden="true"></div>
+        <details class="onsite">
+          <summary>
+            <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>
+            <span class="os-sum">현장 가이드 · 메뉴와 팁 11개</span>
+<span class="os-src">만다이 공식 안내 · 후기 6편</span>            <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+          </summary>
+          <div class="os-box">
+            <div class="os-menu">
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-ticket"/></svg></span>
+                <span class="mmain"><span class="mname">성인</span><span class="mnote">공식가예요. 클룩 같은 한국 예매 채널이 현장보다 만 원 넘게 싸요.</span></span>
+<span class="mprice">S$49</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-ticket"/></svg></span>
+                <span class="mmain"><span class="mname">어린이(3~12세)</span><span class="mnote">공식가 기준이에요.</span></span>
+<span class="mprice">S$34</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-ticket"/></svg></span>
+                <span class="mmain"><span class="mname">36개월 미만</span><span class="mnote">표 없이 함께 들어가요.</span></span>
+<span class="mprice">무료</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-ticket"/></svg></span>
+                <span class="mmain"><span class="mname">먹이 주기 체험</span><span class="mnote">1인분 값이에요. 인기 시간대는 당일 매진되니 미리 사 둬요.</span></span>
+<span class="mprice">S$10</span>              </div>
+            </div>
+            <div class="os-budget">
+              <p class="oblabel">예산</p>
+              <p class="obvalue">성인 둘 S$98</p>
+<p class="obcap">공식가 기준 총액이에요. 클룩으로 사면 9만 원대 초반이고, 먹이 주기는 한 번에 10달러씩 더해져요 · 약 11만 5천 원</p>            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-ticket"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">예매 팁</p>
+                <p class="os-text">클룩에서 산 표는 만다이 예약 페이지에 티켓 번호와 방문 날짜까지 등록해 둬야 입장이 빨라요.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">내리는 곳</p>
+                <p class="os-text">그랩 목적지는 버드 파라다이스가 있는 만다이 와일드라이프 웨스트로 잡아요. 터널처럼 생긴 하차장에 내리면 입구까지 금방이에요. 동물원 쪽인 이스트와 헷갈리지 않게만 주의하세요.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">안에서 도는 순서</p>
+                <p class="os-text">문 열자마자 오른쪽 숲길로 아프리카관과 아시아관을 먼저 보고, 10시 반 맹금류 쇼는 아시아관 바로 위 하늘 공연장에서 보세요. 자리가 넉넉한 편이라 10분쯤 전에 가면 돼요. 쇼가 끝나면 로리 새장에 들렀다가 내려오는 길에 펭귄관에서 시원하게 마무리하면 12시에 딱 맞아요.</p>
+                <div class="os-illust" aria-hidden="true"><svg viewBox="0 0 280 96" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="3" y="3" width="274" height="90" rx="10"/>
+  <path stroke-dasharray="4 5" d="M34 62 75 38 120 60 160 34 205 58 246 36"/>
+  <g fill="currentColor" stroke="none">
+    <circle cx="34" cy="62" r="8"/><circle cx="75" cy="38" r="8"/><circle cx="120" cy="60" r="8"/>
+    <circle cx="160" cy="34" r="8"/><circle cx="205" cy="58" r="8"/><circle cx="246" cy="36" r="8"/>
+  </g>
+  <g font-size="9" font-family="sans-serif" fill="#FFFFFF" stroke="none" text-anchor="middle">
+    <text x="34" y="65.5">1</text><text x="75" y="41.5">2</text><text x="120" y="63.5">3</text>
+    <text x="160" y="37.5">4</text><text x="205" y="61.5">5</text><text x="246" y="39.5">6</text>
+  </g>
+  <g font-size="10" font-family="sans-serif" fill="currentColor" stroke="none" text-anchor="middle">
+    <text x="34" y="83">입구(WEST)</text><text x="75" y="22">아프리카관</text><text x="120" y="81">아시아관</text>
+    <text x="160" y="19">스카이 쇼</text><text x="205" y="79">로리로프트</text><text x="246" y="20">펭귄코브</text>
+  </g>
+</svg></div>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">체험 프로그램</p>
+                <p class="os-text">찌르레기는 9시 반, 펠리컨은 10시, 로리는 11시에 먹이를 줄 수 있어요. 한 번에 10달러이고 인기 시간대는 당일 매진되니 만다이 예약 사이트에서 미리 사 두세요. 시작 15분 전까지 그 자리에 가 있으면 돼요.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-users"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">아이와 함께</p>
+                <p class="os-text">길이 나무 데크라 유모차로 다니기 편해요. 새장 사이 이중문이 꽤 무거우니 한 사람이 문을 잡고 지나가요. 수유실은 입구와 펭귄관, 중앙 광장, 물놀이터 옆까지 네 곳에 있어요.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">실전 팁</p>
+                <p class="os-text">가장 시원한 피난처는 펭귄관이고, 구역 사이사이에도 냉방 쉼터와 미스트 팬이 있어요. 오르막이 힘들면 입구와 위쪽 광장을 오가는 무료 셔틀을 타면 돼요. 낮 1시를 넘겨 나가면 택시와 그랩에 5달러 할증이 붙으니 12시쯤 나오는 게 좋아요.</p>
+              </div>
+            </div>
+            <a class="os-cta" href="https://maps.google.com/?q=Bird+Paradise,+20+Mandai+Lake+Road,+Singapore" target="_blank" rel="noopener">입구 미리 보기</a>
+          </div>
+        </details>
+      </article>
+      <article class="evcard" data-time="13:00">
+        <div class="ev-top">
+          <span class="t">13:00</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">점심 — 위스마 아트리아</h3>
+        <div class="ev-venue">
+          <div class="ev-vmain">
+            <p class="vname">Wisma Atria <span class="vok"><span class="stdot"></span>영업 확인</span></p>
+<p class="vaddr">435 Orchard Road, Singapore</p>            <p class="vlinks">
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Wisma%20Atria%20435%20Orchard%20Road%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Bird%20Paradise%20%28Mandai%29%2C%2020%20Mandai%20Lake%20Road%2C%20Singapore&amp;destination=Wisma%20Atria%2C%20435%20Orchard%20Road%2C%20Singapore&amp;travelmode=transit" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
+          </div>
+          <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=Wisma%20Atria%20435%20Orchard%20Road%2C%20Singapore" target="_blank" rel="noopener" aria-label="Wisma Atria 지도 열기">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./thumb-d5-e3-dark.png">
+              <img src="./thumb-d5-e3.png" alt="" width="62" height="62" loading="lazy">
+            </picture>
+            <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
+          </a>
+        </div>
+<p class="lead">딘타이펑과 파라다이스 다이너스티가 같은 건물에 있어요. 도착해서 줄이 짧은 쪽으로 들어가면 돼요.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">미리 예약해 두고 싶으면 파라다이스 다이너스티가 Chope 앱으로 예약돼요.</div>
+        </details>
+      </article>
+      <article class="evcard" data-time="14:30">
+        <div class="ev-top">
+          <span class="t">14:30</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">오차드 쇼핑</h3>
+<p class="lead">전부 실내라 시원하게 다닐 수 있어요.</p>      </article>
+      <article class="evcard" data-time="17:30">
+        <div class="ev-top">
+          <span class="t">17:30</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">호텔 복귀, 옷 갈아입기</h3>
+        <p class="brief"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span>레벨33은 슬리퍼, 민소매, 수영복 차림은 안 돼요. 남성은 소매 있는 셔츠와 단정한 신발이 필요해요.</span></p>
+      </article>
+      <article class="evcard" data-time="18:30">
+        <div class="ev-top">
+          <span class="t">18:30</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">저녁 — 레벨33 루프탑</h3>
+        <div class="ev-venue">
+          <div class="ev-vmain">
+            <p class="vname">LeVeL33 <span class="vok"><span class="stdot"></span>영업 확인</span></p>
+<p class="vaddr">8 Marina Boulevard #33-01, MBFC Tower 1, Singapore</p>            <p class="vlinks">
+<a href="https://www.google.com/maps/search/?api=1&amp;query=LeVeL33%208%20Marina%20Boulevard%20%2333-01%2C%20MBFC%20Tower%201%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Wisma%20Atria%2C%20435%20Orchard%20Road%2C%20Singapore&amp;destination=LeVeL33%2C%208%20Marina%20Boulevard%20%2333-01%2C%20MBFC%20Tower%201%2C%20Singapore&amp;travelmode=transit" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
+          </div>
+          <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=LeVeL33%208%20Marina%20Boulevard%20%2333-01%2C%20MBFC%20Tower%201%2C%20Singapore" target="_blank" rel="noopener" aria-label="LeVeL33 지도 열기">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./thumb-d5-e6-dark.png">
+              <img src="./thumb-d5-e6.png" alt="" width="62" height="62" loading="lazy">
+            </picture>
+            <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
+          </a>
+        </div>
+        <p class="brief"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span>테라스석은 예약이 필요하고, 최소 주문 금액과 카드 보증이 있어요.</span></p>
+<p class="lead">마리나베이가 한눈에 내려다보이는 33층 양조장이에요. 일몰이 7시 10분쯤이라 저녁과 노을을 같이 즐길 수 있어요.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">낮 12시부터 밤 11시까지 해요. 예약 전화는 <a href="tel:+6568343133">+65 6834 3133</a>.</div>
+        </details>
+        <div class="os-band" aria-hidden="true"></div>
+        <details class="onsite">
+          <summary>
+            <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>
+            <span class="os-sum">현장 가이드 · 메뉴와 팁 6개</span>
+<span class="os-src">공식 메뉴판 3종 · 후기 6편</span>            <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+          </summary>
+          <div class="os-box">
+            <div class="os-illust" aria-hidden="true"><svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M10 42h13l-2 17h-9z"/>
+  <path d="M12 49h9"/>
+  <path d="M29 42h13l-2 17h-9z"/>
+  <path d="M31 48h9"/>
+  <path d="M48 42h13l-2 17h-9z"/>
+  <path d="M50 47h9"/>
+  <path d="M67 42h13l-2 17h-9z"/>
+  <path d="M69 48h9"/>
+  <path d="M86 42h13l-2 17h-9z"/>
+  <path d="M88 47h9"/>
+  <rect x="6" y="62" width="103" height="9" rx="4.5"/>
+  <circle cx="103" cy="66.5" r="2"/>
+</svg></div>
+            <div class="os-menu">
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">테이스팅 패들</span><span class="mnote">33층 양조장에서 직접 만든 다섯 가지를 0.1리터씩 맛봐요. 첫 잔으로 딱이에요.</span></span>
+<span class="mprice">S$29.90</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">생맥주 0.5리터</span><span class="mnote">패들에서 마음에 든 맥주를 큰 잔으로 이어가면 돼요.</span></span>
+<span class="mprice">S$19.90</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">트러플 파르메산 프라이</span><span class="mnote">안주로 제일 인기예요.</span></span>
+<span class="mprice">S$16</span>              </div>
+            </div>
+            <div class="os-budget">
+              <p class="oblabel">예산</p>
+              <p class="obvalue">1인 S$100 이상</p>
+<p class="obcap">테라스석 최소 주문 조건이에요. 맥주 몇 잔에 안주와 요리를 두어 가지 시키면 채워지는 금액이에요. 봉사료 10%와 세금은 따로 붙어요 · 한 사람 약 11만 5천 원부터</p>            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-pin"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">자리 잡기</p>
+                <p class="os-text">테라스는 예약제이고 비가 오면 닫혀요. 해가 지기 전에 자리를 잡으면 밝은 스카이라인부터 노을, 야경까지 한 자리에서 다 볼 수 있어요. 마리나베이 반대편이라 샌즈 호텔이 정면으로 보이는 뷰예요.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-users"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">아이와 함께</p>
+                <p class="os-text">아이 동반 가족이 많이 오는 곳이고 키즈 메뉴도 있어요. 예약 요청사항에 유아 동반과 아기의자를 적어 두면 자리 배정이 한결 수월해요. 올라가는 길은 타워1 로비에서 스탠다드차타드 은행 옆 레벨33 전용 엘리베이터를 타면 돼요.</p>
+              </div>
+            </div>
+            <a class="os-cta" href="https://level33.com.sg/wp-content/uploads/2026/07/Beverage-Bkt-July2026-1.pdf" target="_blank" rel="noopener">메뉴판·사진 보기</a>
+          </div>
+        </details>
+      </article>
+      <article class="evcard" data-time="21:00">
+        <div class="ev-top">
+          <span class="t">21:00</span>
+          <span class="ev-flex"></span>
+<span class="stchip"><span class="stdot"></span>확정</span>        </div>
+        <h3 class="ev-h">스펙트라 — 루프탑에서 내려다보기</h3>
+      </article>
+    </div>
+  </section>
+  <section class="day" id="d6">
+    <h2 class="day-title">6일차</h2>
+<p class="day-theme">마지막 날, 밤 비행기로 출국</p><p class="lead day-lead">낮 12시에 체크아웃하고 저녁까지 짐 없이 가볍게 보내는 날이에요. 여행 마지막 날 밤이라 공항이 붐빌 수 있어서 조금 일찍 움직입니다.</p>    <details class="more day-more">
+      <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+      <div class="box">차가 안 잡히면 지하철로 가면 돼요. 마리나베이에서 창이공항까지 45분쯤 걸려요. 짐이 많으면 미리 택시를 예약해 두세요.
+
+낮 맥주가 아쉽다면 밀레니아워크의 TAP이 이 날 낮이 마지막 기회예요. 크래프트 맥주를 20종 넘게 탭으로 팔아요.</div>
+    </details>
+    <section class="card mapcard">
+      <figure class="daymap">
+        <picture>
+          <source media="(prefers-color-scheme: dark)" srcset="./map-d6-dark.png">
+          <img src="./map-d6.png" alt="6일차 동선 지도" width="680" height="420" loading="lazy">
+        </picture>
+        <ol class="maplegend">
+          <li><span class="mlnum start">1</span><span class="mltime">12:00</span>점심 — 디엔샤오얼</li>
+          <li><span class="mlnum">2</span><span class="mltime">19:40</span>창이공항 도착, 체크인</li>
+        </ol>
+        <figcaption>장소(📍)가 등록된 일정만 방문 순서로 이었어요 — 식사·이동·휴식처럼 위치가 없는 일정은 시간표에서 확인하세요 · 연결선은 실제 도로 경로가 아니에요 · 지도 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></figcaption>
+      </figure>
+      <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94&amp;destination=Singapore%20Changi%20Airport%2C%20Airport%20Boulevard%2C%20Singapore&amp;waypoints=Dian%20Xiao%20Er%20%28Marina%20Square%29%2C%206%20Raffles%20Boulevard%20%2302-200%2C%20Marina%20Square%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>오늘 동선 지도로 열기</a>
+    </section>
+    <div class="evs">
+      <article class="evcard" data-time="07:00">
+        <div class="ev-top">
+          <span class="t">07:00</span>
+          <span class="ev-flex"></span>
+<span class="stchip"><span class="stdot"></span>확정</span>        </div>
+        <h3 class="ev-h">호텔 조식</h3>
+      </article>
+      <article class="evcard" data-time="12:00">
+        <div class="ev-top">
+          <span class="t">12:00</span>
+          <span class="ev-flex"></span>
+<span class="stchip"><span class="stdot"></span>확정</span>        </div>
+        <h3 class="ev-h">체크아웃, 짐 맡기기</h3>
+        <p class="brief"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span>짐 보관과 샤워 시설 이용을 프런트에 물어보세요.</span></p>
+<p class="lead">정식 체크아웃은 낮 12시예요. 2시까지 연장은 특정 객실만 가능해서, 안 되면 짐을 맡기고 다니면 됩니다.</p>      </article>
+      <article class="evcard" data-time="12:00">
+        <div class="ev-top">
+          <span class="t">12:00</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">점심 — 디엔샤오얼</h3>
+        <div class="ev-venue">
+          <div class="ev-vmain">
+            <p class="vname">Dian Xiao Er (Marina Square) <span class="vok"><span class="stdot"></span>영업 확인</span></p>
+<p class="vaddr">6 Raffles Boulevard #02-200, Marina Square, Singapore</p>            <p class="vlinks">
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Dian%20Xiao%20Er%20%28Marina%20Square%29%206%20Raffles%20Boulevard%20%2302-200%2C%20Marina%20Square%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94&amp;destination=Dian%20Xiao%20Er%20%28Marina%20Square%29%2C%206%20Raffles%20Boulevard%20%2302-200%2C%20Marina%20Square%2C%20Singapore&amp;travelmode=transit" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
+          </div>
+          <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=Dian%20Xiao%20Er%20%28Marina%20Square%29%206%20Raffles%20Boulevard%20%2302-200%2C%20Marina%20Square%2C%20Singapore" target="_blank" rel="noopener" aria-label="Dian Xiao Er (Marina Square) 지도 열기">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./thumb-d6-e3-dark.png">
+              <img src="./thumb-d6-e3.png" alt="" width="62" height="62" loading="lazy">
+            </picture>
+            <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
+          </a>
+        </div>
+<p class="lead">허브를 채워 구운 오리 요리집이에요. 숙소에서 가까워서 마지막 반주 한잔에 딱 좋아요.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">영업은 11시부터 밤 10시까지 해요(주문 마감 9시 반). 아이가 지루해하면 같은 건물의 키즈 카페 키토피아로 옮겨도 좋아요. 예약 전화는 <a href="tel:+6563371928">+65 6337 1928</a>.</div>
+        </details>
+        <div class="os-band" aria-hidden="true"></div>
+        <details class="onsite">
+          <summary>
+            <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>
+            <span class="os-sum">현장 가이드 · 메뉴와 팁 7개</span>
+<span class="os-src">후기 3편 · 공식 영업 안내</span>            <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+          </summary>
+          <div class="os-box">
+            <div class="os-illust" aria-hidden="true"><svg viewBox="0 0 120 80" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M50 20c-3-4 3-8 0-12"/>
+  <path d="M66 18c3-4-3-8 0-12"/>
+  <path d="M42 41c-1-9 6-15 14-15 7 0 12 5 12 12"/>
+  <path d="M66 32l8-8"/>
+  <circle cx="77" cy="21" r="2.6"/>
+  <circle cx="34" cy="40" r="1.6" fill="currentColor" stroke="none"/>
+  <circle cx="86" cy="41" r="1.6" fill="currentColor" stroke="none"/>
+  <path d="M78 38q4-4 8-1q-3 4-8 1z"/>
+  <ellipse cx="58" cy="44" rx="33" ry="7"/>
+  <path d="M25 44c0 13 12 21 33 21s33-8 33-21"/>
+  <path d="M22 42c-5-1-8 2-6 6"/>
+  <path d="M94 42c5-1 8 2 6 6"/>
+</svg></div>
+            <div class="os-menu">
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">당귀 허브 오리구이 쿼터</span><span class="mnote">제일 작은 사이즈인데 어른 둘에 넉넉해요. 향이 부담되면 십전대보 쪽이 순해요.</span></span>
+<span class="mprice">S$18~21</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">해물 볶음밥</span><span class="mnote">아이 몫을 겸하기 좋아요.</span></span>
+              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">핫플레이트 두부</span><span class="mnote">야채 대신 곁들여도 잘 어울려요.</span></span>
+<span class="mprice">약 S$17.4</span>              </div>
+              <div class="mrow">
+                <span class="mtile"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg></span>
+                <span class="mmain"><span class="mname">두유 푸딩</span><span class="mnote">고소한 후식이라 하나 시키면 아이가 좋아해요.</span></span>
+              </div>
+            </div>
+            <div class="os-budget">
+              <p class="oblabel">예산</p>
+              <p class="obvalue">S$60~78</p>
+<p class="obcap">오리 쿼터에 사이드 두 개, 봉사료와 세금까지 포함한 값이에요 · 약 7만~9만 원</p>            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-qr"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">주문 방법</p>
+                <p class="os-text">자리의 QR코드로 주문해요. 점심 시간은 직장인들로 붐비니 예약해 두거나 12시 조금 전에 들어가는 게 편해요. 테이블 물티슈는 유료라서 안 썼으면 계산 때 확인하세요.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-users"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">아이와 함께</p>
+                <p class="os-text">아이 몫은 새우 볶음밥과 두부 요리면 충분해요. 오리는 한약재 향이 있어서 아이 입에는 갈릴 수 있어요.</p>
+              </div>
+            </div>
+            <a class="os-cta" href="https://www.google.com/maps/search/?api=1&amp;query=Dian+Xiao+Er+Marina+Square" target="_blank" rel="noopener">메뉴판·사진 보기</a>
+          </div>
+        </details>
+      </article>
+      <article class="evcard" data-time="13:30">
+        <div class="ev-top">
+          <span class="t">13:30</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">마리나베이에서 마지막 쇼핑</h3>
+<p class="lead">더숍스, 마리나스퀘어, 선텍이 전부 실내로 이어져 있어요. 짐 없이 가볍게 돌아요.</p>      </article>
+      <article class="evcard" data-time="17:00">
+        <div class="ev-top">
+          <span class="t">17:00</span>
+          <span class="ev-flex"></span>
+<span class="tbdpill">아직 정하지 않았어요</span>        </div>
+        <h3 class="ev-h">이른 저녁</h3>
+<p class="lead">공항으로 떠나기 전 마지막 식사예요. 어디서 먹을지는 아직 열어뒀어요.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">쇼핑하던 자리에서 바로 해결하는 게 편해요. 선텍의 푸드 리퍼블릭은 메뉴 종류가 많아 각자 취향대로 고르기 좋고, 밀레니아워크 쪽에도 식당이 이어져 있어요. 점심에 간 디엔샤오얼이 좋았다면 한 번 더 가도 돼요.</div>
+        </details>
+      </article>
+      <article class="evcard" data-time="18:40">
+        <div class="ev-top">
+          <span class="t">18:40</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">호텔에서 짐 찾기</h3>
+      </article>
+      <article class="evcard" data-time="19:00">
+        <div class="ev-top">
+          <span class="t">19:00</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">그랩으로 창이공항 이동</h3>
+        <p class="brief"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span>여행 마지막 날 밤이라 길이 막힐 수 있어요. 7시 출발을 지켜주세요.</span></p>
+      </article>
+      <article class="evcard" data-time="19:40">
+        <div class="ev-top">
+          <span class="t">19:40</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">창이공항 도착, 체크인</h3>
+        <div class="ev-venue">
+          <div class="ev-vmain">
+            <p class="vname">Singapore Changi Airport <span class="vok"><span class="stdot"></span>영업 확인</span></p>
+<p class="vaddr">Airport Boulevard, Singapore</p>            <p class="vlinks">
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Singapore%20Changi%20Airport%20Airport%20Boulevard%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=Dian%20Xiao%20Er%20%28Marina%20Square%29%2C%206%20Raffles%20Boulevard%20%2302-200%2C%20Marina%20Square%2C%20Singapore&amp;destination=Singapore%20Changi%20Airport%2C%20Airport%20Boulevard%2C%20Singapore&amp;travelmode=transit" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
+          </div>
+          <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=Singapore%20Changi%20Airport%20Airport%20Boulevard%2C%20Singapore" target="_blank" rel="noopener" aria-label="Singapore Changi Airport 지도 열기">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./thumb-d6-e8-dark.png">
+              <img src="./thumb-d6-e8.png" alt="" width="62" height="62" loading="lazy">
+            </picture>
+            <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
+          </a>
+        </div>
+        <p class="brief"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span>터미널 번호를 미리 확인하세요. 터미널이 다르면 이동 방법을 안내판에서 확인하세요. 터미널4는 스카이트레인이 아니라 셔틀버스로 연결돼요.</span></p>
+      </article>
+      <article class="evcard" data-time="20:20">
+        <div class="ev-top">
+          <span class="t">20:20</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">세금 환급과 면세 쇼핑</h3>
+<p class="lead">부가세 환급(eTRS) 키오스크는 출국 심사 전에 있어요. 부치는 짐에 넣을 물건은 체크인 전에 환급 처리를 끝내야 해요.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">뱅가완솔로 과자는 시내 매장에서 미리 사서 기내에 들고 타는 방법도 있어요.</div>
+        </details>
+      </article>
+      <article class="evcard" data-time="22:50">
+        <div class="ev-top">
+          <span class="t">22:50</span>
+          <span class="ev-flex"></span>
+<span class="stchip"><span class="stdot"></span>확정</span>        </div>
+        <h3 class="ev-h">싱가포르 출발</h3>
+<p class="lead">밤 비행기예요. 다음 날 아침 인천에 도착해요.</p>      </article>
+    </div>
+  </section>
+  <section class="day" id="d7">
+    <h2 class="day-title">7일차</h2>
+<p class="day-theme">인천 도착</p><p class="lead day-lead">아침에 인천에 내리는 날이에요. 입국 심사와 짐 찾기까지 보통 40분에서 1시간쯤 잡으면 됩니다.</p>    <details class="more day-more">
+      <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+      <div class="box">집까지 가는 이동편은 전날 밤 기내에서 미리 정해두면 편해요. 일주일 동안 고생 많으셨어요. 다음 여행에서 또 만나요!</div>
+    </details>
+    <div class="evs">
+      <article class="evcard" data-time="06:40">
+        <div class="ev-top">
+          <span class="t">06:40</span>
+<span class="t-tz">한국 시각</span>          <span class="ev-flex"></span>
+<span class="stchip"><span class="stdot"></span>확정</span>        </div>
+        <h3 class="ev-h">인천공항 도착</h3>
+<p class="lead">아침에 도착해요. 고생 많으셨어요!</p>      </article>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 class="sub">바로 걸기</h2>
+    <ul class="tel">
+      <li><a href="tel:+6568832572"><span class="ticon"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></span><span class="who">Paulaner Bräuhaus Singapore</span><span class="num">+65 6883 2572</span></a></li>
+      <li><a href="tel:+6563368118"><span class="ticon"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></span><span class="who">Palm Beach Seafood</span><span class="num">+65 6336 8118</span></a></li>
+      <li><a href="tel:+6568343133"><span class="ticon"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></span><span class="who">LeVeL33</span><span class="num">+65 6834 3133</span></a></li>
+      <li><a href="tel:+6563371928"><span class="ticon"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></span><span class="who">Dian Xiao Er (Marina Square)</span><span class="num">+65 6337 1928</span></a></li>
+      <li><a href="tel:+6562561188"><span class="ticon"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></span><span class="who">비상 연락</span><span class="num">+65 6256 1188</span></a></li>
+      <li><a href="tel:+6596543528"><span class="ticon"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></span><span class="who">비상 연락</span><span class="num">+65 9654 3528</span></a></li>
+    </ul>
+  </section>
+
+
+  <footer>
+    <p>이 가이드는 여행 계획 파일에서 자동으로 만들어졌어요. 예약번호 같은 개인정보는 담지 않습니다.</p>
+    <p><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg> 폰 홈 화면에 추가해 두면 비행기 모드에서도 열려요. (브라우저 공유 메뉴의 '홈 화면에 추가')</p>
+    <p>지도 데이터 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> 기여자</p>
+  </footer>
+
+</main>
+
+<nav class="fab" id="fab" aria-label="빠른 이동">
+  <a href="#" data-fab="top" class="on" aria-pressed="true"><svg class="ic" aria-hidden="true"><use href="#i-list"/></svg><span>일정</span></a>
+  <a href="#" data-fab="map" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-map"/></svg><span>지도</span></a>
+</nav>
+
+<script>
+(function () {
+  var boxes = document.querySelectorAll('input[data-key]');
+  for (var i = 0; i < boxes.length; i++) {
+    (function (box) {
+      if (box.disabled) { return; } /* trip.yaml done:true 고정 - localStorage보다 우선 */
+      var key = 'trip-pilot:singapore-share:chk:' + box.getAttribute('data-key');
+      try { if (localStorage.getItem(key) === '1') { box.checked = true; } } catch (e) {}
+      box.addEventListener('change', function () {
+        try {
+          if (box.checked) { localStorage.setItem(key, '1'); }
+          else { localStorage.removeItem(key); }
+        } catch (e) {}
+      });
+    })(boxes[i]);
+  }
+})();
+</script>
+<script>
+(function () {
+  try {
+    var pills = document.querySelectorAll('.chk li:not(.done) .due[data-due]');
+    if (!pills.length) { return; }
+    var now = new Date();
+    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    for (var i = 0; i < pills.length; i++) {
+      var p = pills[i].getAttribute('data-due').split('-');
+      var due = new Date(+p[0], +p[1] - 1, +p[2]);
+      if (due < today) {
+        pills[i].classList.add('late');
+        pills[i].textContent = '기한 지남';
+      }
+    }
+  } catch (e) {}
+})();
+</script>
+<script>
+(function () {
+  try {
+    if (!('IntersectionObserver' in window)) { return; }
+    var row = document.getElementById('navrow');
+    if (!row) { return; }
+    var links = row.querySelectorAll('a[data-spy]');
+    var secs = document.querySelectorAll('section.day');
+    if (!links.length || !secs.length) { return; }
+    var setOn = function (id) {
+      for (var j = 0; j < links.length; j++) {
+        if (links[j].getAttribute('data-spy') === id) {
+          links[j].classList.add('on');
+          links[j].setAttribute('aria-current', 'true');
+          var L = links[j].offsetLeft, W = links[j].offsetWidth;
+          if (L < row.scrollLeft + 12) { row.scrollLeft = L - 12; }
+          else if (L + W > row.scrollLeft + row.clientWidth - 12) { row.scrollLeft = L + W - row.clientWidth + 12; }
+        } else {
+          links[j].classList.remove('on');
+          links[j].removeAttribute('aria-current');
+        }
+      }
+    };
+    var io = new IntersectionObserver(function (entries) {
+      for (var k = 0; k < entries.length; k++) {
+        if (entries[k].isIntersecting) { setOn(entries[k].target.id); }
+      }
+    }, { rootMargin: '-82px 0px -58% 0px', threshold: 0 });
+    for (var m = 0; m < secs.length; m++) { io.observe(secs[m]); }
+  } catch (e) {}
+})();
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  try {
+    navigator.serviceWorker.register('./sw.js').catch(function () {});
+    /* 새 판을 배포하면 새 SW 가 즉시 제어권을 잡는다(sw.js 의 skipWaiting+clients.claim).
+       그 순간 한 번만 자동 새로고침해, 배포 후 새로고침 한 번이면 새 판이 뜨게 한다.
+       최초 설치(기존 controller 없음)는 방금 네트워크에서 받은 최신판이라 건너뛰고,
+       sessionStorage 플래그가 무한 리로드를 막는다 (플래그를 못 쓰면 리로드도 안 한다). */
+    var hadSw = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+      if (!hadSw) { hadSw = true; return; }
+      var ok = false;
+      try {
+        ok = sessionStorage.getItem('tp-sw-reloaded-singapore-share') !== '1';
+        if (ok) { sessionStorage.setItem('tp-sw-reloaded-singapore-share', '1'); }
+      } catch (e) { ok = false; }
+      if (ok) { location.reload(); }
+    });
+  } catch (e) {}
+}
+</script>
+<script>
+(function () {
+  /* 준비 진행률 - YAML done + 이 폰에서 체크한 것(localStorage 복원분)을 합산 */
+  try {
+    var prog = document.getElementById('chkprog');
+    if (!prog) { return; }
+    var fill = document.getElementById('pfill');
+    var total = parseInt(prog.getAttribute('data-total'), 10) || 0;
+    var boxes = document.querySelectorAll('input[data-key]');
+    var update = function () {
+      var done = 0;
+      for (var i = 0; i < boxes.length; i++) { if (boxes[i].checked) { done++; } }
+      prog.textContent = '준비 ' + done + '/' + total;
+      prog.hidden = false;
+      if (fill && total > 0) { fill.style.width = Math.round(done * 100 / total) + '%'; }
+    };
+    for (var j = 0; j < boxes.length; j++) { boxes[j].addEventListener('change', update); }
+    update();
+  } catch (e) {}
+})();
+</script>
+<script>
+(function () {
+  /* 오늘로 자동 이동 + 지금/다음 일정 하이라이트 - 여행 기간 밖이면 아무것도 안 함 */
+  try {
+    var now = new Date();
+    var iso = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2);
+    var sec = document.querySelector('section.day[data-date="' + iso + '"]');
+    if (!sec) { return; }
+    var link = document.querySelector('#navrow a[data-spy="' + sec.id + '"]');
+    if (link) { link.classList.add('today'); }
+    var hm = ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2);
+    var rows = sec.querySelectorAll('article.evcard[data-time]');
+    var cur = -1;
+    for (var i = 0; i < rows.length; i++) {
+      if (rows[i].getAttribute('data-time') <= hm) { cur = i; }
+    }
+    var mark = function (row, cls, txt) {
+      var top = row.querySelector('.ev-top');
+      if (!top) { return; }
+      var s = document.createElement('span');
+      s.className = cls;
+      s.textContent = txt;
+      top.insertBefore(s, top.firstChild);
+    };
+    if (cur >= 0) {
+      rows[cur].classList.add('now');
+      mark(rows[cur], 'nowpill', '지금');
+      if (cur + 1 < rows.length) { mark(rows[cur + 1], 'nextpill', '다음'); }
+    }
+    if (!location.hash) {
+      /* 진행 중인 일정이 있으면 '지금' 카드로 바로, 아직 시작 전이면 그날 상단으로 */
+      var target = cur >= 0 ? rows[cur] : sec;
+      var smooth = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+      target.scrollIntoView(smooth ? { behavior: 'smooth', block: 'start' } : { block: 'start' });
+    }
+  } catch (e) {}
+})();
+</script>
+<script>
+(function () {
+  /* 플로팅 바 + 뷰 전환 - 일정(schedule)/지도(map) 두 뷰를 body[data-view] 로 오간다.
+     지도 모드: 본문을 숨기고 지도 패널만 보이며, 세그먼트 바는 날짜 선택기가 된다.
+     JS 없는 환경은 data-view="schedule" 고정이라 기존 앵커 동작이 그대로 남는다. */
+  try {
+    var fab = document.getElementById('fab');
+    if (!fab) { return; }
+    var body = document.body;
+    var links = fab.querySelectorAll('a[data-fab]');
+    var row = document.getElementById('navrow');
+    var dayLinks = row ? row.querySelectorAll('a[data-spy]') : [];
+    var mpTitle = document.getElementById('mp-title');
+    var mpBody = document.getElementById('mp-body');
+    var mpEmpty = document.getElementById('mp-empty');
+    var smooth = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    var savedY = 0;
+    var pushed = false; /* enterMap 이 쌓은 히스토리 항목 - 뒤로가기 한 번 = 지도 닫기 */
+    var isMap = function () { return body.getAttribute('data-view') === 'map'; };
+    var jump = function (y) {
+      /* 뷰 전환 스크롤은 항상 즉시 - html 의 scroll-behavior:smooth 를 잠깐 끈다 */
+      var h = document.documentElement;
+      var prev = h.style.scrollBehavior;
+      h.style.scrollBehavior = 'auto';
+      window.scrollTo(0, y);
+      h.style.scrollBehavior = prev;
+    };
+    var setOn = function (k) {
+      for (var i = 0; i < links.length; i++) {
+        if (links[i].getAttribute('data-fab') === k) { links[i].classList.add('on'); }
+        else { links[i].classList.remove('on'); }
+      }
+    };
+    var pressed = function () {
+      /* aria-pressed 는 클릭 하이라이트가 아니라 현재 뷰를 말한다 */
+      for (var i = 0; i < links.length; i++) {
+        var k = links[i].getAttribute('data-fab');
+        if (k === 'top') { links[i].setAttribute('aria-pressed', isMap() ? 'false' : 'true'); }
+        else if (k === 'map') { links[i].setAttribute('aria-pressed', isMap() ? 'true' : 'false'); }
+      }
+    };
+    var go = function (el) {
+      el.scrollIntoView(smooth ? { behavior: 'smooth', block: 'start' } : { block: 'start' });
+    };
+    var markDay = function (anchor) {
+      for (var i = 0; i < dayLinks.length; i++) {
+        if (dayLinks[i].getAttribute('data-spy') === anchor) {
+          dayLinks[i].classList.add('on');
+          dayLinks[i].setAttribute('aria-current', 'true');
+          var L = dayLinks[i].offsetLeft, W = dayLinks[i].offsetWidth;
+          if (L < row.scrollLeft + 12) { row.scrollLeft = L - 12; }
+          else if (L + W > row.scrollLeft + row.clientWidth - 12) { row.scrollLeft = L + W - row.clientWidth + 12; }
+        } else {
+          dayLinks[i].classList.remove('on');
+          dayLinks[i].removeAttribute('aria-current');
+        }
+      }
+    };
+    var showDay = function (anchor) {
+      if (!anchor || !mpBody) { return; }
+      var sec = document.getElementById(anchor);
+      if (!sec) { return; }
+      var title = sec.querySelector('.day-title');
+      if (mpTitle) { mpTitle.textContent = title ? title.textContent : ''; }
+      while (mpBody.firstChild) { mpBody.removeChild(mpBody.firstChild); }
+      var mc = sec.querySelector('.mapcard');
+      if (mc) {
+        var clone = mc.cloneNode(true); /* 이미지 URL 이 같아 추가 다운로드 없음 */
+        var rb = clone.querySelector('.routebtn');
+        if (rb && rb.lastChild && rb.lastChild.nodeType === 3) {
+          rb.lastChild.nodeValue = '이 날 동선을 구글맵으로 열기';
+        }
+        mpBody.appendChild(clone);
+      }
+      if (mpEmpty) { mpEmpty.hidden = !!mc; }
+      markDay(anchor);
+    };
+    var defaultAnchor = function () {
+      /* 여행 중이면 오늘, 아니면 지도가 있는 첫 날 (그마저 없으면 첫 날) */
+      var now = new Date();
+      var iso = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2);
+      var secs = document.querySelectorAll('section.day');
+      var firstMap = null;
+      for (var i = 0; i < secs.length; i++) {
+        if (secs[i].getAttribute('data-date') === iso) { return secs[i].id; }
+        if (!firstMap && secs[i].querySelector('.mapcard')) { firstMap = secs[i].id; }
+      }
+      if (firstMap) { return firstMap; }
+      return secs.length ? secs[0].id : null;
+    };
+    var spyAnchor = function () {
+      /* 스크롤 스파이가 켠 현재 보던 일자 - 지도 진입 기준 (재진입 포함 일관화) */
+      var on = row ? row.querySelector('a[data-spy].on') : null;
+      return on ? on.getAttribute('data-spy') : null;
+    };
+    var enterMap = function () {
+      if (isMap()) { jump(0); return; }
+      savedY = window.pageYOffset || 0;
+      body.setAttribute('data-view', 'map');
+      showDay(spyAnchor() || defaultAnchor());
+      /* 히스토리에 지도 모드를 쌓는다 - 폰의 뒤로가기가 페이지 이탈 대신 지도 닫기가 된다.
+         브라우저 자동 스크롤 복원이 exitMap 의 자리 복귀와 겨루지 않게 pop 처리까지 manual */
+      try { history.scrollRestoration = 'manual'; } catch (e) {}
+      try { history.pushState({ v: 'map' }, ''); pushed = true; } catch (e) { pushed = false; }
+      jump(0);
+      setOn('map');
+      pressed();
+    };
+    var exitMap = function () {
+      if (!isMap()) { return false; }
+      body.setAttribute('data-view', 'schedule');
+      for (var i = 0; i < dayLinks.length; i++) { dayLinks[i].removeAttribute('aria-current'); }
+      jump(savedY); /* 지도 탭을 누르기 전 보던 자리로 복귀 (스크롤 스파이가 하이라이트 복원) */
+      setOn('top');
+      pressed();
+      return true;
+    };
+    var leaveMap = function () {
+      /* 버튼으로 나가는 경로 - 지도용 히스토리 항목도 함께 걷어 스택을 원상 복구 */
+      if (!isMap()) { return false; }
+      exitMap();
+      if (pushed) { pushed = false; try { history.back(); } catch (e) {} }
+      return true;
+    };
+    for (var i = 0; i < links.length; i++) {
+      (function (a) {
+        var k = a.getAttribute('data-fab');
+        a.addEventListener('click', function (e) {
+          if (k === 'cal') { return; } /* .ics 다운로드는 브라우저 기본 동작 */
+          e.preventDefault();
+          if (k === 'top') {
+            if (!leaveMap()) {
+              if (smooth) { try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (err) { window.scrollTo(0, 0); } }
+              else { window.scrollTo(0, 0); }
+            }
+            setOn('top');
+          } else if (k === 'map') {
+            enterMap();
+          } else if (k === 'chk') {
+            leaveMap(); /* 지도 모드였다면 일정 뷰로 돌아간 뒤 이동 */
+            var c = document.getElementById('checklist');
+            if (c) { go(c); }
+            setOn('chk');
+          }
+        });
+      })(links[i]);
+    }
+    if (row) {
+      row.addEventListener('click', function (e) {
+        if (!isMap()) { return; } /* 일정 모드 - 세그먼트 바는 기존 앵커 스크롤 그대로 */
+        var t = e.target;
+        while (t && t !== row && !(t.getAttribute && t.getAttribute('data-spy'))) { t = t.parentNode; }
+        if (!t || t === row) { return; }
+        e.preventDefault(); /* 지도 모드 - 앵커 이동 대신 날짜 전환 */
+        showDay(t.getAttribute('data-spy'));
+        jump(0);
+      });
+    }
+    window.addEventListener('popstate', function () {
+      /* 지도 모드에서 뒤로가기 - 지도만 닫고 보던 자리로. 일정 모드의 pop 은 기본 동작 */
+      if (isMap()) { pushed = false; exitMap(); }
+      try { history.scrollRestoration = 'auto'; } catch (e) {}
+    });
+    window.addEventListener('hashchange', function () {
+      /* 지도 모드에서 #dN 해시 이동 - 일정 뷰로 돌아간 뒤 그 자리로 스크롤 */
+      if (!isMap()) { return; }
+      leaveMap();
+      var id = location.hash.slice(1);
+      var el = id ? document.getElementById(id) : null;
+      if (el) { go(el); }
+    });
+  } catch (e) {}
+})();
+</script>
+<script>
+(function () {
+  /* 여행 정보 위젯 - 날씨·환율은 열람 시점에 받아오고, 실패하면 캐시를 쓰고,
+     캐시도 없으면 통째로 숨긴다 (docs/schema.md D7 - 실패 시 숨김 원칙) */
+  var card = document.getElementById('tripinfo');
+  if (!card) { return; }
+  var reveal = function (el) { el.hidden = false; card.hidden = false; };
+  var fmt = function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); };
+  (function () {
+    var wx = document.getElementById('wx');
+    if (!wx) { return; }
+    var lat = card.getAttribute('data-wx-lat');
+    var lng = card.getAttribute('data-wx-lng');
+    if (!lat || !lng) { return; }
+    var KEY = 'tp-wx-singapore-share';
+    var WD = ['일', '월', '화', '수', '목', '금', '토'];
+    var parse = function (s) { var p = s.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); };
+    var pad = function (n) { return ('0' + n).slice(-2); };
+    var iso = function (d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
+    var start = parse(card.getAttribute('data-wx-start'));
+    var end = parse(card.getAttribute('data-wx-end'));
+    var icon = function (c) {
+      if (c <= 1) { return 'sun'; }
+      if (c === 2) { return 'part'; }
+      if (c === 3 || c === 45 || c === 48) { return 'cloud'; }
+      if (c >= 95) { return 'thunder'; }
+      if (c >= 80) { return 'shower'; }
+      if (c >= 51) { return 'rain'; }
+      return 'cloud';
+    };
+    var render = function (d, cap) {
+      /* 여행 전 기간을 칸으로 깔고, 예보가 도착한 날짜만 채운다 (없는 칸은 회색 —) */
+      var got = {};
+      for (var i = 0; i < d.time.length; i++) { got[d.time[i]] = i; }
+      var row = document.getElementById('wxrow');
+      var h = '';
+      var missing = false;
+      for (var day = new Date(start.getTime()); day <= end; day.setDate(day.getDate() + 1)) {
+        var k = iso(day);
+        h += '<div class="wx-c"><span class="wx-w">' + WD[day.getDay()] + '</span>';
+        if (k in got) {
+          h += '<svg class="wx-i" aria-hidden="true"><use href="#i-wx-' + icon(d.weather_code[got[k]]) + '"/></svg>'
+            + '<span class="wx-hi">' + Math.round(d.temperature_2m_max[got[k]]) + '°</span>'
+            + '<span class="wx-lo">' + Math.round(d.temperature_2m_min[got[k]]) + '°</span>';
+        } else {
+          missing = true;
+          h += '<span class="wx-na" aria-label="예보 없음">—</span>';
+        }
+        h += '</div>';
+      }
+      row.innerHTML = h;
+      var capEl = document.getElementById('wxcap');
+      if (cap) {
+        capEl.textContent = cap + ' 확인';
+        capEl.hidden = false;
+      } else if (missing) {
+        capEl.textContent = '먼 날짜는 예보가 아직 없어요';
+        capEl.hidden = false;
+      }
+      reveal(wx);
+    };
+    var fromCache = function () {
+      try {
+        var c = JSON.parse(localStorage.getItem(KEY));
+        if (c && c.data && c.data.time) {
+          var t = new Date(c.ts);
+          render(c.data, (t.getMonth() + 1) + '/' + t.getDate());
+        }
+      } catch (e) {}
+    };
+    if (!window.fetch) { fromCache(); return; }
+    /* open-meteo 예보는 오늘부터 16일까지만 - 기간을 겹치는 구간으로 클램프해서
+       범위 밖 요청(400)으로 위젯 전체가 숨는 일을 막는다 */
+    var now = new Date();
+    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var horizon = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 15);
+    var fs = start > today ? start : today;
+    var fe = end < horizon ? end : horizon;
+    if (fs > fe) { fromCache(); return; } /* 전 기간이 범위 밖 - 기존대로 숨김(캐시만) */
+    var url = 'https://api.open-meteo.com/v1/forecast?latitude=' + lat + '&longitude=' + lng
+      + '&daily=weather_code,temperature_2m_max,temperature_2m_min'
+      + '&timezone=' + encodeURIComponent(card.getAttribute('data-wx-tz'))
+      + '&start_date=' + iso(fs) + '&end_date=' + iso(fe);
+    fetch(url).then(function (r) {
+      if (!r.ok) { throw new Error('bad status'); }
+      return r.json();
+    }).then(function (j) {
+      if (!j.daily || !j.daily.time) { throw new Error('bad shape'); }
+      render(j.daily, null);
+      try { localStorage.setItem(KEY, JSON.stringify({ ts: Date.now(), data: j.daily })); } catch (e) {}
+    }).catch(fromCache);
+  })();
+  (function () {
+    var fx = document.getElementById('fx');
+    if (!fx) { return; }
+    var base = card.getAttribute('data-fx-base');
+    var sym = card.getAttribute('data-fx-symbol');
+    if (!base) { return; }
+    var KEY = 'tp-fx-singapore-share';
+    var render = function (rate, cap) {
+      /* 원화는 10원 단위 반올림 - 시세는 감각용이지 송금용이 아니다 */
+      document.getElementById('fxmain').textContent = '1 ' + sym + ' ≈ ' + fmt(Math.round(rate / 10) * 10) + '원';
+      var h = '';
+      var steps = [10, 50, 100];
+      for (var i = 0; i < steps.length; i++) {
+        h += '<span class="fx-cell"><span class="fx-b">' + sym + steps[i] + '</span>'
+          + '<span class="fx-v">' + fmt(Math.round(rate * steps[i] / 10) * 10) + '원</span></span>';
+      }
+      document.getElementById('fxgrid').innerHTML = h;
+      if (cap) {
+        var capEl = document.getElementById('fxcap');
+        capEl.textContent = cap + ' 확인';
+        capEl.hidden = false;
+      }
+      reveal(fx);
+    };
+    var fromCache = function () {
+      try {
+        var c = JSON.parse(localStorage.getItem(KEY));
+        if (c && c.rate) {
+          var t = new Date(c.ts);
+          render(c.rate, (t.getMonth() + 1) + '/' + t.getDate());
+        }
+      } catch (e) {}
+    };
+    if (!window.fetch) { fromCache(); return; }
+    fetch('https://api.frankfurter.dev/v1/latest?base=' + base + '&symbols=KRW').then(function (r) {
+      if (!r.ok) { throw new Error('bad status'); }
+      return r.json();
+    }).then(function (j) {
+      var rate = j && j.rates && j.rates.KRW;
+      if (!rate) { throw new Error('bad shape'); }
+      render(rate, null);
+      try { localStorage.setItem(KEY, JSON.stringify({ ts: Date.now(), rate: rate })); } catch (e) {}
+    }).catch(fromCache);
+  })();
+})();
+</script>
+</body>
+</html>
