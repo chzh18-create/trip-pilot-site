@@ -9,8 +9,22 @@
 <meta name="theme-color" content="#F2F3F6" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#101114" media="(prefers-color-scheme: dark)">
 <style>
+  /* ============================================================
+     테마 파일 - 화면의 생김새는 전부 여기 있다 (docs/design.md v5 앱 문법이 우선).
+     이 파일과 default.json 만 갈아 끼우면 디자인이 바뀐다 - scripts/ 는 무수정.
+     빌드가 index.html 안에 통째로 인라인한다 (첫 화면 왕복 0회).
+     ============================================================ */
   /* v5 앱 문법 - 시스템 산세리프만 사용 (세리프·폰트 서브셋 파이프라인 미사용) */
   :root{
+    /* 타이포 6단 - 크기는 이 여섯 개가 전부다. 중간값을 새로 만들지 않는다:
+       12~14px 사이에 여섯 단계가 몰려 있던 탓에 위계가 무너졌던 것이 감사 지적이다.
+       fs-1 예산·큰 숫자 / fs-2 시간 / fs-3 이름·제목 / fs-4 본문 / fs-5 캡션 / fs-6 미세.
+       (design.md 2장 규칙 3: 시간 19px·예산 26px 은 고정) */
+    --fs-1:26px; --fs-2:19px; --fs-3:16px; --fs-4:14px; --fs-5:12.5px; --fs-6:11px;
+    /* 라운드 (design.md 1장: 카드 20 · 썸네일 14 · 버튼 15 · 칩 999) */
+    --r-card:20px; --r-btn:15px; --r-thumb:14px; --r-sm:12px; --r-xs:7px; --r-pill:999px;
+    /* 구조 리듬 - 페이지·카드 단위 간격만 토큰이다 (컴포넌트 안 미세 간격은 리터럴) */
+    --sp-page:16px; --sp-card:18px; --sp-gap:12px; --sp-sect:24px;
     --bg:#F2F3F6; --card:#FFFFFF; --ink:#191B1E; --ink-2:#5B6068; --sub:#8A8F98;
     --sub-ink:#6E737C; --faint:#B4B8C0; --cap:#6E737D; --div:#F5F6F8; --soft:#F7F8FA;
     --pt:#7048E8; --pt-soft:#F4F1FD; --on-pt:#FFFFFF; --ok:#12B76A; --ok-ink:#067647;
@@ -37,62 +51,62 @@
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
-  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.6;letter-spacing:-.01em;padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:var(--fs-4);line-height:1.6;letter-spacing:-.01em;padding-bottom:calc(96px + env(safe-area-inset-bottom))}
   ::selection{background:var(--pt-soft)}
   [hidden]{display:none!important}
   :focus-visible{outline:2px solid var(--pt);outline-offset:2px}
-  .wrap{max-width:680px;margin:0 auto;padding:0 16px}
+  .wrap{max-width:680px;margin:0 auto;padding:0 var(--sp-page)}
   .ic{width:14px;height:14px;vertical-align:-2px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
   section[id],.day,.evcard{scroll-margin-top:82px}
 
   /* ---------- 카드 ---------- */
-  .card{background:var(--card);border-radius:20px;box-shadow:var(--sh-card);padding:18px;margin-top:12px}
-  .sub{font-size:15px;font-weight:700;letter-spacing:-.01em}
+  .card{background:var(--card);border-radius:var(--r-card);box-shadow:var(--sh-card);padding:var(--sp-card);margin-top:var(--sp-gap)}
+  .sub{font-size:var(--fs-4);font-weight:700;letter-spacing:-.01em}
   .card>.sub{margin-bottom:12px}
-  .hint{font-size:12px;color:var(--cap);margin:-4px 0 6px}
+  .hint{font-size:var(--fs-6);color:var(--cap);margin:-4px 0 6px}
 
   /* ---------- 상단 ---------- */
   .hero{position:relative;overflow:hidden;padding-top:30px;padding-bottom:18px}
   .hero-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
-  .eyebrow{font-size:12.5px;font-weight:700;color:var(--ink-2)}
-  .pill-dday{display:inline-flex;align-items:center;border-radius:999px;background:var(--dday-bg);color:var(--dday-ink);padding:7px 12px;font-size:12px;font-weight:700;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
-  .hero h1{font-size:26px;font-weight:700;letter-spacing:-.02em;line-height:1.28;margin-top:10px}
-  .period{font-family:var(--mono);font-size:13px;color:var(--ink-2);margin-top:7px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .eyebrow{font-size:var(--fs-5);font-weight:700;color:var(--ink-2)}
+  .pill-dday{display:inline-flex;align-items:center;border-radius:var(--r-pill);background:var(--dday-bg);color:var(--dday-ink);padding:7px 12px;font-size:var(--fs-6);font-weight:700;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .hero h1{font-size:var(--fs-1);font-weight:700;letter-spacing:-.02em;line-height:1.28;margin-top:10px}
+  .period{font-family:var(--mono);font-size:var(--fs-5);color:var(--ink-2);margin-top:7px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
   .motif{position:absolute;right:14px;bottom:6px;z-index:-1;width:clamp(110px,22vw,150px);opacity:.14;color:var(--pt);pointer-events:none}
   .motif svg{display:block;width:100%;height:auto}
 
   /* ---------- 여행 정보 카드 ---------- */
-  .infocard{display:grid;gap:16px}
+  .infocard{display:grid;gap:var(--sp-page)}
   .ib-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
-  .ib-h{font-size:12.5px;font-weight:700;color:var(--cap)}
-  .ib-cap{font-size:11.5px;color:var(--sub-ink);font-variant-numeric:tabular-nums}
+  .ib-h{font-size:var(--fs-5);font-weight:700;color:var(--cap)}
+  .ib-cap{font-size:var(--fs-6);color:var(--sub-ink);font-variant-numeric:tabular-nums}
   .wx-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:2px;margin-top:9px}
-  .wx-c{display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 0;border-radius:12px}
-  .wx-w{font-size:10.5px;font-weight:600;color:var(--cap)}
+  .wx-c{display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 0;border-radius:var(--r-sm)}
+  .wx-w{font-size:var(--fs-6);font-weight:600;color:var(--cap)}
   .wx-i{width:22px;height:22px;fill:none;stroke:var(--ink-2);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-  .wx-hi{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums}
-  .wx-lo{font-size:11px;color:var(--cap);font-variant-numeric:tabular-nums}
-  .wx-na{margin:auto 0;font-size:14px;font-weight:600;color:var(--faint)}
-  .fx-main{font-size:20px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:7px}
+  .wx-hi{font-size:var(--fs-5);font-weight:700;font-variant-numeric:tabular-nums}
+  .wx-lo{font-size:var(--fs-6);color:var(--cap);font-variant-numeric:tabular-nums}
+  .wx-na{margin:auto 0;font-size:var(--fs-4);font-weight:600;color:var(--faint)}
+  .fx-main{font-size:var(--fs-2);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:7px}
   .fx-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
-  .fx-cell{background:var(--soft);border-radius:12px;padding:9px 8px;text-align:center}
-  .fx-b{display:block;font-size:11px;font-weight:600;color:var(--cap)}
-  .fx-v{display:block;font-size:13px;font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums}
-  .tinfo summary{display:flex;align-items:center;gap:7px;min-height:44px;border-radius:14px;background:var(--soft);padding:0 13px;font-size:13.5px;font-weight:700;color:var(--pt);cursor:pointer;list-style:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+  .fx-cell{background:var(--soft);border-radius:var(--r-sm);padding:9px 8px;text-align:center}
+  .fx-b{display:block;font-size:var(--fs-6);font-weight:600;color:var(--cap)}
+  .fx-v{display:block;font-size:var(--fs-5);font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums}
+  .tinfo summary{display:flex;align-items:center;gap:7px;min-height:44px;border-radius:var(--r-thumb);background:var(--soft);padding:0 13px;font-size:var(--fs-4);font-weight:700;color:var(--pt);cursor:pointer;list-style:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
   .tinfo summary::-webkit-details-marker{display:none}
   .tinfo summary .ic{width:12px;height:12px;color:var(--sub);transition:transform .15s ease}
   .tinfo[open]>summary .ic{transform:rotate(90deg)}
   .ti-row{padding:11px 2px}
   .ti-row+.ti-row{border-top:1px solid var(--div)}
-  .ti-label{font-size:13px;font-weight:700}
-  .ti-text{font-size:13.5px;line-height:1.65;color:var(--ink-2);margin-top:2px;white-space:pre-line}
+  .ti-label{font-size:var(--fs-5);font-weight:700}
+  .ti-text{font-size:var(--fs-4);line-height:1.65;color:var(--ink-2);margin-top:2px;white-space:pre-line}
 
   /* ---------- 머무는 곳 ---------- */
   .stay+.stay{margin-top:14px;padding-top:14px;border-top:1px solid var(--div)}
-  .stay-name{font-size:16px;font-weight:700;letter-spacing:-.015em}
-  .stay-addr{font-size:13px;line-height:1.55;color:var(--ink-2);margin-top:3px}
-  .stay-addr a{display:inline-flex;align-items:center;gap:4px;min-height:40px;padding:0 6px;margin:-10px -2px;color:var(--pt);text-decoration:none;font-weight:700;white-space:nowrap;font-size:12.5px}
-  .stay-dates{font-size:13px;color:var(--cap);margin-top:6px}
+  .stay-name{font-size:var(--fs-3);font-weight:700;letter-spacing:-.015em}
+  .stay-addr{font-size:var(--fs-5);line-height:1.55;color:var(--ink-2);margin-top:3px}
+  .stay-addr a{display:inline-flex;align-items:center;gap:4px;min-height:40px;padding:0 6px;margin:-10px -2px;color:var(--pt);text-decoration:none;font-weight:700;white-space:nowrap;font-size:var(--fs-5)}
+  .stay-dates{font-size:var(--fs-5);color:var(--cap);margin-top:6px}
 
   /* ---------- 일자 세그먼트 바 ---------- */
   .daybar{position:sticky;top:0;z-index:30;background:var(--bar-bg);padding:10px 0}
@@ -103,9 +117,9 @@
   .dayrow.scroll{display:flex;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
   .dayrow.scroll::-webkit-scrollbar{display:none}
   .dayrow.scroll a{flex:0 0 56px}
-  .dayrow a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-height:50px;border-radius:14px;background:var(--card);box-shadow:0 1px 2px rgba(25,27,30,.04);text-decoration:none;-webkit-tap-highlight-color:transparent}
-  .db-d{font-size:15px;font-weight:700;color:var(--ink);letter-spacing:-.01em;font-variant-numeric:tabular-nums;line-height:1.2}
-  .db-w{font-size:10.5px;font-weight:600;color:var(--ink-2);line-height:1.2}
+  .dayrow a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-height:50px;border-radius:var(--r-thumb);background:var(--card);box-shadow:0 1px 2px rgba(25,27,30,.04);text-decoration:none;-webkit-tap-highlight-color:transparent}
+  .db-d{font-size:var(--fs-4);font-weight:700;color:var(--ink);letter-spacing:-.01em;font-variant-numeric:tabular-nums;line-height:1.2}
+  .db-w{font-size:var(--fs-6);font-weight:600;color:var(--ink-2);line-height:1.2}
   .dayrow a.on{background:var(--ink)}
   .dayrow a.on .db-d{color:var(--card)}
   .dayrow a.on .db-w{color:var(--card);opacity:.72}
@@ -114,101 +128,128 @@
   /* ---------- 함께 정할 것 (tbd 요약 카드) ---------- */
   .tbd{list-style:none;margin-top:2px}
   .tbd li+li{border-top:1px solid var(--div)}
-  .tbd a{display:flex;align-items:center;gap:9px;min-height:44px;padding:3px 0;font-size:13.5px;line-height:1.5;color:var(--ink);text-decoration:none}
+  .tbd a{display:flex;align-items:center;gap:9px;min-height:44px;padding:3px 0;font-size:var(--fs-4);line-height:1.5;color:var(--ink);text-decoration:none}
   .tbd a::before{content:"";flex:0 0 auto;width:7px;height:7px;border-radius:50%;background:var(--warn);opacity:.85}
   .tbd a .ic{flex:0 0 auto;width:12px;height:12px;margin-left:auto;color:var(--pt)}
-  .tbd-note{font-size:12px;color:var(--cap);margin-top:10px}
+  .tbd-note{font-size:var(--fs-6);color:var(--cap);margin-top:10px}
 
   /* ---------- 본문 문단 (notes 첫 문단) ---------- */
-  .lead{font-size:14px;font-weight:400;line-height:1.7;color:var(--ink-2);white-space:pre-line}
+  .lead{font-size:var(--fs-4);font-weight:400;line-height:1.7;color:var(--ink-2);white-space:pre-line}
   .lead a,.box a,.ti-text a,.os-text a{color:var(--pt);font-weight:600;text-decoration:underline;text-underline-offset:2px;word-break:break-all}
 
   /* ---------- 접는 참고 ---------- */
   .more{margin-top:8px}
-  .more summary{display:inline-flex;align-items:center;gap:5px;min-height:40px;font-size:12.5px;font-weight:700;color:var(--pt);cursor:pointer;list-style:none;-webkit-user-select:none;user-select:none;padding:3px 0;-webkit-tap-highlight-color:transparent}
+  .more summary{display:inline-flex;align-items:center;gap:5px;min-height:40px;font-size:var(--fs-5);font-weight:700;color:var(--pt);cursor:pointer;list-style:none;-webkit-user-select:none;user-select:none;padding:3px 0;-webkit-tap-highlight-color:transparent}
   .more summary::-webkit-details-marker{display:none}
   .more summary .ic{width:12px;height:12px;transition:transform .15s ease}
   .more[open]>summary .ic{transform:rotate(90deg)}
-  .more .box{margin-top:6px;background:var(--soft);border-radius:14px;padding:11px 13px;font-size:13.5px;line-height:1.7;color:var(--ink-2);white-space:pre-line}
+  .more .box{margin-top:6px;background:var(--soft);border-radius:var(--r-thumb);padding:11px 13px;font-size:var(--fs-4);line-height:1.7;color:var(--ink-2);white-space:pre-line}
   .day-more .box{background:var(--card);box-shadow:var(--sh-card)}
 
   /* ---------- 일자 섹션 ---------- */
   .day{margin-top:36px}
-  .day-title{font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.3}
-  .day-theme{font-size:13.5px;color:var(--ink-2);margin-top:4px}
+  .day-title{font-size:var(--fs-2);font-weight:700;letter-spacing:-.02em;line-height:1.3}
+  .day-theme{font-size:var(--fs-4);color:var(--ink-2);margin-top:4px}
   .day-lead{margin-top:10px}
   /* 가족 필터 - 일자 세그먼트 바(.dayrow)와 같은 문법: 선택된 칸만 잉크 배경 */
   .pfilter{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:5px;margin-top:14px}
-  .pfbtn{min-height:42px;border:0;border-radius:14px;background:var(--card);box-shadow:0 1px 2px rgba(25,27,30,.04);color:var(--pt);font-family:inherit;font-size:13px;font-weight:700;letter-spacing:-.01em;-webkit-tap-highlight-color:transparent}
+  .pfbtn{min-height:42px;border:0;border-radius:var(--r-thumb);background:var(--card);box-shadow:0 1px 2px rgba(25,27,30,.04);color:var(--pt);font-family:inherit;font-size:var(--fs-5);font-weight:700;letter-spacing:-.01em;-webkit-tap-highlight-color:transparent}
   .pfbtn.on{background:var(--ink);color:var(--card)}
-  .evs{margin-top:12px}
+  .evs{margin-top:var(--sp-gap)}
 
   /* ---------- 동선 지도 카드 ---------- */
   .mapcard{padding:14px 14px 14px}
-  .daymap img{display:block;width:100%;height:auto;border-radius:14px}
-  .daymap figcaption{font-size:11.5px;line-height:1.6;color:var(--cap);margin-top:10px;padding:0 2px}
+  .daymap img{display:block;width:100%;height:auto;border-radius:var(--r-thumb)}
+  .daymap figcaption{font-size:var(--fs-6);line-height:1.6;color:var(--cap);margin-top:10px;padding:0 2px}
   .daymap figcaption a{color:var(--pt);font-weight:700;text-decoration:none}
   .maplegend{list-style:none;margin-top:11px;padding:0 2px}
-  .maplegend li{display:flex;align-items:center;gap:8px;font-size:12.5px;line-height:1.45}
+  .maplegend li{display:flex;align-items:center;gap:8px;font-size:var(--fs-5);line-height:1.45}
   .maplegend li+li{margin-top:7px}
   .mlnum{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--pt);color:var(--on-pt);font:700 10.5px var(--mono)}
   .mlnum.start{background:var(--card);color:var(--pt);border:1.5px solid var(--pt)}
   .mltime{flex:0 0 auto;font:11px var(--mono);color:var(--cap);font-variant-numeric:tabular-nums}
-  .routebtn{display:flex;align-items:center;justify-content:center;gap:7px;min-height:48px;margin-top:12px;border-radius:15px;background:var(--pt-soft);color:var(--pt);font-size:13.5px;font-weight:700;text-decoration:none;-webkit-tap-highlight-color:transparent}
+  .routebtn{display:flex;align-items:center;justify-content:center;gap:7px;min-height:48px;margin-top:12px;border-radius:var(--r-btn);background:var(--pt-soft);color:var(--pt);font-size:var(--fs-4);font-weight:700;text-decoration:none;-webkit-tap-highlight-color:transparent}
   .routebtn.solo{background:var(--card);box-shadow:var(--sh-card)}
 
   /* ---------- 이벤트 카드 ---------- */
-  .evcard{position:relative;overflow:hidden;background:var(--card);border-radius:20px;box-shadow:var(--sh-card);padding:16px 18px 18px;margin-top:10px}
+  .evcard{position:relative;overflow:hidden;background:var(--card);border-radius:var(--r-card);box-shadow:var(--sh-card);padding:16px 18px 18px;margin-top:10px}
   .evcard.now::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--pt)}
   .ev-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .t{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1.3}
-  .t-end{font-size:12.5px;font-weight:600;color:var(--ink-2);font-variant-numeric:tabular-nums}
-  .t-tz{font-size:11px;font-weight:600;color:var(--cap)}
+  .t{font-size:var(--fs-2);font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1.3}
+  .t-end{font-size:var(--fs-5);font-weight:600;color:var(--ink-2);font-variant-numeric:tabular-nums}
+  .t-tz{font-size:var(--fs-6);font-weight:600;color:var(--cap)}
   .ev-flex{flex:1 1 auto}
-  .stchip{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:var(--ink-2);white-space:nowrap}
+  .stchip{display:inline-flex;align-items:center;gap:5px;font-size:var(--fs-6);font-weight:600;color:var(--ink-2);white-space:nowrap}
   .stdot{width:6px;height:6px;border-radius:50%;background:var(--ok)}
-  .tbdpill{display:inline-flex;align-items:center;border-radius:999px;background:var(--warn-bg);color:var(--warn);padding:5px 10px;font-size:11.5px;font-weight:600;line-height:1;white-space:nowrap}
+  .tbdpill{display:inline-flex;align-items:center;border-radius:var(--r-pill);background:var(--warn-bg);color:var(--warn);padding:5px 10px;font-size:var(--fs-6);font-weight:600;line-height:1;white-space:nowrap}
   /* 가족 칩 - 누를 수 없는 정보라 회색 (v5 규칙 1: 보라는 인터랙션 전용) */
-  .pchip{display:inline-flex;align-items:center;border-radius:999px;background:var(--soft);color:var(--cap);padding:5px 10px;font-size:11.5px;font-weight:600;line-height:1;white-space:nowrap}
-  .nowpill,.nextpill{display:inline-flex;align-items:center;border-radius:999px;padding:5px 10px;font-size:11px;font-weight:700;line-height:1;letter-spacing:.01em}
+  .pchip{display:inline-flex;align-items:center;border-radius:var(--r-pill);background:var(--soft);color:var(--cap);padding:5px 10px;font-size:var(--fs-6);font-weight:600;line-height:1;white-space:nowrap}
+  .nowpill,.nextpill{display:inline-flex;align-items:center;border-radius:var(--r-pill);padding:5px 10px;font-size:var(--fs-6);font-weight:700;line-height:1;letter-spacing:.01em}
   .nowpill{background:var(--pt);color:var(--on-pt)}
   .nextpill{background:var(--soft);color:var(--ink-2)}
-  .ev-h{font-size:17.5px;font-weight:700;letter-spacing:-.015em;line-height:1.35;margin-top:6px}
+  .ev-h{font-size:var(--fs-3);font-weight:700;letter-spacing:-.015em;line-height:1.35;margin-top:6px}
   .ev-venue{display:flex;align-items:flex-start;gap:12px;margin-top:8px}
   .ev-vmain{flex:1 1 auto;min-width:0}
-  .vname{font-size:13.5px;font-weight:600;color:var(--ink-2);line-height:1.5}
+  .vname{font-size:var(--fs-4);font-weight:600;color:var(--ink-2);line-height:1.5}
   /* 확인된 곳은 침묵 - 배지는 예외(미확인·폐업)에만 붙는다 */
-  .vwarn{display:inline-flex;align-items:center;margin-left:6px;border-radius:999px;background:var(--warn-bg);color:var(--warn);padding:3px 8px;font-size:11px;font-weight:700;line-height:1.2;white-space:nowrap}
-  .vaddr{font-size:12px;color:var(--cap);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .vwarn{display:inline-flex;align-items:center;margin-left:6px;border-radius:var(--r-pill);background:var(--warn-bg);color:var(--warn);padding:3px 8px;font-size:var(--fs-6);font-weight:700;line-height:1.2;white-space:nowrap}
+  /* 영업 자체는 확인됐고 영업시간만 못 얻은 곳 - 경고가 아니라 정보라 회색 (v5 규칙 1) */
+  .vnote{display:inline-flex;align-items:center;margin-left:6px;border-radius:var(--r-pill);background:var(--soft);color:var(--cap);padding:3px 8px;font-size:var(--fs-6);font-weight:600;line-height:1.2;white-space:nowrap}
+  .vaddr{font-size:var(--fs-6);color:var(--cap);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   /* 영업시간 - 숫자가 주인공(잉크색 tabular-nums), 근거는 회색 캡션 (design v5 규칙 3) */
   .vhours{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 7px;margin-top:3px}
-  .vh-t{font-size:12.5px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
-  .vh-s{font-size:11px;color:var(--cap);font-variant-numeric:tabular-nums}
+  .vh-t{font-size:var(--fs-5);font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .vh-s{font-size:var(--fs-6);color:var(--cap);font-variant-numeric:tabular-nums}
+  /* 맛집 한 줄 (D14 dining 구조 필드) - 거리·결제·수령지·아이 설비를 회색 한 줄로 압축.
+     누를 수 없는 정보라 보라를 쓰지 않고, 앰버는 현금만처럼 현장 사고가 나는 것만 (v5 규칙 1) */
+  .vmeta{font-size:var(--fs-6);line-height:1.6;color:var(--cap);margin-top:4px}
+  .vmeta .vm+.vm::before{content:" · ";color:var(--faint)}
+  .vmeta .vm-w{font-weight:700;color:var(--warn)}
   .vlinks{display:flex;flex-wrap:wrap;gap:2px;margin-top:2px;margin-left:-8px}
-  .vlinks a{display:inline-flex;align-items:center;gap:4px;min-height:40px;padding:0 8px;font-size:12.5px;font-weight:700;color:var(--pt);text-decoration:none;-webkit-tap-highlight-color:transparent}
+  .vlinks a{display:inline-flex;align-items:center;gap:4px;min-height:40px;padding:0 8px;font-size:var(--fs-5);font-weight:700;color:var(--pt);text-decoration:none;-webkit-tap-highlight-color:transparent}
   .vlinks a .ic{width:13px;height:13px}
   /* 숙소 안 식사 - 누를 수 없는 정보라 보라를 쓰지 않는다 (v5 규칙 1) */
-  .vwalk{display:inline-flex;align-items:center;gap:4px;min-height:40px;padding:0 8px;font-size:12.5px;font-weight:600;color:var(--cap)}
+  .vwalk{display:inline-flex;align-items:center;gap:4px;min-height:40px;padding:0 8px;font-size:var(--fs-5);font-weight:600;color:var(--cap)}
   .vwalk .ic{width:13px;height:13px}
-  .vthumb{position:relative;flex:0 0 auto;width:62px;height:62px;border-radius:14px;overflow:hidden;background:var(--soft)}
+  .vthumb{position:relative;flex:0 0 auto;width:62px;height:62px;border-radius:var(--r-thumb);overflow:hidden;background:var(--soft)}
   .vthumb img{display:block;width:62px;height:62px}
   .vthumb::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--pt);border:2.5px solid var(--card);box-shadow:0 1px 4px rgba(25,27,30,.35)}
   .vt-go{position:absolute;right:4px;bottom:4px;width:16px;height:16px;padding:3px;border-radius:50%;background:var(--card);color:var(--pt);stroke-width:2.4;box-shadow:0 1px 3px rgba(25,27,30,.28)}
-  .closedbar{background:var(--danger-bg);color:var(--danger);font-size:13px;font-weight:600;line-height:1.55;border-radius:14px;padding:11px 13px;margin-top:10px}
-  .brief{display:flex;align-items:flex-start;gap:8px;background:var(--warn-bg);color:var(--warn);font-size:13px;line-height:1.55;border-radius:14px;padding:10px 12px;margin-top:10px}
-  .brief .ic{flex:0 0 auto;margin-top:3px}
+  .closedbar{background:var(--danger-bg);color:var(--danger);font-size:var(--fs-5);font-weight:600;line-height:1.55;border-radius:var(--r-thumb);padding:11px 13px;margin-top:10px}
+  /* ---------- 1층 (onsite kind: warn/fact/todo - 접힘 밖) ---------- */
+  .l1{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+  .l1-warn{display:flex;align-items:flex-start;gap:7px;background:var(--warn-bg);color:var(--warn);font-size:var(--fs-5);font-weight:600;line-height:1.55;border-radius:var(--r-thumb);padding:10px 12px}
+  .l1-warn.danger{background:var(--danger-bg);color:var(--danger)}
+  .l1-warn>.ic{flex:0 0 auto;width:14px;height:14px;margin-top:3px}
+  .l1-facts{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:baseline;margin:2px 0 0}
+  .l1-facts dt{font-size:var(--fs-6);color:var(--cap);white-space:nowrap}
+  .l1-facts dd{margin:0}
+  .l1-v{font-size:var(--fs-2);font-weight:700;color:var(--ink);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .l1-n{font-size:var(--fs-6);color:var(--sub-ink)}
+  .l1-todo{display:flex;align-items:flex-start;gap:9px;font-size:var(--fs-5);line-height:1.55;color:var(--ink-2);min-height:32px}
+  .l1-todo input{width:20px;height:20px;margin-top:1px;accent-color:var(--pt);flex:0 0 auto}
+  .c-h{font-size:var(--fs-6);font-weight:600;color:var(--cap)}
+  .tr-eta{margin:6px 0 0;font-size:var(--fs-5);color:var(--ink-2)}
+  .tr-t{font-size:var(--fs-3);font-weight:700;color:var(--ink);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .tr-nd{font-size:var(--fs-6);font-weight:700;color:var(--cap)}
+  .g-facts{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;align-items:baseline;margin:0 0 10px;padding:0 18px}
+  .g-facts dt{font-size:var(--fs-6);color:var(--cap);white-space:nowrap}
+  .g-facts dd{margin:0}
+  .g-tips{margin:8px 0 0;padding:0 18px 0 34px}
+  .g-tips li{font-size:var(--fs-4);line-height:1.65;color:var(--ink-2);margin-bottom:5px}
+  .gcard .l1-warn{margin:0 18px 8px}
   .evcard .lead{margin-top:10px}
   .evcard.empty{padding:22px 18px}
-  .noev{font-size:13.5px;color:var(--cap);text-align:center}
+  .noev{font-size:var(--fs-4);color:var(--cap);text-align:center}
 
   /* ---------- 현장 가이드 (카드 하단 접이 영역) ---------- */
   .os-band{height:8px;background:var(--soft);margin:16px -18px 0}
   .onsite{margin:0 -18px -18px}
-  .onsite summary{display:flex;align-items:center;gap:7px;min-height:52px;padding:6px 18px;font-size:13.5px;font-weight:700;cursor:pointer;list-style:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+  .onsite summary{display:flex;align-items:center;gap:7px;min-height:52px;padding:6px 18px;font-size:var(--fs-4);font-weight:700;cursor:pointer;list-style:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
   .onsite summary::-webkit-details-marker{display:none}
   .onsite summary>.ic{flex:0 0 auto;color:var(--sub)}
   .os-sum{white-space:nowrap;color:var(--pt)}
-  .os-src{margin-left:auto;font-size:11.5px;font-weight:500;color:var(--cap);min-width:0;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .os-src{margin-left:auto;font-size:var(--fs-6);font-weight:500;color:var(--cap);min-width:0;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .os-chev{flex:0 0 auto;width:12px;height:12px;margin-left:auto;transition:transform .15s ease}
   .os-src~.os-chev{margin-left:2px}
   .onsite[open] .os-chev{transform:rotate(90deg)}
@@ -216,73 +257,73 @@
   .os-menu{margin-top:2px}
   .mrow{display:flex;align-items:center;gap:11px;padding:9px 0}
   .mrow+.mrow{border-top:1px solid var(--div)}
-  .mtile{flex:0 0 auto;display:grid;place-items:center;width:40px;height:40px;border-radius:13px;background:var(--pt-soft);color:var(--pt)}
+  .mtile{flex:0 0 auto;display:grid;place-items:center;width:40px;height:40px;border-radius:var(--r-sm);background:var(--pt-soft);color:var(--pt)}
   .mtile .ic{width:19px;height:19px}
   .mmain{flex:1 1 auto;min-width:0}
-  .mname{display:block;font-size:14px;font-weight:600;line-height:1.45}
-  .mnote{display:block;font-size:12.5px;color:var(--cap);line-height:1.5;margin-top:1px}
-  .mprice{flex:0 0 auto;font-size:14px;font-weight:700;font-variant-numeric:tabular-nums}
-  .os-budget{background:var(--soft);border-radius:14px;padding:14px 16px;margin-top:10px}
-  .oblabel{font-size:12.5px;font-weight:600;color:var(--cap)}
-  .obvalue{font-size:26px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:2px}
-  .obcap{font-size:12.5px;color:var(--cap);margin-top:3px;line-height:1.55}
-  .os-tip{display:flex;align-items:flex-start;gap:10px;background:var(--soft);border-radius:14px;padding:12px 13px;margin-top:10px}
+  .mname{display:block;font-size:var(--fs-4);font-weight:600;line-height:1.45}
+  .mnote{display:block;font-size:var(--fs-5);color:var(--cap);line-height:1.5;margin-top:1px}
+  .mprice{flex:0 0 auto;font-size:var(--fs-4);font-weight:700;font-variant-numeric:tabular-nums}
+  .os-budget{background:var(--soft);border-radius:var(--r-thumb);padding:14px 16px;margin-top:10px}
+  .oblabel{font-size:var(--fs-5);font-weight:600;color:var(--cap)}
+  .obvalue{font-size:var(--fs-1);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:2px}
+  .obcap{font-size:var(--fs-5);color:var(--cap);margin-top:3px;line-height:1.55}
+  .os-tip{display:flex;align-items:flex-start;gap:10px;background:var(--soft);border-radius:var(--r-thumb);padding:12px 13px;margin-top:10px}
   .os-tic{flex:0 0 auto;width:16px;height:16px;color:var(--pt);margin-top:2px}
   .os-tbody{flex:1 1 auto;min-width:0}
-  .os-label{font-size:13px;font-weight:700}
-  .os-text{font-size:13.5px;line-height:1.65;color:var(--ink-2);margin-top:2px;white-space:pre-line}
+  .os-label{font-size:var(--fs-5);font-weight:700}
+  .os-text{font-size:var(--fs-4);line-height:1.65;color:var(--ink-2);margin-top:2px;white-space:pre-line}
   .os-illust{margin-top:10px;color:var(--pt)}
   .os-illust svg{display:block;width:100%;max-width:220px;height:auto}
-  .os-cta{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:15px;background:var(--pt);color:var(--on-pt);font-size:14px;font-weight:700;text-decoration:none;margin-top:12px;-webkit-tap-highlight-color:transparent}
+  .os-cta{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:var(--r-btn);background:var(--pt);color:var(--on-pt);font-size:var(--fs-4);font-weight:700;text-decoration:none;margin-top:12px;-webkit-tap-highlight-color:transparent}
   .os-cta.alt{background:var(--soft);color:var(--ink)}
   /* 식당 현장 가이드로 가는 한 줄 - 상자는 맛집 탭 카드 한 곳에만 둔다 */
-  .os-jump{display:flex;align-items:center;gap:7px;min-height:52px;margin:0 -18px -18px;padding:6px 18px;font-size:13.5px;font-weight:700;color:var(--pt);text-decoration:none;-webkit-tap-highlight-color:transparent}
+  .os-jump{display:flex;align-items:center;gap:7px;min-height:52px;margin:0 -18px -18px;padding:6px 18px;font-size:var(--fs-4);font-weight:700;color:var(--pt);text-decoration:none;-webkit-tap-highlight-color:transparent}
   .os-jump .os-chev{margin-left:auto}
 
   /* ---------- 바로 걸기 ---------- */
   .tel{list-style:none;margin-top:2px}
   .tel li+li{border-top:1px solid var(--div)}
   .tel a{display:flex;align-items:center;gap:12px;min-height:52px;padding:4px 0;text-decoration:none;color:var(--ink)}
-  .ticon{flex:0 0 auto;display:grid;place-items:center;width:40px;height:40px;border-radius:13px;background:var(--soft);color:var(--ink-2)}
+  .ticon{flex:0 0 auto;display:grid;place-items:center;width:40px;height:40px;border-radius:var(--r-sm);background:var(--soft);color:var(--ink-2)}
   .ticon .ic{width:17px;height:17px}
-  .tel .who{flex:1 1 auto;min-width:0;font-size:14px;font-weight:600;line-height:1.45}
-  .tel .num{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--pt);white-space:nowrap;font-variant-numeric:tabular-nums}
+  .tel .who{flex:1 1 auto;min-width:0;font-size:var(--fs-4);font-weight:600;line-height:1.45}
+  .tel .num{font-family:var(--mono);font-size:var(--fs-5);font-weight:700;color:var(--pt);white-space:nowrap;font-variant-numeric:tabular-nums}
 
   /* ---------- 준비물 체크리스트 ---------- */
   .chk-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
-  .prog{font-size:12.5px;font-weight:700;color:var(--ink-2);font-variant-numeric:tabular-nums}
-  .pbar{height:4px;border-radius:999px;background:var(--soft);overflow:hidden;margin-top:10px}
-  .pbar span{display:block;height:100%;width:0;border-radius:999px;background:var(--ok);transition:width .2s ease}
+  .prog{font-size:var(--fs-5);font-weight:700;color:var(--ink-2);font-variant-numeric:tabular-nums}
+  .pbar{height:4px;border-radius:var(--r-pill);background:var(--soft);overflow:hidden;margin-top:10px}
+  .pbar span{display:block;height:100%;width:0;border-radius:var(--r-pill);background:var(--ok);transition:width .2s ease}
   .pbar+.hint{margin-top:8px}
   .chk{list-style:none;margin-top:2px}
   .chk li{display:grid;grid-template-columns:1fr auto;column-gap:10px;align-items:start;padding:11px 0}
   .chk li+li{border-top:1px solid var(--div)}
   .chk label{position:relative;display:grid;grid-template-columns:22px 1fr;column-gap:11px;align-items:start;cursor:pointer;-webkit-tap-highlight-color:transparent}
   .chk input{position:absolute;top:0;left:0;width:22px;height:22px;margin:0;opacity:0}
-  .chk .box{width:22px;height:22px;border:1.5px solid var(--faint);border-radius:7px;background:var(--card);display:grid;place-items:center;margin-top:1px;transition:background .12s ease,border-color .12s ease}
+  .chk .box{width:22px;height:22px;border:1.5px solid var(--faint);border-radius:var(--r-xs);background:var(--card);display:grid;place-items:center;margin-top:1px;transition:background .12s ease,border-color .12s ease}
   .chk .box .ic{width:12px;height:12px;stroke-width:2.6;color:#FFFFFF;opacity:0}
   .chk input:checked + .box{background:var(--ok);border-color:var(--ok)}
   .chk input:checked + .box .ic{opacity:1}
   .chk input:focus-visible + .box{outline:2px solid var(--pt);outline-offset:2px}
-  .chk .txt{font-size:14px;line-height:1.55}
+  .chk .txt{font-size:var(--fs-4);line-height:1.55}
   .chk input:checked ~ .txt{color:var(--sub);text-decoration:line-through}
-  .due{font-size:12px;font-weight:600;color:var(--ink-2);background:var(--soft);border-radius:999px;padding:5px 10px;white-space:nowrap;margin-top:1px}
+  .due{font-size:var(--fs-6);font-weight:600;color:var(--ink-2);background:var(--soft);border-radius:var(--r-pill);padding:5px 10px;white-space:nowrap;margin-top:1px}
   .due.late{background:var(--danger-bg);color:var(--danger);font-weight:700}
 
   /* ---------- 푸터 ---------- */
-  footer{margin-top:40px;padding:0 2px;font-size:12px;line-height:1.8;color:var(--cap)}
+  footer{margin-top:40px;padding:0 2px;font-size:var(--fs-6);line-height:1.8;color:var(--cap)}
   footer p{margin-bottom:8px}
   footer .ic{width:13px;height:13px;color:var(--sub)}
   footer a{color:var(--pt);font-weight:700;text-decoration:none}
 
   /* ---------- 플로팅 바 ---------- */
-  .fab{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom));z-index:40;display:flex;gap:2px;background:var(--card);border-radius:999px;box-shadow:var(--sh-float);padding:5px}
-  .fab a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:62px;min-height:44px;border-radius:999px;color:var(--sub);text-decoration:none;-webkit-tap-highlight-color:transparent}
+  .fab{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom));z-index:40;display:flex;gap:2px;background:var(--card);border-radius:var(--r-pill);box-shadow:var(--sh-float);padding:5px}
+  .fab a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:62px;min-height:44px;border-radius:var(--r-pill);color:var(--sub);text-decoration:none;-webkit-tap-highlight-color:transparent}
   /* 탭이 6칸인 트립(맛집·정보 둘 다)만 작은 폰에서 칸을 좁힌다 - 바 폭은 칸 폭의 합이라
      62px 그대로면 6칸이 375px 화면을 넘는다. 5칸 이하 트립은 이 규칙에 걸리지 않는다. */
   @media (max-width:400px){.fab:has(a:nth-child(6)) a{min-width:52px}}
   .fab a .ic{width:19px;height:19px}
-  .fab a span{font-size:10px;font-weight:700;line-height:1;color:var(--sub-ink)}
+  .fab a span{font-size:var(--fs-6);font-weight:700;line-height:1;color:var(--sub-ink)}
   .fab a.on{color:var(--ink);background:var(--soft)}
   .fab a.on span{color:inherit}
 
@@ -306,70 +347,70 @@
   body[data-view="info"] .infopanel{display:block;animation:mp-in .2s ease}
   @keyframes mp-in{from{opacity:0}to{opacity:1}}
   @media (prefers-reduced-motion: reduce){body[data-view="map"] .mappanel,body[data-view="dining"] .diningpanel,body[data-view="info"] .infopanel{animation:none}}
-  .mp-title{font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.3;margin:14px 2px 0}
+  .mp-title{font-size:var(--fs-2);font-weight:700;letter-spacing:-.02em;line-height:1.3;margin:14px 2px 0}
   .mp-empty{padding:26px 18px}
 
   /* ---------- 맛집 뷰 카드 (dining 탭) ---------- */
-  .dn-lead,.g-lead{font-size:13px;line-height:1.6;color:var(--ink-2);margin:8px 2px 0}
-  .dn-sect{display:flex;align-items:baseline;gap:6px;font-size:12.5px;font-weight:700;color:var(--cap);margin:24px 2px 0}
-  .dn-sect-n{font-size:11.5px;font-weight:600;color:var(--sub-ink);font-variant-numeric:tabular-nums}
-  .dn-sect-cap{font-size:12px;line-height:1.55;color:var(--sub-ink);margin:4px 2px 0}
+  .dn-lead,.g-lead{font-size:var(--fs-5);line-height:1.6;color:var(--ink-2);margin:8px 2px 0}
+  .dn-sect{display:flex;align-items:baseline;gap:6px;font-size:var(--fs-5);font-weight:700;color:var(--cap);margin:var(--sp-sect) 2px 0}
+  .dn-sect-n{font-size:var(--fs-6);font-weight:600;color:var(--sub-ink);font-variant-numeric:tabular-nums}
+  .dn-sect-cap{font-size:var(--fs-6);line-height:1.55;color:var(--sub-ink);margin:4px 2px 0}
   /* 칩 필터 - 무상태 토글 (선택된 칩만 잉크 배경, 세그먼트 바와 같은 문법) */
   .dn-flt{display:flex;flex-wrap:wrap;gap:6px;margin:12px 2px 0}
-  .fchip{min-height:36px;border:0;border-radius:999px;background:var(--card);box-shadow:0 1px 2px rgba(25,27,30,.04);color:var(--pt);font-family:inherit;font-size:12.5px;font-weight:700;letter-spacing:-.01em;padding:0 14px;-webkit-tap-highlight-color:transparent}
+  .fchip{min-height:36px;border:0;border-radius:var(--r-pill);background:var(--card);box-shadow:0 1px 2px rgba(25,27,30,.04);color:var(--pt);font-family:inherit;font-size:var(--fs-5);font-weight:700;letter-spacing:-.01em;padding:0 14px;-webkit-tap-highlight-color:transparent}
   .fchip.on{background:var(--ink);color:var(--card)}
-  .dncard{margin-top:12px}
+  .dncard{margin-top:var(--sp-gap)}
   /* 방금 보던 일정의 그 식당 - 비교 기준을 고정해 주는 회색 표시 (누를 수 없음) */
-  .dn-now{display:inline-flex;align-items:center;border-radius:999px;background:var(--soft);color:var(--cap);padding:5px 10px;font-size:11.5px;font-weight:600;line-height:1}
+  .dn-now{display:inline-flex;align-items:center;border-radius:var(--r-pill);background:var(--soft);color:var(--cap);padding:5px 10px;font-size:var(--fs-6);font-weight:600;line-height:1}
   .dn-head{display:flex;align-items:flex-start;gap:12px}
   .dn-main{flex:1 1 auto;min-width:0}
-  .dn-name{font-size:16px;font-weight:700;letter-spacing:-.015em;line-height:1.35}
+  .dn-name{font-size:var(--fs-3);font-weight:700;letter-spacing:-.015em;line-height:1.35}
   .dn-emoji,.ev-emoji,.tr-emoji{font-style:normal}
-  .dn-area{font-size:12.5px;color:var(--cap);line-height:1.5;margin-top:3px}
+  .dn-area{font-size:var(--fs-5);color:var(--cap);line-height:1.5;margin-top:3px}
   .dn-score{flex:0 0 auto;display:flex;align-items:baseline;gap:2px}
-  .dn-score-n{font-size:26px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}
-  .dn-score-u{font-size:12px;font-weight:600;color:var(--cap)}
+  .dn-score-n{font-size:var(--fs-1);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}
+  .dn-score-u{font-size:var(--fs-6);font-weight:600;color:var(--cap)}
   .dn-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
-  .dn-tag{display:inline-flex;align-items:center;border-radius:999px;background:var(--soft);color:var(--ink-2);padding:5px 10px;font-size:11.5px;font-weight:600;line-height:1}
-  .dn-chip{display:inline-flex;align-items:center;border-radius:999px;background:var(--warn-bg);color:var(--warn);padding:5px 10px;font-size:11.5px;font-weight:600;line-height:1}
+  .dn-tag{display:inline-flex;align-items:center;border-radius:var(--r-pill);background:var(--soft);color:var(--ink-2);padding:5px 10px;font-size:var(--fs-6);font-weight:600;line-height:1}
+  .dn-chip{display:inline-flex;align-items:center;border-radius:var(--r-pill);background:var(--warn-bg);color:var(--warn);padding:5px 10px;font-size:var(--fs-6);font-weight:600;line-height:1}
   .dn-menu{list-style:none;margin-top:11px}
   .dn-mrow{display:flex;align-items:baseline;gap:11px;padding:7px 0}
   .dn-mrow+.dn-mrow{border-top:1px solid var(--div)}
-  .dn-mname{flex:1 1 auto;min-width:0;font-size:13.5px;font-weight:600;line-height:1.45}
-  .dn-mprice{flex:0 0 auto;font-size:14px;font-weight:700;font-variant-numeric:tabular-nums}
-  .dn-resv{font-size:12.5px;line-height:1.6;color:var(--cap);margin-top:10px}
+  .dn-mname{flex:1 1 auto;min-width:0;font-size:var(--fs-4);font-weight:600;line-height:1.45}
+  .dn-mprice{flex:0 0 auto;font-size:var(--fs-4);font-weight:700;font-variant-numeric:tabular-nums}
+  .dn-resv{font-size:var(--fs-5);line-height:1.6;color:var(--cap);margin-top:10px}
   .dn-links{display:flex;flex-wrap:wrap;gap:2px;margin-top:6px;margin-left:-8px}
-  .dn-links a{display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:0 8px;font-size:13px;font-weight:700;color:var(--pt);text-decoration:none;-webkit-tap-highlight-color:transparent}
+  .dn-links a{display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:0 8px;font-size:var(--fs-5);font-weight:700;color:var(--pt);text-decoration:none;-webkit-tap-highlight-color:transparent}
   .dn-links a .ic{width:14px;height:14px}
-  .dn-open{display:inline-flex;align-items:center;gap:4px;min-height:40px;padding:0 8px;font-size:12.5px;font-weight:700;color:var(--pt);text-decoration:none;-webkit-tap-highlight-color:transparent}
+  .dn-open{display:inline-flex;align-items:center;gap:4px;min-height:40px;padding:0 8px;font-size:var(--fs-5);font-weight:700;color:var(--pt);text-decoration:none;-webkit-tap-highlight-color:transparent}
   .dn-open .ic{width:13px;height:13px}
 
   /* ---------- 여행 정보 뷰 카드 (info 탭 - guide[]) ---------- */
   .gcard{padding:0;overflow:hidden}
   .gcard summary{display:flex;align-items:center;gap:12px;min-height:64px;padding:11px 16px;cursor:pointer;list-style:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
   .gcard summary::-webkit-details-marker{display:none}
-  .g-ic{flex:0 0 auto;display:grid;place-items:center;width:40px;height:40px;border-radius:13px;background:var(--pt-soft);font-size:19px;line-height:1;font-style:normal}
-  .g-title{flex:1 1 auto;min-width:0;font-size:15px;font-weight:700;letter-spacing:-.015em;line-height:1.4;color:var(--pt)}
+  .g-ic{flex:0 0 auto;display:grid;place-items:center;width:40px;height:40px;border-radius:var(--r-sm);background:var(--pt-soft);font-size:var(--fs-2);line-height:1;font-style:normal}
+  .g-title{flex:1 1 auto;min-width:0;font-size:var(--fs-4);font-weight:700;letter-spacing:-.015em;line-height:1.4;color:var(--pt)}
   .g-chev{flex:0 0 auto;width:12px;height:12px;color:var(--sub);transition:transform .15s ease}
   .gcard[open] .g-chev{transform:rotate(90deg)}
-  .g-body{padding:0 16px 16px;font-size:13.5px;line-height:1.75;color:var(--ink-2);white-space:pre-line}
+  .g-body{padding:0 16px 16px;font-size:var(--fs-4);line-height:1.75;color:var(--ink-2);white-space:pre-line}
   .g-body a{color:var(--pt);font-weight:600;text-decoration:underline;text-underline-offset:2px;word-break:break-all}
 
   /* ---------- 이동 배지 (events[].transit) ---------- */
-  .transit{background:var(--soft);border-radius:14px;padding:11px 13px;margin-top:10px}
+  .transit{background:var(--soft);border-radius:var(--r-thumb);padding:11px 13px;margin-top:10px}
   .tr-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .tr-main{font-size:13.5px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
-  .tr-ok{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:var(--ink-2)}
+  .tr-main{font-size:var(--fs-4);font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+  .tr-ok{display:inline-flex;align-items:center;gap:4px;font-size:var(--fs-6);font-weight:600;color:var(--ink-2)}
   .tr-ok .ic{width:13px;height:13px;color:var(--ok-ink)}
-  .tr-tent{display:inline-flex;align-items:center;border-radius:999px;background:var(--warn-bg);color:var(--warn);padding:4px 9px;font-size:11.5px;font-weight:600;line-height:1}
-  .tr-route{display:inline-flex;align-items:center;gap:4px;margin-left:auto;min-height:32px;padding:0 4px;font-size:12.5px;font-weight:700;color:var(--pt);text-decoration:none;-webkit-tap-highlight-color:transparent}
+  .tr-tent{display:inline-flex;align-items:center;border-radius:var(--r-pill);background:var(--warn-bg);color:var(--warn);padding:4px 9px;font-size:var(--fs-6);font-weight:600;line-height:1}
+  .tr-route{display:inline-flex;align-items:center;gap:4px;margin-left:auto;min-height:32px;padding:0 4px;font-size:var(--fs-5);font-weight:700;color:var(--pt);text-decoration:none;-webkit-tap-highlight-color:transparent}
   .tr-route .ic{width:13px;height:13px}
   .tr-more{margin-top:4px}
 
   /* ---------- 탭 어포던스 (보라 = 누를 수 있다 · 눌림/호버 피드백) ---------- */
   .vlinks a,.stay-addr a,.more summary,.tinfo summary,.onsite summary,.gcard summary,.tbd a,.tel a,.chk label,.routebtn,.os-cta,.dayrow a,.fab a,.vthumb,.daymap figcaption a,footer a,.lead a,.box a,.ti-text a,.os-text a,.g-body a,.dn-links a,.dn-open,.tr-route,.dn-resv a,.pfbtn,.fchip,.os-jump{transition:opacity .12s ease,background-color .12s ease,transform .12s ease}
   .vlinks a:active,.stay-addr a:active,.more summary:active,.daymap figcaption a:active,footer a:active,.lead a:active,.box a:active,.ti-text a:active,.os-text a:active,.g-body a:active,.dn-links a:active,.dn-open:active,.tr-route:active,.dn-resv a:active{opacity:.6}
-  .tbd a:active,.tel a:active,.chk label:active{background:var(--soft);border-radius:12px}
+  .tbd a:active,.tel a:active,.chk label:active{background:var(--soft);border-radius:var(--r-sm)}
   .onsite summary:active,.gcard summary:active,.os-jump:active{background:var(--soft)}
   .tinfo summary:active{background:var(--div);transform:scale(.98)}
   .routebtn:active,.os-cta:active{transform:scale(.98)}
@@ -378,7 +419,7 @@
   @media (hover:hover) and (pointer:fine){
     .vlinks a,.stay-addr a,.more summary,.tinfo summary,.onsite summary,.gcard summary,.tbd a,.tel a,.chk label,.routebtn,.os-cta,.dayrow a,.fab a,.vthumb,.daymap figcaption a,footer a,.lead a,.box a,.ti-text a,.os-text a,.g-body a,.dn-links a,.dn-open,.tr-route,.dn-resv a,.pfbtn,.fchip,.os-jump{cursor:pointer}
     .vlinks a:hover,.stay-addr a:hover,.more summary:hover,.daymap figcaption a:hover,footer a:hover,.lead a:hover,.box a:hover,.ti-text a:hover,.os-text a:hover,.g-body a:hover,.dn-links a:hover,.dn-open:hover,.tr-route:hover,.dn-resv a:hover{opacity:.75}
-    .tbd a:hover,.tel a:hover,.chk label:hover{background:var(--soft);border-radius:12px}
+    .tbd a:hover,.tel a:hover,.chk label:hover{background:var(--soft);border-radius:var(--r-sm)}
     .onsite summary:hover,.gcard summary:hover,.os-jump:hover{background:var(--soft)}
     .tinfo summary:hover{background:var(--div)}
     .dayrow a:not(.on):hover,.pfbtn:not(.on):hover,.fchip:not(.on):hover{background:var(--soft)}
@@ -418,7 +459,6 @@
 
 <svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
   <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 22s-7.5-5.7-7.5-11.7a7.5 7.5 0 0 1 15 0C19.5 16.3 12 22 12 22z"/><circle cx="12" cy="10.3" r="2.8"/></symbol>
-  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24"><path d="M4.5 12.5l5 5L19.5 7"/></symbol>
   <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 5.5l6.5 6.5L9 18.5"/></symbol>
   <symbol id="i-home" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></symbol>
@@ -452,60 +492,16 @@
 
 <div class="wrap overview">
 
-  <section class="card infocard" id="tripinfo" data-wx-lat="12.300991699999999" data-wx-lng="109.2382682" data-wx-tz="Asia/Ho_Chi_Minh" data-wx-start="2026-10-15" data-wx-end="2026-10-20">
+  <section class="card infocard" id="tripinfo" data-wx-lat="12.300991699999999" data-wx-lng="109.2382682" data-wx-tz="Asia/Ho_Chi_Minh" data-wx-start="2026-10-15" data-wx-end="2026-10-20" data-fx-base="VND" data-fx-symbol="₫" data-fx-api="erapi" data-fx-unit="10000" data-fx-unit-label="1만동" data-fx-cells='[{"amount": 10000, "label": "1\ub9cc\ub3d9"}, {"amount": 50000, "label": "5\ub9cc\ub3d9"}, {"amount": 100000, "label": "10\ub9cc\ub3d9"}]' hidden>
     <div class="ib" id="wx" hidden>
       <div class="ib-head"><span class="ib-h">현지 날씨</span><span class="ib-cap" id="wxcap" hidden></span></div>
       <div class="wx-row" id="wxrow"></div>
     </div>
-    <details class="tinfo">
-      <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>알아두면 좋은 것</summary>
-      <div class="ti-rows">
-        <div class="ti-row">
-          <p class="ti-label">시차</p>
-          <p class="ti-text">한국보다 2시간 느려요. 한국 낮 12시가 나트랑 오전 10시예요.</p>
-        </div>
-        <div class="ti-row">
-          <p class="ti-label">통화·결제</p>
-          <p class="ti-text">베트남 동(VND)을 써요. 큰 곳은 카드가 되고, 시장이나 작은 가게는 현금이 편해요. 그랩 앱에 카드를 미리 등록해 두세요.</p>
-        </div>
-        <div class="ti-row">
-          <p class="ti-label">현금은 이만큼</p>
-          <p class="ti-text">여섯 명이 닷새 지내는 데 현금은 300만~500만 동, 우리 돈으로 17만~28만 원쯤이면 넉넉해요. 일정에 넣은 식당과 마트는 대부분 카드가 되고 그랩도 앱으로 결제하니, 현금은 시장과 팁, 빈원더스 유모차 보증금 50만 동처럼 카드가 안 되는 자리에 써요.</p>
-        </div>
-        <div class="ti-row">
-          <p class="ti-label">환전은 이렇게</p>
-          <p class="ti-text">한국에서 미국 달러 신권으로 바꿔 가서 나트랑 은행 창구에서 동으로 바꾸는 방법이 가장 유리해요. 원화 현찰을 베트남에서 바로 바꾸면 100만 원당 10만 원 넘게 손해를 봐요. 공항에서는 첫 택시와 유심에 쓸 만큼만 바꾸고 나머지는 시내 은행에서 바꾸세요. 금은방 환전은 2026년 2월부터 단속 대상이라 하지 않아요.</p>
-        </div>
-        <div class="ti-row">
-          <p class="ti-label">전압·플러그</p>
-          <p class="ti-text">베트남은 220V를 써요. 콘센트는 둥근 2핀이 흔하니 멀티 어댑터를 챙기면 어디서든 충전할 수 있어요.</p>
-        </div>
-        <div class="ti-row">
-          <p class="ti-label">수돗물</p>
-          <p class="ti-text">수돗물은 마시지 않아요. 생수를 사서 마시고 아이 물도 생수로 준비해요.</p>
-        </div>
-        <div class="ti-row">
-          <p class="ti-label">경찰 신고</p>
-          <p class="ti-text">베트남 경찰 신고는 <a href="tel:113">113</a>이에요.</p>
-        </div>
-        <div class="ti-row">
-          <p class="ti-label">구급차</p>
-          <p class="ti-text">구급차가 필요하면 <a href="tel:115">115</a>예요.</p>
-        </div>
-        <div class="ti-row">
-          <p class="ti-label">소방 신고</p>
-          <p class="ti-text">화재 신고는 <a href="tel:114">114</a>예요.</p>
-        </div>
-        <div class="ti-row">
-          <p class="ti-label">주호치민 총영사관</p>
-          <p class="ti-text">나트랑은 주호치민 대한민국 총영사관 관할이에요. 근무시간 외 긴급 상황은 <a href="tel:+84938500238">+84-93-850-0238</a>로 연락하면 돼요.</p>
-        </div>
-        <div class="ti-row">
-          <p class="ti-label">영사콜센터</p>
-          <p class="ti-text">서울 영사콜센터는 <a href="tel:+82232100404">+82-2-3210-0404</a>로 24시간 열려 있어요. 사건이나 사고를 당했을 때, 통역이 필요할 때 도움을 받을 수 있어요.</p>
-        </div>
-      </div>
-    </details>
+    <div class="ib" id="fx" hidden>
+      <div class="ib-head"><span class="ib-h">환율</span><span class="ib-cap" id="fxcap" hidden></span></div>
+      <p class="fx-main" id="fxmain"></p>
+      <div class="fx-grid" id="fxgrid"></div>
+    </div>
   </section>
 
   <section class="card">
@@ -522,7 +518,7 @@
     <p class="lead">영락네가 10월 15일 목요일에 하루 먼저 도착하고, 영두네가 다음 날인 16일 금요일에 합류해요. 돌아오는 19일 밤 비행기는 두 가족이 함께 탑니다.</p>
     <details class="more">
       <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>더 알아두기</summary>
-      <div class="box">리조트에서 지내는 시간이 길어서, 전용 풀과 부대시설을 여유 있게 즐기는 리듬이에요. 하루는 두 가족이 따로 보내요. 영락네는 빈원더스로 종일 나가고, 영두네는 리조트에 남아 은솔이 낮잠 리듬을 지켜요. 10월 중순 나트랑은 오전에 맑고 오후에 소나기가 잦으니, 나가는 날엔 우산을 챙기고 비가 오면 실내 아쿠아리움처럼 지붕 있는 곳으로 옮겨 다니면 돼요.</div>
+      <div class="box">리조트에서 지내는 시간이 길어서, 전용 풀과 부대시설을 여유 있게 즐기는 리듬이에요. 하루는 두 가족이 따로 보내요. 영락네는 빈원더스로 종일 나가고, 영두네는 리조트에 남아 은솔이 낮잠 리듬을 지켜요.</div>
     </details>
   </section>
 
@@ -571,15 +567,22 @@
 <span class="t-tz">한국 시각</span>          <span class="ev-flex"></span>
 <span class="stchip"><span class="stdot"></span>확정</span>        </div>
         <h3 class="ev-h">인천공항 T1 출발 — 영락네</h3>
-        <p class="brief"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span>베트남항공 VN441이에요. 터미널1에서 출발해요.</span></p>
-<p class="lead">베트남항공 VN441편이에요. 비행시간은 4시간 55분이에요.</p>      </article>
+        <div class="l1">
+          <dl class="l1-facts">
+            <dt>편명</dt>
+            <dd><span class="l1-v">베트남항공 VN441</span></dd>
+            <dt>비행시간</dt>
+            <dd><span class="l1-v">4시간 55분</span></dd>
+          </dl>
+        </div>
+      </article>
       <article class="evcard" data-time="09:45" data-party="yeongrak">
         <div class="ev-top">
           <span class="t">09:45</span>
           <span class="ev-flex"></span>
 <span class="stchip"><span class="stdot"></span>확정</span>        </div>
         <h3 class="ev-h">깜라인 국제공항(CXR) 도착 — 영락네</h3>
-<p class="lead">나트랑은 한국보다 2시간 느려요. 도착하면 현지 시각으로 오전 9시 45분이에요.</p>      </article>
+      </article>
       <article class="evcard" data-time="10:30" data-party="yeongrak">
         <div class="ev-top">
           <span class="t">10:30</span>
@@ -591,12 +594,10 @@
             <span class="tr-main"><span class="tr-emoji" aria-hidden="true">🚗</span> 그랩 7인승 · 60분</span>
             <span class="tr-ok"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>확정</span>
 <a class="tr-route" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EA%B9%9C%EB%9D%BC%EC%9D%B8%20%EA%B5%AD%EC%A0%9C%EA%B3%B5%ED%95%AD&amp;destination=%EB%B9%8C%EB%9D%BC%20%EB%A5%B4%20%EC%BD%94%EB%9D%BC%EC%9D%B4&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>          </div>
+          <p class="tr-eta"><span class="tr-t">10:30</span> 출발 → <span class="tr-t">11:30</span> 도착</p>
           <details class="more tr-more">
             <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
-            <div class="box">깜라인 공항에서 리조트까지 약 46~48km, 구글맵 자동차 기준 약 55분이고 실제로는 55~70분 걸렸다는 후기가 많아요. 짐이 있으면 7인승을 부르세요. 그랩 요금은 시내까지가 25만~35만 동이고, 리조트는 시내보다 북쪽이라 45만~60만 동쯤 나와요.
-
-그랩과 택시에는 카시트가 없어서 아이를 안고 가게 돼요. 카시트를 원하면 나트랑 프라이빗 카가 무료로 준비해 주니 왓츠앱으로 미리 요청하면 돼요.
-</div>
+            <div class="box">46~48km 길이고 실제로는 55~70분 걸렸다는 후기가 많아요. 짐이 있으니 7인승을 부르세요.</div>
           </details>
         </div>
       </article>
@@ -620,7 +621,7 @@
             <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
           </a>
         </div>
-<p class="lead">얼리 체크인이 되면 빌라에 짐을 풀고, 안 되면 로비에 짐을 맡긴 뒤 나투라에서 점심을 먹어요. 나투라는 오전 11시 반부터 점심을 열어요. 수영장 옆 살 풀바에서 가볍게 먹어도 좋아요.</p>        <div class="os-band" aria-hidden="true"></div>
+<p class="lead">얼리 체크인이 되면 빌라에 짐을 풀고, 안 되면 로비에 맡긴 뒤 자리에 앉아요. 수영장 옆 살 풀바에서 가볍게 먹어도 좋아요.</p>        <div class="os-band" aria-hidden="true"></div>
         <a class="os-jump" href="#dining/d1-e4" data-dining="d1-e4">
           <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>나투라 (Natura) 현장 가이드 보기
           <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
@@ -632,9 +633,9 @@
           <span class="ev-flex"></span>
         </div>
         <h3 class="ev-h">체크인 전 시간 보내기</h3>
-<p class="lead">점심을 먹고 나면 체크인까지 세 시간쯤 남아요. 얼리 체크인이 되면 바로 빌라에 들어가 짐을 풀고 지우를 낮잠 재워요. 안 되면 로비에 짐을 맡기고 수영장 옆 살 풀바에서 음료를 마시거나 2층 키즈클럽을 둘러보며 기다려요.</p>        <details class="more">
+<p class="lead">얼리 체크인이 되면 바로 빌라에 들어가 지우를 낮잠 재워요. 안 되면 로비에 짐을 맡기고 살 풀바에서 음료를 마시거나 2층 키즈클럽을 둘러보며 기다려요.</p>        <details class="more">
           <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
-          <div class="box">새벽 비행기로 온 날이라 이 시간에 무리해서 밖으로 나가지 않아요. 기다리는 동안 샤워실을 쓸 수 있는지 프런트에 물어보면 땀을 씻고 개운하게 기다릴 수 있어요.</div>
+          <div class="box">새벽 비행기로 온 날이라 무리해서 밖으로 나가지 않아요.</div>
         </details>
       </article>
       <article class="evcard" data-time="15:00" data-party="yeongrak">
@@ -657,15 +658,23 @@
             <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
           </a>
         </div>
-        <p class="brief"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span>체크인은 오후 3시예요. 얼리 체크인이 되는지 물어보세요.</span></p>
-<p class="lead">정식 체크인은 오후 3시예요. 도착이 일러서 얼리 체크인이 되는지 프런트에 물어봐요.</p>      </article>
+        <div class="l1">
+          <label class="l1-todo"><input type="checkbox" data-todo="d1-e5-1"><span>몇 시부터 되는지, 요금과 대기 중 샤워실 이용을 물어보세요.</span></label>
+          <label class="l1-todo"><input type="checkbox" data-todo="d1-e5-2"><span>21개월도 들어갈 수 있는지, 보호자가 함께 있어야 하는지 확인하세요.</span></label>
+          <label class="l1-todo"><input type="checkbox" data-todo="d1-e5-3"><span>두 빌라 모두에 아기침대를 요청하세요. 무료예요.</span></label>
+          <label class="l1-todo"><input type="checkbox" data-todo="d1-e5-4"><span>19일 오후 6시까지 쓰도록 두 빌라 모두 확정해 두세요.</span></label>
+          <label class="l1-todo"><input type="checkbox" data-todo="d1-e5-5"><span>확정서에 조식이 포함인지, 두 아이가 무료인지 확인하세요.</span></label>
+          <label class="l1-todo"><input type="checkbox" data-todo="d1-e5-6"><span>셔틀버스를 운행하는지와 시각표를 프런트에서 받아 두세요.</span></label>
+          <label class="l1-todo"><input type="checkbox" data-todo="d1-e5-7"><span>밤에 아이가 아프면 어디로 연락하는지, 당직 의사가 있는지 물어보세요.</span></label>
+        </div>
+      </article>
       <article class="evcard" data-time="16:00" data-party="yeongrak">
         <div class="ev-top">
           <span class="t">16:00</span>
           <span class="ev-flex"></span>
         </div>
         <h3 class="ev-h">빌라 전용 풀에서 첫 물놀이</h3>
-<p class="lead">체크인하고 빌라 전용 풀에서 가볍게 물놀이하며 리조트에 적응해요. 긴 이동 뒤라 무리하지 않아요.</p>      </article>
+<p class="lead">긴 이동 뒤라 무리하지 않고 가볍게 놀아요.</p>      </article>
       <article class="evcard" data-time="18:30" data-party="yeongrak">
         <div class="ev-top">
           <span class="t">18:30</span>
@@ -676,6 +685,7 @@
           <div class="ev-vmain">
             <p class="vname">일미오</p>
 <p class="vaddr">02 Phạm Văn Đồng, Bắc Nha Trang, Nha Trang, Khánh Hòa 외 2개 지점</p>            <p class="vhours"><span class="vh-t">매일 10:00–22:00</span><span class="vh-s">구글 07/26 확인</span></p>
+            <p class="vmeta"><span class="vm">로비에서 받아요</span></p>
             <p class="vlinks">
 <a href="https://www.google.com/maps/search/IL+MIO+Pizza+Pasta+Nha+Trang" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://search.naver.com/search.naver?query=%EC%9D%BC%EB%AF%B8%EC%98%A4%20%EB%82%98%ED%8A%B8%EB%9E%91" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>네이버</a><a href="https://www.google.com/search?q=%EC%9D%BC%EB%AF%B8%EC%98%A4%20Nha%20Trang" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>구글</a><a class="dn-open" href="#dining/d1-e7" data-dining="d1-e7"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg>다른 데 갈래</a>            </p>
           </div>
@@ -687,15 +697,13 @@
             <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
           </a>
         </div>
-<p class="lead">첫날은 새벽 비행과 긴 이동으로 지치니 리조트에서 배달로 편하게 먹어요. 일미오는 우리 리조트까지 실제로 배달된 후기가 있는 곳이라 첫날 저녁으로 안전해요. 배달K로 화덕피자와 볼로네제 파스타를 시키면 아이들이 낯가림 없이 잘 먹어요. 배달원이 빌라까지 들어오지 못하니 받을 곳은 로비나 정문으로 적어 두세요. 도착하면 바로 그랩마트로 맥주와 물, 간식을 시켜 채워 둬요. 은솔이 기저귀와 물티슈는 집에서 챙겨 왔으니 따로 안 시켜도 돼요.</p>        <details class="more">
+<p class="lead">새벽 비행과 긴 이동으로 지친 날이라 빌라에서 편하게 먹어요. 우리 리조트까지 실제로 온 후기가 있는 곳이라 첫날에 안전해요. 아이들이 낯가림 없이 잘 먹는 메뉴예요.</p>        <details class="more">
           <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
-          <div class="box">힘이 남으면 시내로 나가 목식당이나 마담프엉에서 먹어도 좋아요. 맥주와 막걸리는 케이마트 배달로도 받을 수 있어요.</div>
+          <div class="box">힘이 남으면 시내로 나가 목식당이나 마담프엉에서 먹어도 좋아요.</div>
         </details>
-        <div class="os-band" aria-hidden="true"></div>
-        <a class="os-jump" href="#dining/d1-e7" data-dining="d1-e7">
-          <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>일미오 현장 가이드 보기
-          <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
-        </a>
+        <div class="l1">
+          <label class="l1-todo"><input type="checkbox" data-todo="d1-e7-1"><span>그랩마트로 맥주와 물, 간식을 시켜 빌라를 채워 두세요.</span></label>
+        </div>
       </article>
     </div>
   </section>
@@ -727,8 +735,15 @@
 <span class="t-tz">한국 시각</span>          <span class="ev-flex"></span>
 <span class="pchip">영두네만</span><span class="stchip"><span class="stdot"></span>확정</span>        </div>
         <h3 class="ev-h">인천공항 T1 출발 — 영두네</h3>
-        <p class="brief"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span>베트남항공 VN441이에요. 터미널1에서 출발해요.</span></p>
-<p class="lead">베트남항공 VN441편이에요. 비행시간은 4시간 55분이에요.</p>      </article>
+        <div class="l1">
+          <dl class="l1-facts">
+            <dt>편명</dt>
+            <dd><span class="l1-v">베트남항공 VN441</span></dd>
+            <dt>비행시간</dt>
+            <dd><span class="l1-v">4시간 55분</span></dd>
+          </dl>
+        </div>
+      </article>
       <article class="evcard" data-time="08:00" data-party="yeongrak">
         <div class="ev-top">
           <span class="t">08:00</span>
@@ -749,7 +764,7 @@
             <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
           </a>
         </div>
-<p class="lead">리조트 나투라에서 아침을 먹어요. 조식은 아침 7시부터 10시 반까지예요.</p>        <div class="os-band" aria-hidden="true"></div>
+        <div class="os-band" aria-hidden="true"></div>
         <a class="os-jump" href="#dining/d2-e7" data-dining="d2-e7">
           <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>나투라 (Natura) 현장 가이드 보기
           <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
@@ -761,7 +776,7 @@
           <span class="ev-flex"></span>
 <span class="pchip">영락네만</span>        </div>
         <h3 class="ev-h">빌라 풀과 전용 해변</h3>
-<p class="lead">영두네가 오는 동안 빌라 전용 풀과 전용 해변에서 놀고, 2층 키즈클럽도 둘러봐요.</p>      </article>
+<p class="lead">영두네가 오는 동안 아이들과 놀아요. 2층 키즈클럽도 둘러봐요.</p>      </article>
       <article class="evcard" data-time="09:45" data-party="yeongdu">
         <div class="ev-top">
           <span class="t">09:45</span>
@@ -780,9 +795,10 @@
             <span class="tr-main"><span class="tr-emoji" aria-hidden="true">🚗</span> 그랩 7인승 · 60분</span>
             <span class="tr-ok"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>확정</span>
 <a class="tr-route" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EA%B9%9C%EB%9D%BC%EC%9D%B8%20%EA%B5%AD%EC%A0%9C%EA%B3%B5%ED%95%AD&amp;destination=%EB%B9%8C%EB%9D%BC%20%EB%A5%B4%20%EC%BD%94%EB%9D%BC%EC%9D%B4&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>          </div>
+          <p class="tr-eta"><span class="tr-t">10:30</span> 출발 → <span class="tr-t">11:30</span> 도착</p>
           <details class="more tr-more">
             <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
-            <div class="box">영두네도 공항에서 그랩 7인승으로 리조트까지 와요. 구글맵 자동차 기준 약 55분이고 실제로는 한 시간 남짓 걸려요. 요금은 45만~60만 동쯤이에요.</div>
+            <div class="box">영락네가 어제 온 길과 같아요.</div>
           </details>
         </div>
       </article>
@@ -806,7 +822,7 @@
             <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
           </a>
         </div>
-<p class="lead">영두네가 도착하기 전에 나투라에서 가볍게 점심을 먹어요. 수영장 옆 살 풀바에서 간단히 먹어도 좋아요.</p>        <div class="os-band" aria-hidden="true"></div>
+<p class="lead">영두네가 도착하기 전에 가볍게 먹어요. 수영장 옆 살 풀바도 좋아요.</p>        <div class="os-band" aria-hidden="true"></div>
         <a class="os-jump" href="#dining/d2-e9" data-dining="d2-e9">
           <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>나투라 (Natura) 현장 가이드 보기
           <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
@@ -818,14 +834,14 @@
           <span class="ev-flex"></span>
         </div>
         <h3 class="ev-h">리조트 로비에서 짐 맡기고 두 가족 합류</h3>
-<p class="lead">영두네가 도착하면 로비에 짐을 맡기고, 오후 3시 체크인 전까지 두 가족이 함께 놀아요.</p>      </article>
+      </article>
       <article class="evcard" data-time="12:30" data-party="all">
         <div class="ev-top">
           <span class="t">12:30</span>
           <span class="ev-flex"></span>
         </div>
         <h3 class="ev-h">두 가족 오후 — 빌라 풀과 해변</h3>
-<p class="lead">체크인 전까지 두 가족이 함께 빌라 전용 풀과 전용 해변에서 놀아요. 짐은 로비에 맡겨 둬요.</p>      </article>
+      </article>
       <article class="evcard" data-time="15:00" data-party="yeongdu">
         <div class="ev-top">
           <span class="t">15:00</span>
@@ -846,7 +862,10 @@
             <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
           </a>
         </div>
-<p class="lead">영두네도 같은 빌라동에서 오후 3시에 체크인해요.</p>      </article>
+        <div class="l1">
+          <label class="l1-todo"><input type="checkbox" data-todo="d2-e3-1"><span>아기침대와 조식 포함 여부, 레이트 체크아웃을 다시 확인하세요.</span></label>
+        </div>
+      </article>
       <article class="evcard" data-time="18:30" data-party="all">
         <div class="ev-top">
           <span class="t">18:30</span>
@@ -857,6 +876,7 @@
           <div class="ev-vmain">
             <p class="vname">마담프엉</p>
 <p class="vaddr">34F Nguyễn Thiện Thuật, Tân Lập, Nha Trang, Khánh Hòa</p>            <p class="vhours"><span class="vh-t">매일 11:00–22:00</span><span class="vh-s">구글 07/26 확인</span></p>
+            <p class="vmeta"><span class="vm">숙소에서 그랩 35분</span></p>
             <p class="vlinks">
 <a href="https://www.google.com/maps/search/?api=1&amp;query=Madam+Phuong+34F+Nguyen+Thien+Thuat+Nha+Trang" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%B9%8C%EB%9D%BC%20%EB%A5%B4%20%EC%BD%94%EB%9D%BC%EC%9D%B4%20%28Villa%20Le%20Corail%2C%20A%20Gran%20Meli%C3%A1%29%2C%20B%C3%A3i%20Ti%C3%AAn%2C%20%C4%90%C6%B0%E1%BB%9Dng%20%C4%90%E1%BB%87%2C%20B%E1%BA%AFc%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a%2C%20Vietnam&amp;destination=%EB%A7%88%EB%8B%B4%ED%94%84%EC%97%89%2C%2034F%20Nguy%E1%BB%85n%20Thi%E1%BB%87n%20Thu%E1%BA%ADt%2C%20T%C3%A2n%20L%E1%BA%ADp%2C%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a><a href="https://search.naver.com/search.naver?query=%EB%A7%88%EB%8B%B4%ED%94%84%EC%97%89%20%EB%82%98%ED%8A%B8%EB%9E%91" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>네이버</a><a href="https://www.google.com/search?q=%EB%A7%88%EB%8B%B4%ED%94%84%EC%97%89%20Nha%20Trang" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>구글</a><a class="dn-open" href="#dining/d2-e6" data-dining="d2-e6"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg>다른 데 갈래</a>            </p>
           </div>
@@ -870,11 +890,11 @@
         </div>
         <details class="more resv">
           <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>예약 안내</summary>
-          <div class="box">점심·저녁 피크엔 웨이팅이 있을 수 있어요. 인스타그램 @madamphuong.nhatrang 로 미리 문의해 두면 유아 동반에 안전해요.</div>
+          <div class="box">온라인으로 미리 예약하세요. 인스타그램 @madamphuong.nhatrang 로 여섯 명 자리와 아기의자를 미리 문의해 두세요.</div>
         </details>
-<p class="lead">영두네가 합류한 첫 저녁이라 다 같이 시내로 나가 에어컨이 시원한 베트남 가정식을 먹어요. 쌀국수와 볶음밥처럼 아이들이 먹기 순한 메뉴가 많고 한국어 메뉴판도 있어요. 반주로 맥주 한잔 곁들이기 좋아요.</p>        <details class="more">
+<p class="lead">영두네가 합류한 날이라 시내로 나가 함께 먹어요. 쌀국수와 볶음밥처럼 아이들이 먹기 순한 메뉴가 많고 반주로 맥주 한잔 곁들이기 좋아요.</p>        <details class="more">
           <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
-          <div class="box">나서기 전, 저녁 6시 로비 테이아에서 무료로 내주는 칵테일 한 잔으로 저녁을 시작해도 좋아요. 다른 데가 당기면 맛집 목록에서 골라 바꿔도 돼요.</div>
+          <div class="box">나서기 전, 로비 테이아에서 무료로 내주는 칵테일 한 잔으로 시작해도 좋아요. 다른 데가 당기면 맛집 목록에서 골라 바꿔도 돼요.</div>
         </details>
         <div class="os-band" aria-hidden="true"></div>
         <a class="os-jump" href="#dining/d2-e6" data-dining="d2-e6">
@@ -886,9 +906,9 @@
   </section>
   <section class="day" id="d3" data-date="2026-10-17">
     <h2 class="day-title">10월 17일 토요일</h2>
-<p class="day-theme">영락네는 빈원더스, 영두네는 리조트</p><p class="lead day-lead">이 날은 두 가족이 따로 보내요. 영락네는 아침 일찍 나서서 빈원더스에서 종일 놀다 시내에서 저녁을 먹고 들어오고, 영두네는 리조트에 남아 은솔이 낮잠 리듬을 지키며 빌라 풀과 전용 해변에서 쉬어요. 지우는 낮잠을 이동하는 차 안이나 카페에서 안고 재우기로 했어요. 종일 코스라 무리가 있지만 이번 하루는 그렇게 하기로 했어요.</p>    <details class="more day-more">
+<p class="day-theme">영락네는 빈원더스, 영두네는 리조트</p><p class="lead day-lead">두 가족이 따로 보내는 날이에요. 영락네는 아침 일찍 나서서 빈원더스에서 종일 놀다 시내에서 저녁을 먹고 들어오고, 영두네는 리조트에 남아 은솔이 낮잠 리듬을 지켜요.</p>    <details class="more day-more">
       <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
-      <div class="box">저녁 7시 반 타타쇼는 화려하지만 지우 잘 시간과 겹치고 귀가가 늦어져, 이번엔 접고 낮의 동물과 아쿠아리움에 집중해요. 비 예보가 있으면 빈원더스에 가는 날과 리조트에서 쉬는 날의 순서를 바꿔도 돼요.</div>
+      <div class="box">저녁 7시 반 타타쇼는 화려하지만 지우 잘 시간과 겹치고 귀가가 늦어져 이번엔 접었어요. 비 예보가 있으면 빈원더스에 가는 날과 리조트에서 쉬는 날의 순서를 바꿔도 돼요.</div>
     </details>
     <section class="card mapcard">
       <figure class="daymap">
@@ -931,7 +951,7 @@
             <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
           </a>
         </div>
-<p class="lead">빈원더스로 일찍 나서는 날이라 나투라 조식을 문 여는 7시에 맞춰 먹어요.</p>        <div class="os-band" aria-hidden="true"></div>
+<p class="lead">빈원더스로 일찍 나서는 날이라 문 여는 시각에 맞춰 먹어요.</p>        <div class="os-band" aria-hidden="true"></div>
         <a class="os-jump" href="#dining/d3-e1" data-dining="d3-e1">
           <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>나투라 (Natura) 현장 가이드 보기
           <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
@@ -948,9 +968,10 @@
             <span class="tr-main"><span class="tr-emoji" aria-hidden="true">🚗</span> 그랩 4인승 · 40분</span>
             <span class="tr-ok"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>확정</span>
 <a class="tr-route" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%B9%8C%EB%9D%BC%20%EB%A5%B4%20%EC%BD%94%EB%9D%BC%EC%9D%B4&amp;destination=%EC%BC%80%EC%9D%B4%EB%B8%94%EC%B9%B4%20%EC%8A%B9%EA%B0%95%EC%9E%A5%20%28%EA%B9%8C%EC%9A%B0%EB%8B%A4%20%ED%95%AD%29&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>          </div>
+          <p class="tr-eta"><span class="tr-t">08:00</span> 출발 → <span class="tr-t">08:40</span> 도착</p>
           <details class="more tr-more">
             <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
-            <div class="box">리조트는 북쪽, 케이블카 승강장은 남쪽 까우다 항 옆이라 시내를 가로질러 구글맵 기준 약 35분, 실제로는 40분쯤 걸려요. 세 명이 짐 없이 움직이니 그랩 4인승 한 대면 돼요. 9시 개장에 맞춰 8시쯤 나서요.</div>
+            <div class="box">리조트는 북쪽, 승강장은 남쪽 까우다 항 옆이라 시내를 가로질러요. 세 명이 짐 없이 움직이니 4인승 한 대면 돼요.</div>
           </details>
         </div>
       </article>
@@ -974,7 +995,7 @@
             <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
           </a>
         </div>
-<p class="lead">영락네가 나선 뒤 느긋하게 아침을 먹어요. 조식은 아침 7시부터 10시 반까지라 서두를 일이 없어요. 즉석 쌀국수와 계란은 은솔이도 잘 먹어요.</p>        <div class="os-band" aria-hidden="true"></div>
+<p class="lead">영락네가 나선 뒤 서두르지 않고 먹어요. 즉석 쌀국수와 계란은 은솔이도 잘 먹어요.</p>        <div class="os-band" aria-hidden="true"></div>
         <a class="os-jump" href="#dining/d3-e8" data-dining="d3-e8">
           <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>나투라 (Natura) 현장 가이드 보기
           <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
@@ -1000,12 +1021,26 @@
             <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
           </a>
         </div>
-        <p class="brief"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span>2024년에는 10월 15일부터 11월 15일까지 케이블카가 쉬었어요. 우리 날짜와 그대로 겹치는 기간이라 2026년 10월에 운행하는지 9월 중순에 꼭 확인하세요. 운휴면 무료 스피드보트로 섬에 들어가요.</span></p>
-<p class="lead">케이블카를 타고 혼째 섬으로 들어가요. 오전에는 동물 먹이주기와 버드쇼, 아쿠아리움을 보고, 낮에는 워터파크에서 물놀이를 해요.</p>        <div class="os-band" aria-hidden="true"></div>
+<p class="lead">케이블카를 타고 혼째 섬으로 들어가요. 오전에는 동물 먹이주기와 버드쇼, 아쿠아리움을 보고 낮에는 물놀이를 해요.</p>        <div class="l1">
+          <p class="l1-warn">
+            <svg class="ic" aria-hidden="true"><use href="#i-bulb"/></svg>2024년에는 10월 15일부터 11월 15일까지 케이블카가 정기점검으로 쉬었어요. 우리 여행 주와 그대로 겹치는 기간이에요.
+          </p>
+          <dl class="l1-facts">
+            <dt>워터파크</dt>
+            <dd><span class="l1-v">10:00~17:30</span> <span class="l1-n">물놀이는 낮에 몰아서 해요. 유아용 스플래시존과 파도풀, 유수풀이 있어요</span></dd>
+            <dt>버드쇼</dt>
+            <dd><span class="l1-v">오전 11시</span> <span class="l1-n">앉아서 보는 공연이라 지우도 편하게 볼 수 있어요</span></dd>
+            <dt>유모차 대여</dt>
+            <dd><span class="l1-v">보증금 50만 동</span> <span class="l1-n">정문에서 빌려요. 현금만 받아요</span></dd>
+            <dt>주니어 주키퍼</dt>
+            <dd><span class="l1-v">만 4세부터</span> <span class="l1-n">지우는 아직 신청이 안 돼요. 킹스가든 기린 먹이주기로 대신해요</span></dd>
+          </dl>
+        </div>
+        <div class="os-band" aria-hidden="true"></div>
         <details class="onsite">
           <summary>
             <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>
-            <span class="os-sum">현장 가이드 · 메뉴와 팁 12개</span>
+            <span class="os-sum">현장 가이드 · 메뉴와 팁 9개</span>
 <span class="os-src">빈원더스 공식·2026년 가족 방문 후기·한국 여행 가이드 교차</span>            <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
           </summary>
           <div class="os-box">
@@ -1031,56 +1066,35 @@
               <svg class="ic os-tic" aria-hidden="true"><use href="#i-ticket"/></svg>
               <div class="os-tbody">
                 <p class="os-label">예매는 이렇게</p>
-                <p class="os-text">온라인 예매가 현장가보다 크게 싸지는 않지만, QR 코드로 매표 줄 없이 바로 들어가는 게 가장 큰 이점이에요. 방문 사나흘 전에 여러 예매처를 같은 날짜로 비교해 할인을 챙기세요. 성인 둘만 사면 되고, 지우는 키가 100cm를 넘지 않으면 현장에서 무료예요.</p>
-              </div>
-            </div>
-            <div class="os-tip">
-              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
-              <div class="os-tbody">
-                <p class="os-label">케이블카로 섬에 들어가요</p>
-                <p class="os-text">빈원더스는 혼째 섬에 있어 바다 위 케이블카로 들어가요. 리조트가 북쪽이고 케이블카 승강장은 남쪽 까우다 항 옆이라 이동에 시간이 걸려요. 2024년에는 10월 15일부터 11월 15일까지, 우리 여행 날짜와 그대로 겹치는 기간에 케이블카가 정기점검으로 쉬고 무료 스피드보트로 대체했어요. 우리 방문 주에도 운행하는지 9월 중순에 꼭 확인하세요.</p>
-              </div>
-            </div>
-            <div class="os-tip">
-              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
-              <div class="os-tbody">
-                <p class="os-label">동물 먹이주기와 버드쇼</p>
-                <p class="os-text">킹스가든의 기린 먹이주기 스테이션에서 지우가 직접 나뭇잎을 줄 수 있어요. 유료 주니어 주키퍼 체험은 만 4세부터라 지우는 아직 신청이 안 되니, 기린 먹이주기로 대신하면 좋아요. 앉아서 보는 버드쇼는 오전 11시에 있어 지우도 편하게 볼 수 있어요.</p>
+                <p class="os-text">온라인 예매가 현장가보다 크게 싸지는 않지만, QR 코드로 매표 줄 없이 바로 들어가는 게 가장 큰 이점이에요.</p>
               </div>
             </div>
             <div class="os-tip">
               <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
               <div class="os-tbody">
                 <p class="os-label">아쿠아리움</p>
-                <p class="os-text">실내 아쿠아리움은 에어컨이 시원해 한낮 더위나 소나기를 피하기 좋아요. 유리 터널에서 물고기를 코앞에서 보고, 인어쇼와 다이버 물고기 먹이주기도 볼 수 있어요. 정확한 공연 시각은 현장 안내에서 확인하세요.</p>
-              </div>
-            </div>
-            <div class="os-tip">
-              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
-              <div class="os-tbody">
-                <p class="os-label">워터파크</p>
-                <p class="os-text">워터파크에는 유아용 얕은 스플래시존과 파도풀, 유수풀이 있어 지우가 놀기 좋아요. 큰 슬라이드는 키 제한이 있어 어른만 타요. 워터파크는 오전 10시에 열어 오후 5시 반에 닫으니 물놀이는 낮에 몰아서 해요. 수영기저귀와 수건은 챙겨 가세요.</p>
+                <p class="os-text">에어컨이 시원해 한낮 더위나 소나기를 피하기 좋아요. 유리 터널과 인어쇼, 다이버 물고기 먹이주기를 볼 수 있어요.</p>
               </div>
             </div>
             <div class="os-tip">
               <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
               <div class="os-tbody">
                 <p class="os-label">지우 낮잠은 이렇게</p>
-                <p class="os-text">종일 코스라 지우는 낮잠을 이동하는 차 안이나 실내 카페에서 안고 재우기로 했어요. 아쿠아리움처럼 시원한 실내나 킹스가든 그늘 벤치에서 잠깐 눕혀 재우면 오후가 한결 수월해요. 유모차를 빌려 두면 잠든 아이를 눕히기 좋아요.</p>
+                <p class="os-text">종일 코스라 낮잠은 이동하는 차 안이나 실내 카페에서 안고 재워요. 유모차를 빌려 두면 잠든 아이를 눕히기 좋아요.</p>
               </div>
             </div>
             <div class="os-tip">
-              <svg class="ic os-tic" aria-hidden="true"><use href="#i-users"/></svg>
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
               <div class="os-tbody">
-                <p class="os-label">유아 편의</p>
-                <p class="os-text">유모차는 정문에서 빌릴 수 있는데 보증금 50만 동을 현금으로 내요. 지우는 걸을 수 있지만 부지가 넓어 오후에 지치니 유모차나 버기(카트)가 도움이 돼요. 500ml 이하 생수와 시판 간식은 들고 들어갈 수 있으니 지우 물과 간식을 챙겨 가세요.</p>
+                <p class="os-label">챙겨 갈 것</p>
+                <p class="os-text">500ml 이하 생수와 시판 간식은 들고 들어갈 수 있어요. 물놀이용 수영기저귀와 수건도 챙기세요.</p>
               </div>
             </div>
             <div class="os-tip">
               <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
               <div class="os-tbody">
                 <p class="os-label">섬 안 점심</p>
-                <p class="os-text">섬에 한 번 들어오면 나가서 먹기 어려워 점심은 섬 안에서 해결해요. 코랄 뷔페가 밥과 면, 과일이 두루 있어 지우가 먹기에 무난해요. 뷔페 점심은 오후 1시 전에 앉는 게 안전하고, 식사 바우처가 포함된 콤보 티켓을 사면 점심값을 덜 수 있어요.</p>
+                <p class="os-text">한 번 들어오면 나가서 먹기 어려워요. 코랄 뷔페가 밥과 면, 과일이 두루 있어 지우가 먹기에 무난해요.</p>
               </div>
             </div>
           </div>
@@ -1092,7 +1106,7 @@
           <span class="ev-flex"></span>
 <span class="pchip">영두네만</span>        </div>
         <h3 class="ev-h">빌라 전용 풀과 전용 해변</h3>
-<p class="lead">빌라 전용 풀에서 물놀이를 하고, 파도가 잔잔하면 전용 해변에도 나가 봐요. 21개월은 물에 오래 있으면 금세 지치니 삼십 분쯤 놀고 그늘에서 쉬기를 번갈아 하면 좋아요.</p>      </article>
+<p class="lead">21개월은 물에 오래 있으면 금세 지치니, 삼십 분쯤 놀고 그늘에서 쉬기를 번갈아 하면 좋아요. 파도가 잔잔하면 바다에도 나가 봐요.</p>      </article>
       <article class="evcard" data-time="11:45" data-party="yeongdu">
         <div class="ev-top">
           <span class="t">11:45</span>
@@ -1113,7 +1127,7 @@
             <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
           </a>
         </div>
-<p class="lead">은솔이 낮잠 전에 나투라에서 이른 점심을 먹어요. 점심은 11시 반부터 열어요. 수영장 옆 살 풀바에서 가볍게 먹어도 좋아요.</p>        <div class="os-band" aria-hidden="true"></div>
+<p class="lead">은솔이 낮잠 전에 미리 먹어요. 수영장 옆 살 풀바도 좋아요.</p>        <div class="os-band" aria-hidden="true"></div>
         <a class="os-jump" href="#dining/d3-e10" data-dining="d3-e10">
           <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>나투라 (Natura) 현장 가이드 보기
           <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
@@ -1125,28 +1139,28 @@
           <span class="ev-flex"></span>
 <span class="pchip">영락네만</span>        </div>
         <h3 class="ev-h">빈원더스 점심 — 코랄 뷔페</h3>
-<p class="lead">지우가 지치기 전에 섬 안 코랄 뷔페에서 이른 점심을 먹어요. 오후 1시 전에 앉는 게 좋아요.</p>      </article>
+<p class="lead">지우가 지치기 전에 섬 안에서 해결해요. 오후 1시 전에 앉는 게 좋아요.</p>      </article>
       <article class="evcard" data-time="13:00" data-party="yeongdu">
         <div class="ev-top">
           <span class="t">13:00</span>
 <span class="t-end">– 15:00</span>          <span class="ev-flex"></span>
 <span class="pchip">영두네만</span>        </div>
         <h3 class="ev-h">은솔이 낮잠 — 빌라</h3>
-<p class="lead">빌라로 들어와 은솔이를 재워요. 두 시간쯤 자는 동안 어른들은 번갈아 테라스에서 쉬어요. 로비 테이아 라운지가 낮에는 커피와 디저트 라운지로 열려 있어 한 사람씩 다녀오기 좋아요.</p>      </article>
+<p class="lead">두 시간쯤 자는 동안 어른들은 번갈아 테라스에서 쉬어요. 낮의 로비 테이아는 커피와 디저트 라운지라 한 사람씩 다녀오기 좋아요.</p>      </article>
       <article class="evcard" data-time="15:30" data-party="yeongdu">
         <div class="ev-top">
           <span class="t">15:30</span>
           <span class="ev-flex"></span>
 <span class="pchip">영두네만</span>        </div>
         <h3 class="ev-h">키즈클럽과 전용 해변</h3>
-<p class="lead">낮잠에서 깨면 2층 키즈클럽에 가 봐요. 21개월도 들어갈 수 있는지, 보호자가 함께 있어야 하는지는 체크인할 때 확인해 두면 좋아요. 해가 누그러지면 전용 해변에서 모래놀이를 해도 좋아요.</p>      </article>
+<p class="lead">낮잠에서 깨면 2층에 올라가 놀아요. 해가 누그러지면 모래놀이를 해도 좋아요.</p>      </article>
       <article class="evcard" data-time="17:00" data-party="yeongrak">
         <div class="ev-top">
           <span class="t">17:00</span>
           <span class="ev-flex"></span>
 <span class="pchip">영락네만</span>        </div>
         <h3 class="ev-h">케이블카로 섬에서 나오기</h3>
-<p class="lead">물놀이를 마치고 케이블카로 섬에서 나와 시내 식당가로 향해요.</p>      </article>
+<p class="lead">물놀이를 마치고 시내 식당가로 향해요.</p>      </article>
       <article class="evcard" data-time="18:00" data-party="yeongrak">
         <div class="ev-top">
           <span class="t">18:00</span>
@@ -1156,7 +1170,8 @@
         <div class="ev-venue">
           <div class="ev-vmain">
             <p class="vname">목식당 (하이산 목꽌)</p>
-<p class="vaddr">74-76 Đường Hồng Bàng, Tân Lập, Nha Trang, Khánh Hòa</p>            <p class="vlinks">
+<p class="vaddr">74-76 Đường Hồng Bàng, Tân Lập, Nha Trang, Khánh Hòa</p>            <p class="vmeta"><span class="vm">숙소에서 그랩 30분</span></p>
+            <p class="vlinks">
 <a href="https://www.google.com/maps/search/?api=1&amp;query=H%E1%BA%A3i%20s%E1%BA%A3n%20M%E1%BB%99c%20Qu%C3%A1n%20Nha%20Trang%2074%20H%E1%BB%93ng%20B%C3%A0ng" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%B9%88%EC%9B%90%EB%8D%94%EC%8A%A4%20%EB%82%98%ED%8A%B8%EB%9E%91%20%28VinWonders%20Nha%20Trang%29%2C%20%C4%90%E1%BA%A3o%20H%C3%B2n%20Tre%2C%20V%C4%A9nh%20Nguy%C3%AAn%2C%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a%2C%20Vietnam&amp;destination=%EB%AA%A9%EC%8B%9D%EB%8B%B9%20%28%ED%95%98%EC%9D%B4%EC%82%B0%20%EB%AA%A9%EA%BD%8C%29%2C%2074-76%20%C4%90%C6%B0%E1%BB%9Dng%20H%E1%BB%93ng%20B%C3%A0ng%2C%20T%C3%A2n%20L%E1%BA%ADp%2C%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a><a href="https://search.naver.com/search.naver?query=%EB%AA%A9%EC%8B%9D%EB%8B%B9%20%28%ED%95%98%EC%9D%B4%EC%82%B0%20%EB%AA%A9%EA%BD%8C%29%20%EB%82%98%ED%8A%B8%EB%9E%91" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>네이버</a><a href="https://www.google.com/search?q=%EB%AA%A9%EC%8B%9D%EB%8B%B9%20%28%ED%95%98%EC%9D%B4%EC%82%B0%20%EB%AA%A9%EA%BD%8C%29%20Nha%20Trang" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>구글</a><a class="dn-open" href="#dining/d3-e6" data-dining="d3-e6"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg>다른 데 갈래</a>            </p>
           </div>
           <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=H%E1%BA%A3i%20s%E1%BA%A3n%20M%E1%BB%99c%20Qu%C3%A1n%20Nha%20Trang%2074%20H%E1%BB%93ng%20B%C3%A0ng" target="_blank" rel="noopener" aria-label="목식당 (하이산 목꽌) 지도 열기">
@@ -1169,9 +1184,9 @@
         </div>
         <details class="more resv">
           <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>예약 · 전화 걸기</summary>
-          <div class="box">2층 에어컨 자리는 미리 예약하는 게 좋아요. 카카오톡 채널 「다낭 목 해산물 식당 나트랑점」이나 전화 <a href="tel:+84934981180">0934 981 180</a>으로 예약할 수 있고, 한국어가 되는 직원이 있어요.</div>
+          <div class="box">카카오톡으로 미리 예약하세요. 채널 「다낭 목 해산물 식당 나트랑점」이나 <a href="tel:+84934981180">0934 981 180</a>. 2층 에어컨 자리와 아기의자를 함께 요청하세요.</div>
         </details>
-<p class="lead">섬에서 나오는 길이 시내 식당가와 이어져요. 리조트로 바로 돌아가지 않고, 시내에서 에어컨이 시원한 해산물집에 들러 이른 저녁을 먹고 들어가요. 이번 여행에 한 번은 랍스터와 해산물을 이렇게 챙겨요.</p>        <details class="more">
+<p class="lead">섬에서 나오는 길이 식당가와 이어져요. 리조트로 바로 돌아가지 않고 들러서 먹고 들어가요. 이번 여행에 한 번은 랍스터를 이렇게 챙겨요.</p>        <details class="more">
           <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
           <div class="box">다른 데가 당기면 맛집 목록에서 골라 바꿔도 돼요.</div>
         </details>
@@ -1201,9 +1216,9 @@
             <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
           </a>
         </div>
-<p class="lead">은솔이 잘 시간이 이르니 저녁도 이르게 먹어요. 나투라 저녁은 6시에 열어요.</p>        <details class="more">
+<p class="lead">은솔이 잘 시간이 일러 어른들도 함께 일찍 먹어요.</p>        <details class="more">
           <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
-          <div class="box">빌라에서 편하게 먹고 싶으면 배달이나 룸서비스로 바꿔도 돼요. 피자와 파스타는 일미오를 배달K로 시켜 로비에서 받고, 룸서비스는 객실 전화로 바로 시키면 돼요.</div>
+          <div class="box">빌라에서 편하게 먹고 싶으면 배달이나 룸서비스로 바꿔도 돼요.</div>
         </details>
         <div class="os-band" aria-hidden="true"></div>
         <a class="os-jump" href="#dining/d3-e13" data-dining="d3-e13">
@@ -1217,14 +1232,14 @@
           <span class="ev-flex"></span>
 <span class="pchip">영두네만</span>        </div>
         <h3 class="ev-h">은솔이 재우기</h3>
-<p class="lead">종일 논 날이라 일찍 재워요. 은솔이를 재운 뒤 어른들은 빌라 테라스에서 룸서비스로 조용한 저녁을 즐겨도 좋아요.</p>      </article>
+<p class="lead">종일 논 날이라 일찍 재워요. 재운 뒤 어른들은 테라스에서 룸서비스로 조용한 저녁을 즐겨도 좋아요.</p>      </article>
       <article class="evcard" data-time="20:00" data-party="yeongrak">
         <div class="ev-top">
           <span class="t">20:00</span>
           <span class="ev-flex"></span>
 <span class="pchip">영락네만</span>        </div>
         <h3 class="ev-h">리조트 복귀</h3>
-<p class="lead">저녁까지 먹고 리조트로 돌아와 쉬어요. 지우가 차에서 잠들면 그대로 빌라로 옮겨 재워요.</p>      </article>
+<p class="lead">지우가 차에서 잠들면 그대로 빌라로 옮겨 재워요.</p>      </article>
     </div>
   </section>
   <section class="day" id="d4" data-date="2026-10-18">
@@ -1264,7 +1279,7 @@
             <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
           </a>
         </div>
-<p class="lead">두 가족 모두 나투라에서 아침을 먹어요.</p>        <div class="os-band" aria-hidden="true"></div>
+        <div class="os-band" aria-hidden="true"></div>
         <a class="os-jump" href="#dining/d4-e1" data-dining="d4-e1">
           <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>나투라 (Natura) 현장 가이드 보기
           <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
@@ -1276,7 +1291,7 @@
           <span class="ev-flex"></span>
         </div>
         <h3 class="ev-h">빌라 전용 풀과 전용 해변</h3>
-<p class="lead">빌라 전용 풀과 전용 해변에서 물놀이를 해요. 파도가 있는 바다보다 전용 풀이 아이들에게 안전해요.</p>      </article>
+<p class="lead">파도가 있는 바다보다 빌라 풀이 아이들에게 안전해요.</p>      </article>
       <article class="evcard" data-time="12:30" data-party="all">
         <div class="ev-top">
           <span class="t">12:30</span>
@@ -1297,11 +1312,7 @@
             <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
           </a>
         </div>
-<p class="lead">리조트에서 쉬는 날이라 나투라에서 점심을 먹어요. 수영장 옆 살 풀바에서 가볍게 먹어도 좋아요.</p>        <details class="more">
-          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
-          <div class="box">빌라에서 쉬고 싶은 날이면 배달로 받아도 돼요. 한국 음식은 케이마트나 본스치킨, 피자나 파스타는 일미오를 배달K로 시키고 로비나 정문에서 받아요.</div>
-        </details>
-        <div class="os-band" aria-hidden="true"></div>
+<p class="lead">리조트에서 쉬는 날이라 멀리 나가지 않아요. 수영장 옆 살 풀바도 좋아요.</p>        <div class="os-band" aria-hidden="true"></div>
         <a class="os-jump" href="#dining/d4-e3" data-dining="d4-e3">
           <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>나투라 (Natura) 현장 가이드 보기
           <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
@@ -1313,14 +1324,14 @@
           <span class="ev-flex"></span>
         </div>
         <h3 class="ev-h">키즈클럽</h3>
-<p class="lead">2층 키즈클럽에서 아이들이 놀아요. 21개월도 이용할 수 있는지는 호텔에 미리 확인해 두면 좋아요.</p>      </article>
+<p class="lead">2층에서 아이들이 놀아요. 오전에는 만들기 놀이가 있어요.</p>      </article>
       <article class="evcard" data-time="16:00" data-party="all">
         <div class="ev-top">
           <span class="t">16:00</span>
           <span class="ev-flex"></span>
         </div>
         <h3 class="ev-h">스파</h3>
-<p class="lead">어른들은 번갈아 스파에서 쉬어요.</p>      </article>
+<p class="lead">어른들이 한 사람씩 번갈아 다녀와요.</p>      </article>
       <article class="evcard" data-time="18:00" data-party="all">
         <div class="ev-top">
           <span class="t">18:00</span>
@@ -1331,6 +1342,7 @@
           <div class="ev-vmain">
             <p class="vname">씀모이가든</p>
 <p class="vaddr">144 Võ Trứ, Tân Lập, Nha Trang, Khánh Hòa</p>            <p class="vhours"><span class="vh-t">매일 06:30–22:30</span><span class="vh-s">구글 07/26 확인</span></p>
+            <p class="vmeta"><span class="vm">숙소에서 그랩 30분</span></p>
             <p class="vlinks">
 <a href="https://www.google.com/maps/search/?api=1&amp;query=Xom+Moi+Garden+144+Vo+Tru+Tan+Lap+Nha+Trang" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%B9%8C%EB%9D%BC%20%EB%A5%B4%20%EC%BD%94%EB%9D%BC%EC%9D%B4%20%28Villa%20Le%20Corail%2C%20A%20Gran%20Meli%C3%A1%29%2C%20B%C3%A3i%20Ti%C3%AAn%2C%20%C4%90%C6%B0%E1%BB%9Dng%20%C4%90%E1%BB%87%2C%20B%E1%BA%AFc%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a%2C%20Vietnam&amp;destination=%EC%94%80%EB%AA%A8%EC%9D%B4%EA%B0%80%EB%93%A0%2C%20144%20V%C3%B5%20Tr%E1%BB%A9%2C%20T%C3%A2n%20L%E1%BA%ADp%2C%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a><a href="https://search.naver.com/search.naver?query=%EC%94%80%EB%AA%A8%EC%9D%B4%EA%B0%80%EB%93%A0%20%EB%82%98%ED%8A%B8%EB%9E%91" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>네이버</a><a href="https://www.google.com/search?q=%EC%94%80%EB%AA%A8%EC%9D%B4%EA%B0%80%EB%93%A0%20Nha%20Trang" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>구글</a><a class="dn-open" href="#dining/d4-e6" data-dining="d4-e6"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg>다른 데 갈래</a>            </p>
           </div>
@@ -1344,9 +1356,9 @@
         </div>
         <details class="more resv">
           <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>예약 · 전화 걸기</summary>
-          <div class="box">카카오톡 채널 「씀모이가든」에서 웨이팅과 식사 예약을 채팅으로 할 수 있어요. 한국어 전화 <a href="tel:+84784831004">078 483 1004</a> 도 돼요. 유아 동반이면 피크 시간엔 미리 예약하세요.</div>
+          <div class="box">카카오톡으로 미리 예약하세요. 채널 「씀모이가든」이나 <a href="tel:+84784831004">078 483 1004</a>. 아기의자 두 개도 함께 부탁하세요.</div>
         </details>
-<p class="lead">에어컨이 시원한 대형 가든형 식당에서 베트남 가정식으로 먹어요. 한국어 메뉴판이 있고 양이 넉넉해 여섯 명이 나눠 먹기 좋아요. 반주로 맥주 한잔 곁들이기 좋아요.</p>        <details class="more">
+<p class="lead">에어컨이 시원한 대형 가든형 식당이라 여섯 명이 나눠 먹기 좋아요. 반주로 맥주 한잔 곁들이기 좋아요.</p>        <details class="more">
           <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
           <div class="box">리조트에서 쉬고 싶은 날이면 배달로 바꿔도 돼요. 아이들을 재운 뒤엔 빌라 룸서비스나 프라이빗 BBQ로 어른들만의 저녁을 즐겨도 좋아요.</div>
         </details>
@@ -1360,7 +1372,7 @@
   </section>
   <section class="day" id="d5" data-date="2026-10-19" data-mapnote="이 날은 지도에 찍힌 곳이 숙소 하나뿐이라 이을 동선이 없어요. 시간표에서 일정을 확인하세요.">
     <h2 class="day-title">10월 19일 월요일</h2>
-<p class="day-theme">마지막 날, 밤 비행기로 출국</p><p class="lead day-lead">낮 12시에 체크아웃하고, 저녁 비행기 전까지 짐 없이 가볍게 보내는 날이에요. 레이트 체크아웃이 오후 6시까지 되면 여유가 훨씬 커지니 체크인할 때 미리 요청해 두세요.</p>    <div class="evs">
+<p class="day-theme">마지막 날, 밤 비행기로 출국</p><p class="lead day-lead">낮 12시에 체크아웃하고, 저녁 비행기 전까지 짐 없이 가볍게 보내는 날이에요.</p>    <div class="evs">
       <article class="evcard" data-time="08:00" data-party="all">
         <div class="ev-top">
           <span class="t">08:00</span>
@@ -1381,7 +1393,7 @@
             <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
           </a>
         </div>
-<p class="lead">마지막 아침도 나투라에서 여유롭게 먹어요.</p>        <div class="os-band" aria-hidden="true"></div>
+        <div class="os-band" aria-hidden="true"></div>
         <a class="os-jump" href="#dining/d5-e1" data-dining="d5-e1">
           <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>나투라 (Natura) 현장 가이드 보기
           <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
@@ -1393,8 +1405,7 @@
           <span class="ev-flex"></span>
         </div>
         <h3 class="ev-h">체크아웃 (레이트 체크아웃 요청)</h3>
-        <p class="brief"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span>정식 체크아웃은 낮 12시예요. 오후 6시까지 쓰는 레이트 체크아웃은 체크인할 때 두 빌라 모두 확정해 두세요.</span></p>
-<p class="lead">정식 체크아웃은 낮 12시예요. 오후 6시까지 방을 쓰는 레이트 체크아웃은 체크인할 때 두 빌라 모두 확정해 두세요.</p>      </article>
+      </article>
       <article class="evcard" data-time="12:30" data-party="all">
         <div class="ev-top">
           <span class="t">12:30</span>
@@ -1415,7 +1426,7 @@
             <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
           </a>
         </div>
-<p class="lead">마지막 점심은 나투라에서 여유롭게 먹어요. 레이트 체크아웃이 되면 식사 뒤에도 방에서 쉬었다 나올 수 있어요.</p>        <div class="os-band" aria-hidden="true"></div>
+<p class="lead">레이트 체크아웃이 되면 식사 뒤에도 방에서 쉬었다 나올 수 있어요.</p>        <div class="os-band" aria-hidden="true"></div>
         <a class="os-jump" href="#dining/d5-e3" data-dining="d5-e3">
           <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>나투라 (Natura) 현장 가이드 보기
           <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
@@ -1427,7 +1438,7 @@
           <span class="ev-flex"></span>
         </div>
         <h3 class="ev-h">빌라 전용 풀에서 마지막 휴식</h3>
-<p class="lead">레이트 체크아웃이 되면 오후 6시까지 방을 쓰면서 마지막까지 전용 풀에서 놀아요. 요청이 받아들여지지 않으면 로비에 짐을 맡기고 공용 수영장과 키즈클럽에서 시간을 보내면 돼요.</p>      </article>
+<p class="lead">레이트 체크아웃이 되면 오후 6시까지 방을 써요. 요청이 받아들여지지 않으면 로비에 짐을 맡기고 공용 수영장과 키즈클럽에서 보내면 돼요.</p>      </article>
       <article class="evcard" data-time="16:00" data-party="all">
         <div class="ev-top">
           <span class="t">16:00</span>
@@ -1448,7 +1459,7 @@
             <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
           </a>
         </div>
-<p class="lead">공항 가기 전에 빌라 룸서비스로 이른 저녁을 가볍게 먹어요. 주문하고 받기까지 30~45분 걸리니 3시 반쯤 미리 시켜 두면 시간이 딱 맞아요.</p>        <div class="os-band" aria-hidden="true"></div>
+<p class="lead">주문하고 받기까지 30~45분 걸리니 3시 반쯤 미리 시켜 두면 시간이 딱 맞아요.</p>        <div class="os-band" aria-hidden="true"></div>
         <a class="os-jump" href="#dining/d5-e5" data-dining="d5-e5">
           <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>인빌라 다이닝 (룸서비스·플로팅 조식·프라이빗 BBQ) 현장 가이드 보기
           <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
@@ -1465,12 +1476,10 @@
             <span class="tr-main"><span class="tr-emoji" aria-hidden="true">🚗</span> 그랩 7인승 두 대 · 70분</span>
             <span class="tr-ok"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>확정</span>
 <a class="tr-route" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%B9%8C%EB%9D%BC%20%EB%A5%B4%20%EC%BD%94%EB%9D%BC%EC%9D%B4&amp;destination=%EA%B9%9C%EB%9D%BC%EC%9D%B8%20%EA%B5%AD%EC%A0%9C%EA%B3%B5%ED%95%AD&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>          </div>
+          <p class="tr-eta"><span class="tr-t">17:00</span> 출발 → <span class="tr-t">18:10</span> 도착</p>
           <details class="more tr-more">
             <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
-            <div class="box">구글맵 자동차 기준 약 55분이지만, 저녁 시간대 시내를 지나야 해서 70~90분으로 넉넉히 잡아요. 17시에 나서면 공항에 18시 10분에서 30분 사이에 닿아요. 밤 9시 35분 비행기는 카운터가 8시 45분에 닫히니 여유가 넉넉해요.
-
-여섯 명에 유모차와 캐리어까지 실어야 해서 7인승 한 대로는 부족해요. 두 대로 나눠 부르거나 리조트에 큰 차량을 미리 부탁하세요.
-</div>
+            <div class="box">저녁 시내를 지나야 해서 70~90분으로 넉넉히 잡아요. 여섯 명에 유모차와 캐리어까지 실어야 해서 한 대로는 부족해요.</div>
           </details>
         </div>
       </article>
@@ -1480,20 +1489,27 @@
           <span class="ev-flex"></span>
 <span class="stchip"><span class="stdot"></span>확정</span>        </div>
         <h3 class="ev-h">깜라인 공항 출발 — 두 가족 함께</h3>
-        <p class="brief"><svg class="ic" aria-hidden="true"><use href="#i-bell"/></svg><span>베트남항공 VN440이에요. 다음 날 새벽 인천에 도착해요.</span></p>
-<p class="lead">베트남항공 VN440편이에요. 밤 비행기라 다음 날 새벽 인천에 도착해요.</p>      </article>
+        <div class="l1">
+          <dl class="l1-facts">
+            <dt>편명</dt>
+            <dd><span class="l1-v">베트남항공 VN440</span></dd>
+            <dt>카운터 마감</dt>
+            <dd><span class="l1-v">20:45</span></dd>
+          </dl>
+        </div>
+      </article>
     </div>
   </section>
   <section class="day" id="d6" data-date="2026-10-20">
     <h2 class="day-title">10월 20일 화요일</h2>
-<p class="day-theme">인천 도착</p><p class="lead day-lead">새벽에 인천에 내리는 날이에요. 공항철도 첫차가 5시 14분이라 짐을 찾고 조금 기다렸다 움직이게 되니 서두르지 않아도 돼요.</p>    <div class="evs">
+<p class="day-theme">인천 도착</p><p class="lead day-lead">새벽에 인천에 내리는 날이에요. 공항철도 첫차를 기다렸다 움직이게 되니 서두르지 않아도 돼요.</p>    <div class="evs">
       <article class="evcard" data-time="04:30" data-party="all">
         <div class="ev-top">
           <span class="t">04:30</span>
 <span class="t-tz">한국 시각</span>          <span class="ev-flex"></span>
 <span class="stchip"><span class="stdot"></span>확정</span>        </div>
         <h3 class="ev-h">인천공항 제1터미널 도착</h3>
-<p class="lead">고생 많으셨어요. 새벽 4시 반에 내려서 입국 심사와 짐 찾기를 마치면 5시 전후가 돼요. 유모차부터 찾아 아이들을 태우고 천천히 나오세요.</p>        <details class="more">
+<p class="lead">고생 많으셨어요. 입국 심사와 짐 찾기를 마치면 5시 전후가 돼요. 유모차부터 찾아 아이들을 태우고 천천히 나오세요.</p>        <details class="more">
           <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
           <div class="box">1층 입국장의 B 게이트와 E 게이트 옆에 24시간 여는 유아 휴게실이 있어요. 수유 공간과 기저귀 교환대가 있고 공항철도로 내려가는 길목이라, 첫차를 기다리는 동안 아이들을 쉬게 하기 좋아요. 4층 냅존과 샤워실은 면세 구역 안이라 입국한 다음에는 쓸 수 없어요.</div>
         </details>
@@ -1504,97 +1520,82 @@
 <span class="t-tz">한국 시각</span>          <span class="ev-flex"></span>
         </div>
         <h3 class="ev-h">집으로 — 공항철도 첫차나 택시</h3>
-<p class="lead">서울역 방면 공항철도 첫차가 제1터미널에서 5시 14분에 떠나요. 5시 24분 직통열차는 서울역에 6시 7분에 닿아요. 어른은 4,750원이고 만 여섯 살 미만은 무료라 지우와 은솔이는 요금이 없어요.</p>        <details class="more">
+<p class="lead">짐과 유모차가 많으면 택시가 편해요. 새벽 시간대에 몇 대나 대기하는지는 그때 현장에서 확인하세요.</p>        <details class="more">
           <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
-          <div class="box">짐과 유모차가 많으면 택시가 편해요. 심야 할증이 새벽 4시에 끝나서 5시대에 타면 할증이 붙지 않아요. 아홉 명까지 타는 대형택시는 1층 밖 7C와 8C 승차장에 서 있어요. 새벽 시간대에 몇 대나 대기하는지와 요금은 그때 현장에서 확인하세요. 심야버스는 4시 40분과 4시 50분 차가 마지막이라, 유아 둘에 유모차까지 챙겨 나오면 타기 어려워요.</div>
+          <div class="box">심야버스는 4시 40분과 4시 50분 차가 마지막이라, 유아 둘에 유모차까지 챙겨 나오면 타기 어려워요.</div>
         </details>
+        <div class="l1">
+          <dl class="l1-facts">
+            <dt>공항철도 첫차</dt>
+            <dd><span class="l1-v">05:14</span> <span class="l1-n">서울역 방면. 5시 24분 직통은 서울역에 6시 7분 도착</span></dd>
+            <dt>철도 요금</dt>
+            <dd><span class="l1-v">어른 4,750원</span> <span class="l1-n">만 여섯 살 미만은 무료라 지우와 은솔이는 요금이 없어요</span></dd>
+            <dt>대형택시 승차장</dt>
+            <dd><span class="l1-v">1층 밖 7C·8C</span> <span class="l1-n">아홉 명까지 타요. 심야 할증이 새벽 4시에 끝나 5시대에는 붙지 않아요</span></dd>
+          </dl>
+        </div>
       </article>
     </div>
   </section>
 
-  <section class="card">
-    <h2 class="sub">바로 걸기</h2>
-    <ul class="tel">
-      <li><a href="tel:113"><span class="ticon"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></span><span class="who">경찰 신고</span><span class="num">113</span></a></li>
-      <li><a href="tel:115"><span class="ticon"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></span><span class="who">구급차</span><span class="num">115</span></a></li>
-      <li><a href="tel:114"><span class="ticon"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></span><span class="who">소방 신고</span><span class="num">114</span></a></li>
-      <li><a href="tel:+84938500238"><span class="ticon"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></span><span class="who">주호치민 총영사관</span><span class="num">+84-93-850-0238</span></a></li>
-      <li><a href="tel:+82232100404"><span class="ticon"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></span><span class="who">영사콜센터</span><span class="num">+82-2-3210-0404</span></a></li>
-      <li><a href="tel:+84934981180"><span class="ticon"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></span><span class="who">목식당 (하이산 목꽌)</span><span class="num">0934 981 180</span></a></li>
-      <li><a href="tel:+84782519191"><span class="ticon"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></span><span class="who">코스타 씨푸드</span><span class="num">+84 78 251 9191</span></a></li>
-      <li><a href="tel:+84784831004"><span class="ticon"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></span><span class="who">씀모이가든</span><span class="num">078 483 1004</span></a></li>
-      <li><a href="tel:+842583521948"><span class="ticon"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></span><span class="who">루이지애나 브루하우스</span><span class="num">0258 3521 948</span></a></li>
-      <li><a href="tel:+842586283599"><span class="ticon"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></span><span class="who">JJ 씨푸드</span><span class="num">+84 258 6283 599</span></a></li>
-      <li><a href="tel:+842583826737"><span class="ticon"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></span><span class="who">넴느엉 당반꾸옌</span><span class="num">0258 3826 737</span></a></li>
-      <li><a href="tel:+84981733354"><span class="ticon"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></span><span class="who">포세이돈 씨푸드 뷔페 (골드코스트점)</span><span class="num">+84 981 733 354</span></a></li>
-      <li><a href="tel:+84965446445"><span class="ticon"><svg class="ic" aria-hidden="true"><use href="#i-tel"/></svg></span><span class="who">라 칼라 (시내점)</span><span class="num">+84 96 544 6445</span></a></li>
-    </ul>
-  </section>
 
   <section class="card" id="checklist">
     <div class="chk-head">
       <h2 class="sub">준비물 체크리스트</h2>
-      <span class="prog" id="chkprog" data-total="19" hidden></span>
+      <span class="prog" id="chkprog" data-total="18" hidden></span>
     </div>
     <div class="pbar" aria-hidden="true"><span id="pfill"></span></div>
     <p class="hint">탭하면 완료 표시가 이 폰에 저장돼요</p>
     <ul class="chk">
       <li>
         <label>
-          <input type="checkbox" data-key="e4688bd9">
+          <input type="checkbox" data-key="19f5b4b4">
           <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <span class="txt">여권 유효기간 확인 (귀국일 기준 6개월 이상 남아야 해요)</span>
+          <span class="txt">여권 유효기간 확인 (귀국일 기준 6개월 이상)</span>
         </label>
 <span class="due" data-due="2026-09-15">9/15까지</span>      </li>
       <li>
         <label>
-          <input type="checkbox" data-key="8e526552">
+          <input type="checkbox" data-key="f22f553c">
           <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <span class="txt">베트남 무비자 입국 조건 확인 (한국인 45일 무비자) 및 필요한 입국 서류 준비</span>
+          <span class="txt">빈원더스 케이블카가 10월에 운행하는지 다시 확인하기</span>
+        </label>
+<span class="due" data-due="2026-09-15">9/15까지</span>      </li>
+      <li>
+        <label>
+          <input type="checkbox" data-key="4ecfaf7f">
+          <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <span class="txt">베트남 무비자 입국 조건과 입국 서류 확인 (45일 무비자)</span>
         </label>
 <span class="due" data-due="2026-09-30">9/30까지</span>      </li>
       <li>
         <label>
-          <input type="checkbox" data-key="350bbe11">
+          <input type="checkbox" data-key="f68f80fe">
           <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <span class="txt">그랩 앱 설치하고 해외 카드 등록해 두기 (공항 이동과 시내 나들이에 써요)</span>
+          <span class="txt">그랩 앱 설치하고 해외 카드 등록해 두기</span>
         </label>
 <span class="due" data-due="2026-09-30">9/30까지</span>      </li>
       <li>
         <label>
-          <input type="checkbox" data-key="3457f790">
+          <input type="checkbox" data-key="544289a5">
           <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <span class="txt">호텔에 공항 픽업, 키즈클럽 21개월 이용 가능 여부, 아기침대, 레이트 체크아웃을 미리 확인하기</span>
+          <span class="txt">리조트에 얼리 체크인 되는 시각과 요금 미리 물어보기</span>
         </label>
 <span class="due" data-due="2026-09-30">9/30까지</span>      </li>
       <li>
         <label>
-          <input type="checkbox" data-key="2eb391ac">
+          <input type="checkbox" data-key="dd319290">
           <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <span class="txt">얼리 체크인이 몇 시부터 되는지와 요금, 기다리는 동안 샤워실을 쓸 수 있는지 호텔에 물어보기</span>
+          <span class="txt">예약 확정서에 조식 포함과 두 아이 무료 여부 확인하기</span>
         </label>
 <span class="due" data-due="2026-09-30">9/30까지</span>      </li>
       <li>
         <label>
-          <input type="checkbox" data-key="617dd734">
+          <input type="checkbox" data-key="b24b033c">
           <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <span class="txt">예약 확정서에 조식이 포함(B&amp;B)인지, 두 아이 조식이 무료인지 확인하기</span>
-        </label>
-<span class="due" data-due="2026-09-30">9/30까지</span>      </li>
-      <li>
-        <label>
-          <input type="checkbox" data-key="884f7c48">
-          <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <span class="txt">여행자 보험 가입 (성인 4명·유아 2명)</span>
+          <span class="txt">여행자 보험 가입 (성인 4명·유아 2명, 소아 보장 확인)</span>
         </label>
 <span class="due" data-due="2026-10-05">10/5까지</span>      </li>
-      <li>
-        <label>
-          <input type="checkbox" data-key="5de291e2">
-          <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <span class="txt">빈원더스 케이블카가 2026년 10월에 운행하는지 9월 중순에 다시 확인하기 (운휴면 무료 스피드보트로 들어가요)</span>
-        </label>
-<span class="due" data-due="2026-09-15">9/15까지</span>      </li>
       <li>
         <label>
           <input type="checkbox" data-key="19905d6d">
@@ -1604,72 +1605,72 @@
 <span class="due" data-due="2026-10-10">10/10까지</span>      </li>
       <li>
         <label>
-          <input type="checkbox" data-key="8f2a7e8e">
+          <input type="checkbox" data-key="3826f77e">
           <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <span class="txt">목식당 저녁 자리 예약하기 (카카오톡 채널로 한국어 예약이 돼요. 2층 에어컨 자리를 부탁하세요)</span>
+          <span class="txt">목식당 저녁 자리 예약하기 (카카오톡 채널·2층 에어컨 자리)</span>
         </label>
 <span class="due" data-due="2026-10-10">10/10까지</span>      </li>
       <li>
         <label>
-          <input type="checkbox" data-key="1fa28422">
+          <input type="checkbox" data-key="ed7c906b">
           <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <span class="txt">씀모이가든 저녁 자리 예약하기 (카카오톡 채널로 한국어 예약이 돼요. 아기의자 두 개도 함께 부탁하세요)</span>
+          <span class="txt">씀모이가든 저녁 자리 예약하기 (카카오톡 채널·아기의자 두 개)</span>
         </label>
 <span class="due" data-due="2026-10-10">10/10까지</span>      </li>
       <li>
         <label>
-          <input type="checkbox" data-key="78943262">
+          <input type="checkbox" data-key="6f1f0405">
           <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <span class="txt">마담프엉에 여섯 명 자리를 미리 문의하기 (인스타그램 메시지로 물어봐요)</span>
+          <span class="txt">마담프엉에 여섯 명 자리 문의하기 (인스타그램 메시지)</span>
         </label>
 <span class="due" data-due="2026-10-10">10/10까지</span>      </li>
       <li>
         <label>
-          <input type="checkbox" data-key="c988e1c1">
+          <input type="checkbox" data-key="0c569082">
           <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <span class="txt">빈원더스 종일권 성인 2매를 온라인으로 예매하기 (QR 코드로 매표 줄 없이 바로 들어가요. 성인 2명 약 210만 동)</span>
+          <span class="txt">빈원더스 종일권 성인 2매 온라인 예매하기 (약 210만 동)</span>
         </label>
 <span class="due" data-due="2026-10-13">10/13까지</span>      </li>
       <li>
         <label>
-          <input type="checkbox" data-key="de43d540">
+          <input type="checkbox" data-key="a7d2d2ab">
           <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <span class="txt">한국에서 미국 달러 신권으로 환전해 두기 (나트랑 은행 창구에서 동으로 바꾸는 게 가장 유리해요)</span>
+          <span class="txt">한국에서 미국 달러 신권으로 환전해 두기</span>
         </label>
 <span class="due" data-due="2026-10-13">10/13까지</span>      </li>
       <li>
         <label>
-          <input type="checkbox" data-key="0c52d6b5">
+          <input type="checkbox" data-key="6e39fe13">
           <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <span class="txt">새벽 도착 귀가편 다시 확인하기 (공항철도 첫차 시각과 택시 승차장은 바뀔 수 있어요)</span>
+          <span class="txt">새벽 도착 귀가편 다시 확인하기 (첫차 시각·택시 승차장)</span>
         </label>
 <span class="due" data-due="2026-10-13">10/13까지</span>      </li>
       <li>
         <label>
-          <input type="checkbox" data-key="11677d36">
+          <input type="checkbox" data-key="034b2c98">
           <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <span class="txt">은솔이 기저귀와 물티슈는 집에서 넉넉히 챙기기 (현지에서 배달로 사지 않아요. 지우는 기저귀를 뗐어요)</span>
+          <span class="txt">은솔이 기저귀와 물티슈 넉넉히 챙기기</span>
         </label>
 <span class="due" data-due="2026-10-13">10/13까지</span>      </li>
       <li>
         <label>
-          <input type="checkbox" data-key="094183ef">
+          <input type="checkbox" data-key="6ee140c0">
           <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <span class="txt">유아용 모기 기피제와 긴옷 챙기기 (리조트에 모기가 많다는 후기가 많아요)</span>
+          <span class="txt">유아용 모기 기피제와 긴옷 챙기기</span>
         </label>
 <span class="due" data-due="2026-10-13">10/13까지</span>      </li>
       <li>
         <label>
-          <input type="checkbox" data-key="57bec975">
+          <input type="checkbox" data-key="cf28065b">
           <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <span class="txt">빈원더스 유모차 보증금(50만 동)용 동 현금과 수영기저귀, 시판 이유식 챙기기</span>
+          <span class="txt">유모차 보증금용 동 현금과 수영기저귀, 시판 이유식 챙기기</span>
         </label>
 <span class="due" data-due="2026-10-13">10/13까지</span>      </li>
       <li>
         <label>
-          <input type="checkbox" data-key="c8274ad6">
+          <input type="checkbox" data-key="e5f738ac">
           <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <span class="txt">유아 상비약과 간식 챙기기</span>
+          <span class="txt">늘 쓰던 해열제와 계량기, 유아 상비약 챙기기</span>
         </label>
 <span class="due" data-due="2026-10-13">10/13까지</span>      </li>
     </ul>
@@ -1677,8 +1678,7 @@
 
   <footer>
     <p>이 가이드는 여행 계획 파일에서 자동으로 만들어졌어요. 예약번호 같은 개인정보는 담지 않습니다.</p>
-<p>2026년 7월 26일에 업데이트됐어요.</p><p><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg> <a href="./nhatrang-2026-10.ics" download>여행 일정 전체를 내 캘린더 앱에 저장할 수 있어요.</a></p>    <p><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg> 폰 홈 화면에 추가해 두면 비행기 모드에서도 열려요. (브라우저 공유 메뉴의 '홈 화면에 추가')</p>
-    <p>영업 정보를 지도에서 확인하지 못한 곳에는 카드에 '영업 미확인'이라고 적어 뒀어요. 가기 전에 한 번 더 확인하세요.</p>
+<p>2026년 7월 27일에 업데이트됐어요.</p><p><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg> <a href="./nhatrang-2026-10.ics" download>여행 일정 전체를 내 캘린더 앱에 저장할 수 있어요.</a></p>    <p><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg> 폰 홈 화면에 추가해 두면 비행기 모드에서도 열려요. (브라우저 공유 메뉴의 '홈 화면에 추가')</p>
     <p>지도 데이터 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> 기여자</p>
   </footer>
 
@@ -1844,7 +1844,13 @@ if ('serviceWorker' in navigator) {
 </script>
 <script>
 (function () {
-  /* 오늘로 자동 이동 + 지금/다음 일정 하이라이트 - 여행 기간 밖이면 아무것도 안 함 */
+  /* 오늘로 자동 이동 + 지금/다음 일정 하이라이트 - 여행 기간 밖이면 아무것도 안 함.
+
+     가족(party, docs/schema.md D13)별로 따로 계산한다. 문서 순서로만 훑으면 두 가족
+     일정이 섞인 날에 남의 가족 카드에 '지금'이 붙는다 - 나트랑 10/17 18:00 은 영락네
+     '시내 해산물'과 영두네 '이른 저녁'이 동시에 시작해서, 영락네 폰이 영두네 카드에
+     착지하고 '다음'까지 영두네 것으로 떴다. 공동 일정(all)은 모든 가족의 타임라인에
+     함께 들어가고, 필터가 '전체'면 가족마다 각자의 지금·다음을 단다. */
   try {
     var now = new Date();
     var iso = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2);
@@ -1854,26 +1860,60 @@ if ('serviceWorker' in navigator) {
     if (link) { link.classList.add('today'); }
     var hm = ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2);
     var rows = sec.querySelectorAll('article.evcard[data-time]');
-    var cur = -1;
-    for (var i = 0; i < rows.length; i++) {
-      if (rows[i].getAttribute('data-time') <= hm) { cur = i; }
-    }
+    var partyOf = function (row) { return row.getAttribute('data-party') || 'all'; };
     var mark = function (row, cls, txt) {
       var top = row.querySelector('.ev-top');
-      if (!top) { return; }
+      if (!top || row.querySelector('.' + cls)) { return; }
       var s = document.createElement('span');
       s.className = cls;
       s.textContent = txt;
       top.insertBefore(s, top.firstChild);
     };
-    if (cur >= 0) {
-      rows[cur].classList.add('now');
-      mark(rows[cur], 'nowpill', '지금');
-      if (cur + 1 < rows.length) { mark(rows[cur + 1], 'nextpill', '다음'); }
-    }
+    /* 계산 대상 가족 - 한 가족을 고르면 그 가족만, '전체'면 그날 있는 가족 전부
+       (공동 일정뿐인 날은 묶음이 하나라 예전과 똑같이 동작한다) */
+    var groupsFor = function (active) {
+      if (active && active !== 'all') { return [active]; }
+      var out = [], seen = {};
+      for (var i = 0; i < rows.length; i++) {
+        var p = partyOf(rows[i]);
+        if (p !== 'all' && !seen[p]) { seen[p] = 1; out.push(p); }
+      }
+      return out.length ? out : ['all'];
+    };
+    var apply = function (active) {
+      var old = sec.querySelectorAll('.nowpill, .nextpill');
+      for (var o = 0; o < old.length; o++) { old[o].parentNode.removeChild(old[o]); }
+      for (var r = 0; r < rows.length; r++) { rows[r].classList.remove('now'); }
+      var gs = groupsFor(active), nows = [], nexts = [];
+      for (var g = 0; g < gs.length; g++) {
+        var mine = [];
+        for (var i = 0; i < rows.length; i++) {
+          var p = partyOf(rows[i]);
+          if (gs[g] === 'all' || p === gs[g] || p === 'all') { mine.push(rows[i]); }
+        }
+        var cur = -1;
+        for (var k = 0; k < mine.length; k++) {
+          if (mine[k].getAttribute('data-time') <= hm) { cur = k; }
+        }
+        if (cur < 0) { continue; }
+        nows.push(mine[cur]);
+        if (cur + 1 < mine.length) { nexts.push(mine[cur + 1]); }
+      }
+      for (var n = 0; n < nows.length; n++) {
+        nows[n].classList.add('now');
+        mark(nows[n], 'nowpill', '지금');
+      }
+      /* 다른 가족이 '지금'으로 쓰는 공동 일정 카드에는 '다음'을 겹쳐 붙이지 않는다 */
+      for (var x = 0; x < nexts.length; x++) {
+        if (!nexts[x].classList.contains('now')) { mark(nexts[x], 'nextpill', '다음'); }
+      }
+      return sec.querySelector('article.evcard.now');
+    };
+    sec.tpNow = apply;   /* 가족 필터가 바뀌면 다시 계산한다 (아래 필터 스크립트) */
+    var first = apply('all');   /* 필터 기본값은 늘 '전체' (D13 무상태) */
     if (!location.hash) {
-      /* 진행 중인 일정이 있으면 '지금' 카드로 바로, 아직 시작 전이면 그날 상단으로 */
-      var target = cur >= 0 ? rows[cur] : sec;
+      /* 진행 중인 일정이 있으면 가장 이른 '지금' 카드로, 아직 시작 전이면 그날 상단으로 */
+      var target = first || sec;
       var smooth = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
       target.scrollIntoView(smooth ? { behavior: 'smooth', block: 'start' } : { block: 'start' });
     }
@@ -1903,6 +1943,8 @@ if ('serviceWorker' in navigator) {
             if (on) { btns[b].classList.add('on'); } else { btns[b].classList.remove('on'); }
             btns[b].setAttribute('aria-pressed', on ? 'true' : 'false');
           }
+          /* 오늘이면 '지금·다음'도 고른 가족 기준으로 다시 계산한다 (위 스크립트가 등록) */
+          if (day.tpNow) { day.tpNow(sel); }
         };
         for (var k = 0; k < btns.length; k++) {
           (function (btn) {
@@ -2427,15 +2469,20 @@ if ('serviceWorker' in navigator) {
     var base = card.getAttribute('data-fx-base');
     var sym = card.getAttribute('data-fx-symbol');
     if (!base) { return; }
+    /* 표시 단위·눈금은 빌드가 통화별로 정해 준다 - 동(1 ₫ ≈ 0.06원)처럼 1 단위가
+       너무 작은 통화를 '1 ₫ ≈ 0원'으로 쓰면 아무 감각도 주지 못한다 */
+    var unit = parseFloat(card.getAttribute('data-fx-unit')) || 1;
+    var unitLabel = card.getAttribute('data-fx-unit-label') || ('1 ' + sym);
+    var cells = [];
+    try { cells = JSON.parse(card.getAttribute('data-fx-cells') || '[]'); } catch (e) {}
     var KEY = 'tp-fx-nhatrang-2026-10';
     var render = function (rate, cap) {
       /* 원화는 10원 단위 반올림 - 시세는 감각용이지 송금용이 아니다 */
-      document.getElementById('fxmain').textContent = '1 ' + sym + ' ≈ ' + fmt(Math.round(rate / 10) * 10) + '원';
+      document.getElementById('fxmain').textContent = unitLabel + ' ≈ ' + fmt(Math.round(rate * unit / 10) * 10) + '원';
       var h = '';
-      var steps = [10, 50, 100];
-      for (var i = 0; i < steps.length; i++) {
-        h += '<span class="fx-cell"><span class="fx-b">' + sym + steps[i] + '</span>'
-          + '<span class="fx-v">' + fmt(Math.round(rate * steps[i] / 10) * 10) + '원</span></span>';
+      for (var i = 0; i < cells.length; i++) {
+        h += '<span class="fx-cell"><span class="fx-b">' + cells[i].label + '</span>'
+          + '<span class="fx-v">' + fmt(Math.round(rate * cells[i].amount / 10) * 10) + '원</span></span>';
       }
       document.getElementById('fxgrid').innerHTML = h;
       if (cap) {
@@ -2455,7 +2502,13 @@ if ('serviceWorker' in navigator) {
       } catch (e) {}
     };
     if (!window.fetch) { fromCache(); return; }
-    fetch('https://api.frankfurter.dev/v1/latest?base=' + base + '&symbols=KRW').then(function (r) {
+    /* frankfurter(ECB 고시)에 없는 통화(동·대만달러)는 open.er-api.com 에서 받는다.
+       두 응답 모두 {rates:{KRW:n}} 라 아래 처리는 그대로 쓴다. 실패하면 캐시,
+       캐시도 없으면 칩이 스스로 숨는다 (실패 시 숨김 원칙). */
+    var fxUrl = card.getAttribute('data-fx-api') === 'erapi'
+      ? 'https://open.er-api.com/v6/latest/' + base
+      : 'https://api.frankfurter.dev/v1/latest?base=' + base + '&symbols=KRW';
+    fetch(fxUrl).then(function (r) {
       if (!r.ok) { throw new Error('bad status'); }
       return r.json();
     }).then(function (j) {
