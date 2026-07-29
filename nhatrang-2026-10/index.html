@@ -29,9 +29,13 @@
     /* 구조 리듬 - 페이지·카드 단위 간격만 토큰이다 (컴포넌트 안 미세 간격은 리터럴) */
     --sp-page:16px; --sp-card:18px; --sp-gap:12px; --sp-sect:24px;
     --bg:#F2F3F6; --card:#FFFFFF; --ink:#191B1E; --ink-2:#5B6068; --sub:#8A8F98;
-    --sub-ink:#6E737C; --faint:#B4B8C0; --cap:#6E737D; --div:#F5F6F8; --soft:#F7F8FA;
+    /* 캡션 두 색: 흰 카드에서만 4.5 를 넘고 캔버스 4.29·4.30·연회색 4.48 이었다.
+       -7 씩 내려 4.75/4.96/5.27 (본문 --ink-2 는 5.70 이라 위계 유지) */
+    --sub-ink:#676C75; --faint:#B4B8C0; --cap:#676C76; --div:#F5F6F8; --soft:#F7F8FA;
     --pt:#7048E8; --pt-soft:#F4F1FD; --on-pt:#FFFFFF; --ok:#12B76A; --ok-ink:#067647;
-    --warn:#96640A; --warn-bg:#FAF1DE; --danger:#D92D20; --danger-bg:#FDEEEC;
+    /* --danger 는 제 배경 위 4.28 이었다(화상 경고문) - 배경을 밝히면 경고 상자가
+       사라지므로 글자를 내려 4.72 */
+    --warn:#96640A; --warn-bg:#FAF1DE; --danger:#D02417; --danger-bg:#FDEEEC;
     --dday-bg:#191B1E; --dday-ink:#FFFFFF;
     --sh-card:0 1px 3px rgba(25,27,30,.05),0 12px 32px rgba(25,27,30,.06);
     --sh-float:0 2px 6px rgba(25,27,30,.06),0 14px 36px rgba(25,27,30,.12);
@@ -43,9 +47,11 @@
     :root{
       --bg:#101114; --card:#1A1C20; --ink:#ECEDEF; --ink-2:#9CA1AB; --sub:#787D87;
       --sub-ink:#8B909A; --faint:#4A4E56; --cap:#8B909A; --div:#24262B; --soft:#202226;
-      /* 다크 --pt 는 텍스트 링크가 카드(#1A1C20) 위에서 4.5:1 을 넘도록 #8B6CF0 에서 소폭 상향 */
-      /* 다크 --on-pt 는 잉크색 - 밝은 보라 위 흰 글씨는 3.50:1(AA 미달), 뒤집으면 5.44:1 */
-      --pt:#9075F1; --pt-soft:#2A2440; --on-pt:#101114; --ok:#3DCF8E; --ok-ink:#3DCF8E;
+      /* 다크 --pt 는 카드(#1A1C20) 위 링크가 4.5 를 넘도록 #8B6CF0 -> #9075F1 -> #987DF9.
+         마지막 상향은 동선 버튼(보라 글자/연보라 바탕) 4.21 - --pt-soft 를 어둡게 하면
+         버튼 바탕이 카드와 구분되지 않아 글자를 올렸다 (4.66) */
+      /* 다크 --on-pt 는 잉크색 - 밝은 보라 위 흰 글씨는 3.50:1(AA 미달), 뒤집으면 5.97:1 */
+      --pt:#987DF9; --pt-soft:#2A2440; --on-pt:#101114; --ok:#3DCF8E; --ok-ink:#3DCF8E;
       --warn:#E0B25C; --warn-bg:#2E2712; --danger:#F08578; --danger-bg:#3A211E;
       --dday-bg:#E8B84B; --dday-ink:#101114;
       --bar-bg:rgba(16,17,20,.88);
@@ -144,7 +150,9 @@
 
   /* ---------- 본문 문단 (notes 첫 문단) ---------- */
   .lead{font-size:var(--fs-4);font-weight:400;line-height:1.7;color:var(--ink-2);white-space:pre-line}
-  .lead a,.box a,.ti-text a,.os-text a{color:var(--pt);font-weight:600;text-decoration:underline;text-underline-offset:2px;word-break:break-all}
+  /* |linkify 가 만든 산문 속 링크 - 원시 URL 이 나오는 자리라 word-break 이 없으면
+     화면을 넘긴다(ICA URL 396px > 375px). 선택자는 템플릿의 |linkify 자리와 1:1 */
+  .lead a,.box a,.ti-text a,.os-text a,.g-tips a,.l1-warn a,.dn-resv a{color:var(--pt);font-weight:600;text-decoration:underline;text-underline-offset:2px;word-break:break-all}
 
   /* ---------- 접는 참고 ---------- */
   .more{margin-top:8px}
@@ -259,13 +267,14 @@
   /* ---------- 현장 가이드 (카드 하단 접이 영역) ---------- */
   .os-band{height:8px;background:var(--soft);margin:16px -18px 0}
   .onsite{margin:0 -18px -18px}
-  .onsite summary{display:flex;align-items:center;gap:7px;min-height:52px;padding:6px 18px;font-size:var(--fs-4);font-weight:700;cursor:pointer;list-style:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+  .onsite summary{display:flex;align-items:center;flex-wrap:wrap;gap:0 7px;min-height:52px;padding:6px 18px;font-size:var(--fs-4);font-weight:700;cursor:pointer;list-style:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
   .onsite summary::-webkit-details-marker{display:none}
   .onsite summary>.ic{flex:0 0 auto;color:var(--sub)}
   .os-sum{white-space:nowrap;color:var(--pt)}
-  .os-src{margin-left:auto;font-size:var(--fs-6);font-weight:500;color:var(--cap);min-width:0;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  /* 출처는 믿어도 되는 근거다 - 라벨 옆에서 96px(글씨 130% 는 48px)로 잘려
+     "멜리아 공식·20…"만 남았다. 폭을 나누는 대신 아래 줄을 통째로 쓴다 */
+  .os-src{flex:1 0 100%;order:1;font-size:var(--fs-6);font-weight:500;color:var(--cap);line-height:1.45;overflow-wrap:anywhere}
   .os-chev{flex:0 0 auto;width:12px;height:12px;margin-left:auto;transition:transform .15s ease}
-  .os-src~.os-chev{margin-left:2px}
   .onsite[open] .os-chev{transform:rotate(90deg)}
   .os-box{padding:2px 18px 16px}
   .os-menu{margin-top:2px}
@@ -586,7 +595,7 @@
           <span class="t">06:50</span>
 <span class="t-tz">한국 시각</span>          <span class="ev-flex"></span>
 <span class="stchip"><span class="stdot"></span>확정</span>        </div>
-        <h3 class="ev-h">인천공항 T1 출발 — 영락네</h3>
+        <h3 class="ev-h">인천공항 제1여객터미널 출발 — 영락네</h3>
         <div class="l1">
           <dl class="l1-facts">
             <dt>편명</dt>
@@ -758,7 +767,7 @@
         </ol>
         <figcaption>장소(📍)가 등록된 일정만 방문 순서로 이었어요 — 식사·이동·휴식처럼 위치가 없는 일정은 시간표에서 확인하세요 · 연결선은 실제 도로 경로가 아니에요 · 지도 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></figcaption>
       </figure>
-      <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%B9%8C%EB%9D%BC%20%EB%A5%B4%20%EC%BD%94%EB%9D%BC%EC%9D%B4%20%28Villa%20Le%20Corail%2C%20A%20Gran%20Meli%C3%A1%29%2C%20B%C3%A3i%20Ti%C3%AAn%2C%20%C4%90%C6%B0%E1%BB%9Dng%20%C4%90%E1%BB%87%2C%20B%E1%BA%AFc%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a%2C%20Vietnam&amp;destination=%EB%A7%88%EB%8B%B4%ED%94%84%EC%97%89%2C%2034F%20Nguy%E1%BB%85n%20Thi%E1%BB%87n%20Thu%E1%BA%ADt%2C%20T%C3%A2n%20L%E1%BA%ADp%2C%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a&amp;origin_place_id=ChIJ1bUMuTNpcDERasclBGe0N6I" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>영두네 동선 지도로 열기</a>
+      <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%B9%8C%EB%9D%BC%20%EB%A5%B4%20%EC%BD%94%EB%9D%BC%EC%9D%B4%20%28Villa%20Le%20Corail%2C%20A%20Gran%20Meli%C3%A1%29%2C%20B%C3%A3i%20Ti%C3%AAn%2C%20%C4%90%C6%B0%E1%BB%9Dng%20%C4%90%E1%BB%87%2C%20B%E1%BA%AFc%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a%2C%20Vietnam&amp;destination=%EB%A7%88%EB%8B%B4%ED%94%84%EC%97%89%2C%2034F%20Nguy%E1%BB%85n%20Thi%E1%BB%87n%20Thu%E1%BA%ADt%2C%20T%C3%A2n%20L%E1%BA%ADp%2C%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a&amp;origin_place_id=ChIJ1bUMuTNpcDERasclBGe0N6I&amp;destination_place_id=ChIJHW9RwchncDERvbaMbo5NpLI" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>영두네 동선 지도로 열기</a>
     </section>
     <section class="card mapcard" data-party="yeongrak">
 <p class="mlparty">영락네 동선</p>      <figure class="daymap">
@@ -772,7 +781,7 @@
         </ol>
         <figcaption>장소(📍)가 등록된 일정만 방문 순서로 이었어요 — 식사·이동·휴식처럼 위치가 없는 일정은 시간표에서 확인하세요 · 연결선은 실제 도로 경로가 아니에요 · 지도 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></figcaption>
       </figure>
-      <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%B9%8C%EB%9D%BC%20%EB%A5%B4%20%EC%BD%94%EB%9D%BC%EC%9D%B4%20%28Villa%20Le%20Corail%2C%20A%20Gran%20Meli%C3%A1%29%2C%20B%C3%A3i%20Ti%C3%AAn%2C%20%C4%90%C6%B0%E1%BB%9Dng%20%C4%90%E1%BB%87%2C%20B%E1%BA%AFc%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a%2C%20Vietnam&amp;destination=%EB%A7%88%EB%8B%B4%ED%94%84%EC%97%89%2C%2034F%20Nguy%E1%BB%85n%20Thi%E1%BB%87n%20Thu%E1%BA%ADt%2C%20T%C3%A2n%20L%E1%BA%ADp%2C%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a&amp;origin_place_id=ChIJ1bUMuTNpcDERasclBGe0N6I" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>영락네 동선 지도로 열기</a>
+      <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%B9%8C%EB%9D%BC%20%EB%A5%B4%20%EC%BD%94%EB%9D%BC%EC%9D%B4%20%28Villa%20Le%20Corail%2C%20A%20Gran%20Meli%C3%A1%29%2C%20B%C3%A3i%20Ti%C3%AAn%2C%20%C4%90%C6%B0%E1%BB%9Dng%20%C4%90%E1%BB%87%2C%20B%E1%BA%AFc%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a%2C%20Vietnam&amp;destination=%EB%A7%88%EB%8B%B4%ED%94%84%EC%97%89%2C%2034F%20Nguy%E1%BB%85n%20Thi%E1%BB%87n%20Thu%E1%BA%ADt%2C%20T%C3%A2n%20L%E1%BA%ADp%2C%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a&amp;origin_place_id=ChIJ1bUMuTNpcDERasclBGe0N6I&amp;destination_place_id=ChIJHW9RwchncDERvbaMbo5NpLI" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>영락네 동선 지도로 열기</a>
     </section>
     <div class="evs">
       <article class="evcard" data-time="06:50" data-party="yeongdu">
@@ -780,7 +789,7 @@
           <span class="t">06:50</span>
 <span class="t-tz">한국 시각</span>          <span class="ev-flex"></span>
 <span class="pchip">영두네만</span><span class="stchip"><span class="stdot"></span>확정</span>        </div>
-        <h3 class="ev-h">인천공항 T1 출발 — 영두네</h3>
+        <h3 class="ev-h">인천공항 제1여객터미널 출발 — 영두네</h3>
         <div class="l1">
           <dl class="l1-facts">
             <dt>편명</dt>
@@ -1023,7 +1032,7 @@
         </ol>
         <figcaption>장소(📍)가 등록된 일정만 방문 순서로 이었어요 — 식사·이동·휴식처럼 위치가 없는 일정은 시간표에서 확인하세요 · 연결선은 실제 도로 경로가 아니에요 · 지도 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></figcaption>
       </figure>
-      <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%B9%8C%EB%9D%BC%20%EB%A5%B4%20%EC%BD%94%EB%9D%BC%EC%9D%B4%20%28Villa%20Le%20Corail%2C%20A%20Gran%20Meli%C3%A1%29%2C%20B%C3%A3i%20Ti%C3%AAn%2C%20%C4%90%C6%B0%E1%BB%9Dng%20%C4%90%E1%BB%87%2C%20B%E1%BA%AFc%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a%2C%20Vietnam&amp;destination=%EB%AA%A9%EC%8B%9D%EB%8B%B9%20%28%ED%95%98%EC%9D%B4%EC%82%B0%20%EB%AA%A9%EA%BD%8C%29%2C%2074-76%20%C4%90%C6%B0%E1%BB%9Dng%20H%E1%BB%93ng%20B%C3%A0ng%2C%20T%C3%A2n%20L%E1%BA%ADp%2C%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a&amp;origin_place_id=ChIJ1bUMuTNpcDERasclBGe0N6I&amp;waypoints=%EB%B9%88%EC%9B%90%EB%8D%94%EC%8A%A4%20%EB%82%98%ED%8A%B8%EB%9E%91%20%28VinWonders%20Nha%20Trang%29%2C%20%C4%90%E1%BA%A3o%20H%C3%B2n%20Tre%2C%20V%C4%A9nh%20Nguy%C3%AAn%2C%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a%2C%20Vietnam" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>영락네 동선 지도로 열기</a>
+      <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%B9%8C%EB%9D%BC%20%EB%A5%B4%20%EC%BD%94%EB%9D%BC%EC%9D%B4%20%28Villa%20Le%20Corail%2C%20A%20Gran%20Meli%C3%A1%29%2C%20B%C3%A3i%20Ti%C3%AAn%2C%20%C4%90%C6%B0%E1%BB%9Dng%20%C4%90%E1%BB%87%2C%20B%E1%BA%AFc%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a%2C%20Vietnam&amp;destination=%EB%AA%A9%EC%8B%9D%EB%8B%B9%20%28%ED%95%98%EC%9D%B4%EC%82%B0%20%EB%AA%A9%EA%BD%8C%29%2C%2074-76%20%C4%90%C6%B0%E1%BB%9Dng%20H%E1%BB%93ng%20B%C3%A0ng%2C%20T%C3%A2n%20L%E1%BA%ADp%2C%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a&amp;origin_place_id=ChIJ1bUMuTNpcDERasclBGe0N6I&amp;destination_place_id=ChIJY0rVZRRncDERV-9UR-iMjns&amp;waypoints=%EB%B9%88%EC%9B%90%EB%8D%94%EC%8A%A4%20%EB%82%98%ED%8A%B8%EB%9E%91%20%28VinWonders%20Nha%20Trang%29%2C%20%C4%90%E1%BA%A3o%20H%C3%B2n%20Tre%2C%20V%C4%A9nh%20Nguy%C3%AAn%2C%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a%2C%20Vietnam&amp;waypoint_place_ids=ChIJUXQmxMdncDERI-V3_g5la4I" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>영락네 동선 지도로 열기</a>
     </section>
     <div class="evs">
       <article class="evcard" data-time="07:00" data-party="yeongrak">
@@ -1357,7 +1366,7 @@
         </ol>
         <figcaption>장소(📍)가 등록된 일정만 방문 순서로 이었어요 — 식사·이동·휴식처럼 위치가 없는 일정은 시간표에서 확인하세요 · 연결선은 실제 도로 경로가 아니에요 · 지도 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></figcaption>
       </figure>
-      <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%B9%8C%EB%9D%BC%20%EB%A5%B4%20%EC%BD%94%EB%9D%BC%EC%9D%B4%20%28Villa%20Le%20Corail%2C%20A%20Gran%20Meli%C3%A1%29%2C%20B%C3%A3i%20Ti%C3%AAn%2C%20%C4%90%C6%B0%E1%BB%9Dng%20%C4%90%E1%BB%87%2C%20B%E1%BA%AFc%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a%2C%20Vietnam&amp;destination=%EC%94%80%EB%AA%A8%EC%9D%B4%EA%B0%80%EB%93%A0%2C%20144%20V%C3%B5%20Tr%E1%BB%A9%2C%20T%C3%A2n%20L%E1%BA%ADp%2C%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a&amp;origin_place_id=ChIJ1bUMuTNpcDERasclBGe0N6I" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>오늘 동선 지도로 열기</a>
+      <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%B9%8C%EB%9D%BC%20%EB%A5%B4%20%EC%BD%94%EB%9D%BC%EC%9D%B4%20%28Villa%20Le%20Corail%2C%20A%20Gran%20Meli%C3%A1%29%2C%20B%C3%A3i%20Ti%C3%AAn%2C%20%C4%90%C6%B0%E1%BB%9Dng%20%C4%90%E1%BB%87%2C%20B%E1%BA%AFc%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a%2C%20Vietnam&amp;destination=%EC%94%80%EB%AA%A8%EC%9D%B4%EA%B0%80%EB%93%A0%2C%20144%20V%C3%B5%20Tr%E1%BB%A9%2C%20T%C3%A2n%20L%E1%BA%ADp%2C%20Nha%20Trang%2C%20Kh%C3%A1nh%20H%C3%B2a&amp;origin_place_id=ChIJ1bUMuTNpcDERasclBGe0N6I&amp;destination_place_id=ChIJWU9s5chncDERTiomOGbHjQM" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>오늘 동선 지도로 열기</a>
     </section>
     <div class="evs">
       <article class="evcard" data-time="08:00" data-party="all">
@@ -1641,7 +1650,7 @@
           <span class="t">04:30</span>
 <span class="t-tz">한국 시각</span>          <span class="ev-flex"></span>
 <span class="stchip"><span class="stdot"></span>확정</span>        </div>
-        <h3 class="ev-h">인천공항 제1터미널 도착</h3>
+        <h3 class="ev-h">인천공항 제1여객터미널 도착</h3>
 <p class="lead">고생 많으셨어요. 입국 심사와 짐 찾기를 마치면 5시 전후가 돼요. 유모차부터 찾아 아이들을 태우고 천천히 나오세요.</p>        <details class="more">
           <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
           <div class="box">1층 입국장의 B 게이트와 E 게이트 옆에 24시간 여는 유아 휴게실이 있어요. 수유 공간과 기저귀 교환대가 있고 공항철도로 내려가는 길목이라, 첫차를 기다리는 동안 아이들을 쉬게 하기 좋아요. 4층 냅존과 샤워실은 면세 구역 안이라 입국한 다음에는 쓸 수 없어요.</div>
@@ -1675,7 +1684,7 @@
   <section class="card" id="checklist">
     <div class="chk-head">
       <h2 class="sub">준비물 체크리스트</h2>
-      <span class="prog" id="chkprog" data-total="18" hidden></span>
+      <span class="prog" id="chkprog" data-total="19" hidden></span>
     </div>
     <div class="pbar" aria-hidden="true"><span id="pfill"></span></div>
     <p class="hint">탭하면 완료 표시가 이 폰에 저장돼요</p>
@@ -1692,6 +1701,13 @@
           <input type="checkbox" data-key="f22f553c">
           <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
           <span class="txt">빈원더스 케이블카가 10월에 운행하는지 다시 확인하기</span>
+        </label>
+<span class="due" data-due="2026-09-25">9/25까지</span>      </li>
+      <li>
+        <label>
+          <input type="checkbox" data-key="87c4b93e">
+          <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <span class="txt">베트남항공 VN441 출발 터미널 재확인 — 제2여객터미널 이전 예고 (항공사 공식 안내)</span>
         </label>
 <span class="due" data-due="2026-09-25">9/25까지</span>      </li>
       <li>
@@ -1924,9 +1940,27 @@
         }
       }
     };
+    /* 누른 날짜는 그 자리에서 확정한다 - 스무스 스크롤이 끝나야 스파이가 날짜를 정하던
+       탓에 10/18 을 누르고 **바로** 지도 탭을 열면 10월 15일이 떴다(1.5초 뒤에야 10/18).
+       스크롤이 그 날에 닿거나 사용자가 스크롤하면(휠·터치) 스파이가 다시 주인이 된다. */
+    var pinned = null;
+    var wake = function () { pinned = null; };
+    row.addEventListener('click', function (e) {
+      /* 지도·맛집·정보 뷰의 날짜 클릭은 스크롤이 없다 (그 뷰가 직접 표시를 바꾼다) */
+      if (document.body.getAttribute('data-view') !== 'schedule') { return; }
+      var t = e.target;
+      while (t && t !== row && !(t.getAttribute && t.getAttribute('data-spy'))) { t = t.parentNode; }
+      if (!t || t === row) { return; }
+      pinned = t.getAttribute('data-spy');
+      setOn(pinned);
+    });
+    window.addEventListener('wheel', wake, { passive: true });
+    window.addEventListener('touchmove', wake, { passive: true });
     var io = new IntersectionObserver(function (entries) {
       for (var k = 0; k < entries.length; k++) {
-        if (entries[k].isIntersecting) { setOn(entries[k].target.id); }
+        if (!entries[k].isIntersecting) { continue; }
+        if (pinned) { if (entries[k].target.id === pinned) { pinned = null; } continue; }
+        setOn(entries[k].target.id);
       }
     }, { rootMargin: '-82px 0px -58% 0px', threshold: 0 });
     for (var m = 0; m < secs.length; m++) { io.observe(secs[m]); }
@@ -2661,7 +2695,12 @@ if ('serviceWorker' in navigator) {
     var fxUrl = card.getAttribute('data-fx-api') === 'erapi'
       ? 'https://open.er-api.com/v6/latest/' + base
       : 'https://api.frankfurter.dev/v1/latest?base=' + base + '&symbols=KRW';
-    fetch(fxUrl).then(function (r) {
+    /* no-cache: 브라우저 HTTP 캐시가 조용히 답하지 않게 서버에 매번 확인한다.
+       기본 정책으로 두면 비행기 모드에서도 옛 시세가 **"7/29 확인" 스탬프 없이**
+       올라와 라이브처럼 보였다(실측 재현). 오프라인이면 이 요청이 실패하고
+       fromCache 가 날짜 스탬프를 달아 정직하게 옛 값을 보여 준다(날씨 위젯의 폴백
+       표기와 같은 규칙) - 캐시도 없으면 위젯이 스스로 숨는 계약은 그대로다. */
+    fetch(fxUrl, { cache: 'no-cache' }).then(function (r) {
       if (!r.ok) { throw new Error('bad status'); }
       return r.json();
     }).then(function (j) {
