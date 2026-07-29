@@ -53,6 +53,11 @@
   }
 
   *{box-sizing:border-box;margin:0;padding:0}
+  /* 링크 기본색 - 규칙이 붙지 않은 링크가 브라우저 기본 파랑(#0000EE)으로 떨어지면
+     다크에서 대비 1.82:1 이 되어 사실상 안 보인다 (실측: 식당 예약 전화 5건과
+     입국카드 URL 이 그랬다). 명시도가 가장 낮아 아래 컨텍스트별 규칙이 전부 이긴다.
+     보라 = 누를 수 있음 (design.md v5 규칙 1). */
+  a{color:var(--pt)}
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:var(--fs-4);line-height:1.6;letter-spacing:-.01em;padding-bottom:calc(96px + env(safe-area-inset-bottom))}
@@ -514,7 +519,7 @@
   </g>
 </svg></div>
   <div class="hero-top">
-    <p class="eyebrow">우리 가족 여행 가이드</p>
+    <p class="eyebrow">싱가포르 출장 일정</p>
 <span class="pill-dday" id="dday" hidden></span>  </div>
   <h1>싱가포르, 여름의 일주일</h1>
   <p class="period">2026년 8월 2일 – 8일 · 성인 3명</p>
@@ -1609,7 +1614,7 @@
         <h3 class="ev-h">점심</h3>
 <p class="lead">어디서 먹을지는 히타치 방문이 끝나는 자리를 보고 가이드와 정해요.</p>        <details class="more">
           <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
-          <div class="box">오후에 북쪽 만다이로 올라가는 길이라 도심에서 먹고 이동하는 편이 시간이 덜 듭니다. 보타닉가든 쪽으로 먼저 간다면 아담로드 호커센터가 걸어갈 거리에 있고, 진저가든 안의 더 할리아는 세트런치를 오후 2시까지 받아요.</div>
+          <div class="box">오후에 북쪽 만다이로 올라가는 길이라 도심에서 먹고 이동하는 편이 시간이 덜 듭니다. 보타닉가든 쪽으로 먼저 간다면 아담로드 호커센터가 걸어갈 거리에 있어요.</div>
         </details>
       </article>
       <article class="evcard" data-time="13:30" data-party="all">
