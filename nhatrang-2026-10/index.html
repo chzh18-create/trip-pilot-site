@@ -53,6 +53,11 @@
   }
 
   *{box-sizing:border-box;margin:0;padding:0}
+  /* 링크 기본색 - 규칙이 붙지 않은 링크가 브라우저 기본 파랑(#0000EE)으로 떨어지면
+     다크에서 대비 1.82:1 이 되어 사실상 안 보인다 (실측: 식당 예약 전화 5건과
+     입국카드 URL 이 그랬다). 명시도가 가장 낮아 아래 컨텍스트별 규칙이 전부 이긴다.
+     보라 = 누를 수 있음 (design.md v5 규칙 1). */
+  a{color:var(--pt)}
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:var(--fs-4);line-height:1.6;letter-spacing:-.01em;padding-bottom:calc(96px + env(safe-area-inset-bottom))}
@@ -1057,7 +1062,7 @@
           <div class="tr-row">
             <span class="tr-main"><span class="tr-emoji" aria-hidden="true">🚗</span> 그랩 4인승 · 35분</span>
             <span class="tr-ok"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>확정</span>
-<a class="tr-route" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%B9%8C%EB%9D%BC%20%EB%A5%B4%20%EC%BD%94%EB%9D%BC%EC%9D%B4&amp;destination=%EC%BC%80%EC%9D%B4%EB%B8%94%EC%B9%B4%20%EC%8A%B9%EA%B0%95%EC%9E%A5%20%28%EA%B9%8C%EC%9A%B0%EB%8B%A4%20%ED%95%AD%29&amp;origin_place_id=ChIJ1bUMuTNpcDERasclBGe0N6I&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>          </div>
+<a class="tr-route" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%B9%8C%EB%9D%BC%20%EB%A5%B4%20%EC%BD%94%EB%9D%BC%EC%9D%B4&amp;destination=%EC%BC%80%EC%9D%B4%EB%B8%94%EC%B9%B4%20%EC%8A%B9%EA%B0%95%EC%9E%A5%20%28%EA%B9%8C%EC%9A%B0%EB%8B%A4%20%ED%95%AD%29%2C%20Kh%C3%A1nh%20H%C3%B2a%2C%20Vietnam&amp;origin_place_id=ChIJ1bUMuTNpcDERasclBGe0N6I&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>          </div>
           <p class="tr-eta"><span class="tr-t">08:00</span> 출발 → <span class="tr-t">08:35</span> 도착</p>
           <details class="more tr-more">
             <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
