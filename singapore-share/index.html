@@ -53,6 +53,11 @@
   }
 
   *{box-sizing:border-box;margin:0;padding:0}
+  /* 링크 기본색 - 규칙이 붙지 않은 링크가 브라우저 기본 파랑(#0000EE)으로 떨어지면
+     다크에서 대비 1.82:1 이 되어 사실상 안 보인다 (실측: 식당 예약 전화 5건과
+     입국카드 URL 이 그랬다). 명시도가 가장 낮아 아래 컨텍스트별 규칙이 전부 이긴다.
+     보라 = 누를 수 있음 (design.md v5 규칙 1). */
+  a{color:var(--pt)}
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
   @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
   body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:var(--fs-4);line-height:1.6;letter-spacing:-.01em;padding-bottom:calc(96px + env(safe-area-inset-bottom))}
