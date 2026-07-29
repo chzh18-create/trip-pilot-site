@@ -29,9 +29,13 @@
     /* 구조 리듬 - 페이지·카드 단위 간격만 토큰이다 (컴포넌트 안 미세 간격은 리터럴) */
     --sp-page:16px; --sp-card:18px; --sp-gap:12px; --sp-sect:24px;
     --bg:#F2F3F6; --card:#FFFFFF; --ink:#191B1E; --ink-2:#5B6068; --sub:#8A8F98;
-    --sub-ink:#6E737C; --faint:#B4B8C0; --cap:#6E737D; --div:#F5F6F8; --soft:#F7F8FA;
+    /* 캡션 두 색: 흰 카드에서만 4.5 를 넘고 캔버스 4.29·4.30·연회색 4.48 이었다.
+       -7 씩 내려 4.75/4.96/5.27 (본문 --ink-2 는 5.70 이라 위계 유지) */
+    --sub-ink:#676C75; --faint:#B4B8C0; --cap:#676C76; --div:#F5F6F8; --soft:#F7F8FA;
     --pt:#7048E8; --pt-soft:#F4F1FD; --on-pt:#FFFFFF; --ok:#12B76A; --ok-ink:#067647;
-    --warn:#96640A; --warn-bg:#FAF1DE; --danger:#D92D20; --danger-bg:#FDEEEC;
+    /* --danger 는 제 배경 위 4.28 이었다(화상 경고문) - 배경을 밝히면 경고 상자가
+       사라지므로 글자를 내려 4.72 */
+    --warn:#96640A; --warn-bg:#FAF1DE; --danger:#D02417; --danger-bg:#FDEEEC;
     --dday-bg:#191B1E; --dday-ink:#FFFFFF;
     --sh-card:0 1px 3px rgba(25,27,30,.05),0 12px 32px rgba(25,27,30,.06);
     --sh-float:0 2px 6px rgba(25,27,30,.06),0 14px 36px rgba(25,27,30,.12);
@@ -43,9 +47,11 @@
     :root{
       --bg:#101114; --card:#1A1C20; --ink:#ECEDEF; --ink-2:#9CA1AB; --sub:#787D87;
       --sub-ink:#8B909A; --faint:#4A4E56; --cap:#8B909A; --div:#24262B; --soft:#202226;
-      /* 다크 --pt 는 텍스트 링크가 카드(#1A1C20) 위에서 4.5:1 을 넘도록 #8B6CF0 에서 소폭 상향 */
-      /* 다크 --on-pt 는 잉크색 - 밝은 보라 위 흰 글씨는 3.50:1(AA 미달), 뒤집으면 5.44:1 */
-      --pt:#9075F1; --pt-soft:#2A2440; --on-pt:#101114; --ok:#3DCF8E; --ok-ink:#3DCF8E;
+      /* 다크 --pt 는 카드(#1A1C20) 위 링크가 4.5 를 넘도록 #8B6CF0 -> #9075F1 -> #987DF9.
+         마지막 상향은 동선 버튼(보라 글자/연보라 바탕) 4.21 - --pt-soft 를 어둡게 하면
+         버튼 바탕이 카드와 구분되지 않아 글자를 올렸다 (4.66) */
+      /* 다크 --on-pt 는 잉크색 - 밝은 보라 위 흰 글씨는 3.50:1(AA 미달), 뒤집으면 5.97:1 */
+      --pt:#987DF9; --pt-soft:#2A2440; --on-pt:#101114; --ok:#3DCF8E; --ok-ink:#3DCF8E;
       --warn:#E0B25C; --warn-bg:#2E2712; --danger:#F08578; --danger-bg:#3A211E;
       --dday-bg:#E8B84B; --dday-ink:#101114;
       --bar-bg:rgba(16,17,20,.88);
@@ -144,7 +150,9 @@
 
   /* ---------- 본문 문단 (notes 첫 문단) ---------- */
   .lead{font-size:var(--fs-4);font-weight:400;line-height:1.7;color:var(--ink-2);white-space:pre-line}
-  .lead a,.box a,.ti-text a,.os-text a{color:var(--pt);font-weight:600;text-decoration:underline;text-underline-offset:2px;word-break:break-all}
+  /* |linkify 가 만든 산문 속 링크 - 원시 URL 이 나오는 자리라 word-break 이 없으면
+     화면을 넘긴다(ICA URL 396px > 375px). 선택자는 템플릿의 |linkify 자리와 1:1 */
+  .lead a,.box a,.ti-text a,.os-text a,.g-tips a,.l1-warn a,.dn-resv a{color:var(--pt);font-weight:600;text-decoration:underline;text-underline-offset:2px;word-break:break-all}
 
   /* ---------- 접는 참고 ---------- */
   .more{margin-top:8px}
@@ -259,13 +267,14 @@
   /* ---------- 현장 가이드 (카드 하단 접이 영역) ---------- */
   .os-band{height:8px;background:var(--soft);margin:16px -18px 0}
   .onsite{margin:0 -18px -18px}
-  .onsite summary{display:flex;align-items:center;gap:7px;min-height:52px;padding:6px 18px;font-size:var(--fs-4);font-weight:700;cursor:pointer;list-style:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+  .onsite summary{display:flex;align-items:center;flex-wrap:wrap;gap:0 7px;min-height:52px;padding:6px 18px;font-size:var(--fs-4);font-weight:700;cursor:pointer;list-style:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
   .onsite summary::-webkit-details-marker{display:none}
   .onsite summary>.ic{flex:0 0 auto;color:var(--sub)}
   .os-sum{white-space:nowrap;color:var(--pt)}
-  .os-src{margin-left:auto;font-size:var(--fs-6);font-weight:500;color:var(--cap);min-width:0;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  /* 출처는 믿어도 되는 근거다 - 라벨 옆에서 96px(글씨 130% 는 48px)로 잘려
+     "멜리아 공식·20…"만 남았다. 폭을 나누는 대신 아래 줄을 통째로 쓴다 */
+  .os-src{flex:1 0 100%;order:1;font-size:var(--fs-6);font-weight:500;color:var(--cap);line-height:1.45;overflow-wrap:anywhere}
   .os-chev{flex:0 0 auto;width:12px;height:12px;margin-left:auto;transition:transform .15s ease}
-  .os-src~.os-chev{margin-left:2px}
   .onsite[open] .os-chev{transform:rotate(90deg)}
   .os-box{padding:2px 18px 16px}
   .os-menu{margin-top:2px}
@@ -580,7 +589,7 @@
     <h2 class="sub">머무는 곳</h2>
     <div class="stay">
       <p class="stay-name">마리나베이 인근 호텔</p>
-      <p class="stay-addr"><a href="https://www.google.com/maps/search/?api=1&amp;query=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도 보기</a></p>
+      <p class="stay-addr"><a href="https://www.google.com/maps/search/?api=1&amp;query=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도 보기</a></p>
       <p class="stay-dates">5박</p>
     </div>
   </section>
@@ -686,7 +695,7 @@
         </ol>
         <figcaption>장소(📍)가 등록된 일정만 방문 순서로 이었어요 — 식사·이동·휴식처럼 위치가 없는 일정은 시간표에서 확인하세요 · 연결선은 실제 도로 경로가 아니에요 · 지도 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></figcaption>
       </figure>
-      <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94&amp;destination=Wings%20of%20Time%2C%2060%20Siloso%20Beach%20Walk%2C%20Sentosa%2C%20Singapore&amp;waypoints=Din%20Tai%20Fung%20%28Suntec%20City%29%2C%20Suntec%20City%20Tower%205%20%2302-302%2C%20Singapore%7CSingapore%20Cable%20Car%20HarbourFront%20Station%2C%203%20HarbourFront%20Place%2C%20Singapore%7CImbiah%20Lookout%2C%20Sentosa%2C%20Singapore%7CPalawan%20Beach%2C%20Sentosa%2C%20Singapore%7CSiloso%20Beach%2C%20Sentosa%2C%20Singapore%7CTrapizza%2C%20101%20Siloso%20Road%2C%20Sentosa%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>오늘 동선 지도로 열기</a>
+      <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94%2C%20Singapore&amp;destination=Wings%20of%20Time%2C%2060%20Siloso%20Beach%20Walk%2C%20Sentosa%2C%20Singapore&amp;destination_place_id=ChIJ3f__j_kb2jERYEEHaAfmcB8&amp;waypoints=Din%20Tai%20Fung%20%28Suntec%20City%29%2C%20Suntec%20City%20Tower%205%20%2302-302%2C%20Singapore%7CSingapore%20Cable%20Car%20HarbourFront%20Station%2C%203%20HarbourFront%20Place%2C%20Singapore%7CImbiah%20Lookout%2C%20Sentosa%2C%20Singapore%7CPalawan%20Beach%2C%20Sentosa%2C%20Singapore%7CSiloso%20Beach%2C%20Sentosa%2C%20Singapore%7CTrapizza%2C%20101%20Siloso%20Road%2C%20Sentosa%2C%20Singapore&amp;waypoint_place_ids=ChIJCY4rragZ2jERJth5CEaPbWE%7CChIJqQjOtOMb2jERI4XEmcnYEVw%7CChIJOUfS6P4b2jERoVXdlOegdkI%7CChIJ_dMhDKoe2jERLKH66wxWO2M%7CChIJ60Vd-vgb2jERzKezzTGAy_I%7CChIJ0a0WgFUZ2jERBsdGqBaO_Ds" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>오늘 동선 지도로 열기</a>
     </section>
     <div class="evs">
       <article class="evcard" data-time="07:00" data-party="all">
@@ -714,7 +723,7 @@
             <p class="vname">Din Tai Fung (Suntec City)</p>
 <p class="vaddr">Suntec City Tower 5 #02-302, Singapore</p>            <p class="vhours"><span class="vh-t">매일 11:00–22:00</span><span class="vh-s">구글</span></p>
             <p class="vlinks">
-<a href="https://www.google.com/maps/search/?api=1&amp;query=Din%20Tai%20Fung%20%28Suntec%20City%29%20Suntec%20City%20Tower%205%20%2302-302%2C%20Singapore&amp;query_place_id=ChIJCY4rragZ2jERJth5CEaPbWE" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94&amp;destination=Din%20Tai%20Fung%20%28Suntec%20City%29%2C%20Suntec%20City%20Tower%205%20%2302-302%2C%20Singapore&amp;destination_place_id=ChIJCY4rragZ2jERJth5CEaPbWE&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Din%20Tai%20Fung%20%28Suntec%20City%29%20Suntec%20City%20Tower%205%20%2302-302%2C%20Singapore&amp;query_place_id=ChIJCY4rragZ2jERJth5CEaPbWE" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94%2C%20Singapore&amp;destination=Din%20Tai%20Fung%20%28Suntec%20City%29%2C%20Suntec%20City%20Tower%205%20%2302-302%2C%20Singapore&amp;destination_place_id=ChIJCY4rragZ2jERJth5CEaPbWE&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
           </div>
           <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=Din%20Tai%20Fung%20%28Suntec%20City%29%20Suntec%20City%20Tower%205%20%2302-302%2C%20Singapore&amp;query_place_id=ChIJCY4rragZ2jERJth5CEaPbWE" target="_blank" rel="noopener" aria-label="Din Tai Fung (Suntec City) 지도 열기">
             <picture>
@@ -1154,7 +1163,7 @@
         </ol>
         <figcaption>장소(📍)가 등록된 일정만 방문 순서로 이었어요 — 식사·이동·휴식처럼 위치가 없는 일정은 시간표에서 확인하세요 · 연결선은 실제 도로 경로가 아니에요 · 지도 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></figcaption>
       </figure>
-      <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94&amp;destination=Paulaner%20Br%C3%A4uhaus%20Singapore%2C%209%20Raffles%20Boulevard%2C%20Millenia%20Walk%2C%20Singapore&amp;waypoints=Merlion%20Park%2C%201%20Fullerton%20Road%2C%20Singapore%7CMaxwell%20Food%20Centre%2C%201%20Kadayanallur%20Street%2C%20Singapore%7CGardens%20by%20the%20Bay%2C%2018%20Marina%20Gardens%20Drive%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>오늘 동선 지도로 열기</a>
+      <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94%2C%20Singapore&amp;destination=Paulaner%20Br%C3%A4uhaus%20Singapore%2C%209%20Raffles%20Boulevard%2C%20Millenia%20Walk%2C%20Singapore&amp;destination_place_id=ChIJCUEDxqgZ2jERLoWQ7ycLoQ8&amp;waypoints=Merlion%20Park%2C%201%20Fullerton%20Road%2C%20Singapore%7CMaxwell%20Food%20Centre%2C%201%20Kadayanallur%20Street%2C%20Singapore%7CGardens%20by%20the%20Bay%2C%2018%20Marina%20Gardens%20Drive%2C%20Singapore&amp;waypoint_place_ids=ChIJBTYg1g4Z2jERp_MBbu5erWY%7CChIJseQsTQ0Z2jERqpBTWF0Zf84%7CChIJMxZ-kwQZ2jERdsqftXeWCWI" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>오늘 동선 지도로 열기</a>
     </section>
     <div class="evs">
       <article class="evcard" data-time="07:00" data-party="all">
@@ -1181,7 +1190,7 @@
           <div class="ev-vmain">
             <p class="vname">Merlion Park</p>
 <p class="vaddr">1 Fullerton Road, Singapore</p>            <p class="vlinks">
-<a href="https://www.google.com/maps/search/?api=1&amp;query=Merlion%20Park%201%20Fullerton%20Road%2C%20Singapore&amp;query_place_id=ChIJBTYg1g4Z2jERp_MBbu5erWY" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94&amp;destination=Merlion%20Park%2C%201%20Fullerton%20Road%2C%20Singapore&amp;destination_place_id=ChIJBTYg1g4Z2jERp_MBbu5erWY&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Merlion%20Park%201%20Fullerton%20Road%2C%20Singapore&amp;query_place_id=ChIJBTYg1g4Z2jERp_MBbu5erWY" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94%2C%20Singapore&amp;destination=Merlion%20Park%2C%201%20Fullerton%20Road%2C%20Singapore&amp;destination_place_id=ChIJBTYg1g4Z2jERp_MBbu5erWY&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
           </div>
           <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=Merlion%20Park%201%20Fullerton%20Road%2C%20Singapore&amp;query_place_id=ChIJBTYg1g4Z2jERp_MBbu5erWY" target="_blank" rel="noopener" aria-label="Merlion Park 지도 열기">
             <picture>
@@ -1275,7 +1284,7 @@
                 <p class="os-text">회전이 빨라서 평일엔 10분 안팎이면 받지만 12시가 넘으면 줄이 길어져요. 근처에 똑같은 파란 간판 가게가 있으니 01-10 자리인지 확인하세요.</p>
               </div>
             </div>
-            <a class="os-cta" href="https://www.google.com/maps/search/?api=1&amp;query=Tian+Tian+Hainanese+Chicken+Rice+Maxwell+Food+Centre" target="_blank" rel="noopener">메뉴판·사진 보기</a>
+            <a class="os-cta" href="https://www.google.com/maps/search/?api=1&amp;query=Tian+Tian+Hainanese+Chicken+Rice+Maxwell+Food+Centre+Singapore" target="_blank" rel="noopener">메뉴판·사진 보기</a>
           </div>
         </details>
       </article>
@@ -1518,7 +1527,7 @@
         </ol>
         <figcaption>장소(📍)가 등록된 일정만 방문 순서로 이었어요 — 식사·이동·휴식처럼 위치가 없는 일정은 시간표에서 확인하세요 · 연결선은 실제 도로 경로가 아니에요 · 지도 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></figcaption>
       </figure>
-      <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94&amp;destination=Palm%20Beach%20Seafood%2C%201%20Fullerton%20Road%20%2301-09%2C%20One%20Fullerton%2C%20Singapore&amp;waypoints=WaterB%20River%20Cruise%20%E2%80%94%20Merlion%20Park%20%EC%84%A0%EC%B0%A9%EC%9E%A5%2C%20Merlion%20Park%2C%201%20Fullerton%20Road%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>오늘 동선 지도로 열기</a>
+      <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94%2C%20Singapore&amp;destination=Palm%20Beach%20Seafood%2C%201%20Fullerton%20Road%20%2301-09%2C%20One%20Fullerton%2C%20Singapore&amp;destination_place_id=ChIJsSmt3wgZ2jERzmVdqGYajrk&amp;waypoints=WaterB%20River%20Cruise%20%E2%80%94%20Merlion%20Park%20%EC%84%A0%EC%B0%A9%EC%9E%A5%2C%20Merlion%20Park%2C%201%20Fullerton%20Road%2C%20Singapore&amp;waypoint_place_ids=ChIJFZKm4bkZ2jERFM8gKOKD4Nk" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>오늘 동선 지도로 열기</a>
     </section>
     <div class="evs">
       <article class="evcard" data-time="07:00" data-party="all">
@@ -1574,7 +1583,7 @@
           <div class="ev-vmain">
             <p class="vname">WaterB River Cruise — Merlion Park 선착장</p>
 <p class="vaddr">Merlion Park, 1 Fullerton Road, Singapore</p>            <p class="vlinks">
-<a href="https://www.google.com/maps/search/?api=1&amp;query=WaterB%20River%20Cruise%20%E2%80%94%20Merlion%20Park%20%EC%84%A0%EC%B0%A9%EC%9E%A5%20Merlion%20Park%2C%201%20Fullerton%20Road%2C%20Singapore&amp;query_place_id=ChIJFZKm4bkZ2jERFM8gKOKD4Nk" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94&amp;destination=WaterB%20River%20Cruise%20%E2%80%94%20Merlion%20Park%20%EC%84%A0%EC%B0%A9%EC%9E%A5%2C%20Merlion%20Park%2C%201%20Fullerton%20Road%2C%20Singapore&amp;destination_place_id=ChIJFZKm4bkZ2jERFM8gKOKD4Nk&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
+<a href="https://www.google.com/maps/search/?api=1&amp;query=WaterB%20River%20Cruise%20%E2%80%94%20Merlion%20Park%20%EC%84%A0%EC%B0%A9%EC%9E%A5%20Merlion%20Park%2C%201%20Fullerton%20Road%2C%20Singapore&amp;query_place_id=ChIJFZKm4bkZ2jERFM8gKOKD4Nk" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94%2C%20Singapore&amp;destination=WaterB%20River%20Cruise%20%E2%80%94%20Merlion%20Park%20%EC%84%A0%EC%B0%A9%EC%9E%A5%2C%20Merlion%20Park%2C%201%20Fullerton%20Road%2C%20Singapore&amp;destination_place_id=ChIJFZKm4bkZ2jERFM8gKOKD4Nk&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
           </div>
           <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=WaterB%20River%20Cruise%20%E2%80%94%20Merlion%20Park%20%EC%84%A0%EC%B0%A9%EC%9E%A5%20Merlion%20Park%2C%201%20Fullerton%20Road%2C%20Singapore&amp;query_place_id=ChIJFZKm4bkZ2jERFM8gKOKD4Nk" target="_blank" rel="noopener" aria-label="WaterB River Cruise — Merlion Park 선착장 지도 열기">
             <picture>
@@ -1790,7 +1799,7 @@
         </ol>
         <figcaption>장소(📍)가 등록된 일정만 방문 순서로 이었어요 — 식사·이동·휴식처럼 위치가 없는 일정은 시간표에서 확인하세요 · 연결선은 실제 도로 경로가 아니에요 · 지도 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></figcaption>
       </figure>
-      <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94&amp;destination=LeVeL33%2C%208%20Marina%20Boulevard%20%2333-01%2C%20MBFC%20Tower%201%2C%20Singapore&amp;waypoints=Bird%20Paradise%20%28Mandai%29%2C%2020%20Mandai%20Lake%20Road%2C%20Singapore%7CWisma%20Atria%2C%20435%20Orchard%20Road%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>오늘 동선 지도로 열기</a>
+      <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94%2C%20Singapore&amp;destination=LeVeL33%2C%208%20Marina%20Boulevard%20%2333-01%2C%20MBFC%20Tower%201%2C%20Singapore&amp;destination_place_id=ChIJuVSo3A8Z2jERPTOqcYWM9i4&amp;waypoints=Bird%20Paradise%20%28Mandai%29%2C%2020%20Mandai%20Lake%20Road%2C%20Singapore%7CWisma%20Atria%2C%20435%20Orchard%20Road%2C%20Singapore&amp;waypoint_place_ids=ChIJkyCpkWcT2jER1Nsl0ZvOI4Q%7CChIJSZHC-I0Z2jERm8BlwXqhcfc" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>오늘 동선 지도로 열기</a>
     </section>
     <div class="evs">
       <article class="evcard" data-time="07:00" data-party="all">
@@ -1817,7 +1826,7 @@
           <div class="ev-vmain">
             <p class="vname">Bird Paradise (Mandai)</p>
 <p class="vaddr">20 Mandai Lake Road, Singapore</p>            <p class="vlinks">
-<a href="https://www.google.com/maps/search/?api=1&amp;query=Bird%20Paradise%20%28Mandai%29%2020%20Mandai%20Lake%20Road%2C%20Singapore&amp;query_place_id=ChIJkyCpkWcT2jER1Nsl0ZvOI4Q" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94&amp;destination=Bird%20Paradise%20%28Mandai%29%2C%2020%20Mandai%20Lake%20Road%2C%20Singapore&amp;destination_place_id=ChIJkyCpkWcT2jER1Nsl0ZvOI4Q&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Bird%20Paradise%20%28Mandai%29%2020%20Mandai%20Lake%20Road%2C%20Singapore&amp;query_place_id=ChIJkyCpkWcT2jER1Nsl0ZvOI4Q" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94%2C%20Singapore&amp;destination=Bird%20Paradise%20%28Mandai%29%2C%2020%20Mandai%20Lake%20Road%2C%20Singapore&amp;destination_place_id=ChIJkyCpkWcT2jER1Nsl0ZvOI4Q&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
           </div>
           <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=Bird%20Paradise%20%28Mandai%29%2020%20Mandai%20Lake%20Road%2C%20Singapore&amp;query_place_id=ChIJkyCpkWcT2jER1Nsl0ZvOI4Q" target="_blank" rel="noopener" aria-label="Bird Paradise (Mandai) 지도 열기">
             <picture>
@@ -2075,7 +2084,7 @@
         </ol>
         <figcaption>장소(📍)가 등록된 일정만 방문 순서로 이었어요 — 식사·이동·휴식처럼 위치가 없는 일정은 시간표에서 확인하세요 · 연결선은 실제 도로 경로가 아니에요 · 지도 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></figcaption>
       </figure>
-      <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94&amp;destination=Singapore%20Changi%20Airport%2C%20Airport%20Boulevard%2C%20Singapore&amp;waypoints=Dian%20Xiao%20Er%20%28Marina%20Square%29%2C%206%20Raffles%20Boulevard%20%2302-200%2C%20Marina%20Square%2C%20Singapore" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>오늘 동선 지도로 열기</a>
+      <a class="routebtn" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94%2C%20Singapore&amp;destination=Singapore%20Changi%20Airport%2C%20Airport%20Boulevard%2C%20Singapore&amp;destination_place_id=ChIJ483Qk9YX2jERA0VOQV7d1tY&amp;waypoints=Dian%20Xiao%20Er%20%28Marina%20Square%29%2C%206%20Raffles%20Boulevard%20%2302-200%2C%20Marina%20Square%2C%20Singapore&amp;waypoint_place_ids=ChIJt7a1YKgZ2jERrc4R7ki0_fw" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>오늘 동선 지도로 열기</a>
     </section>
     <div class="evs">
       <article class="evcard" data-time="07:00" data-party="all">
@@ -2103,7 +2112,7 @@
             <p class="vname">Dian Xiao Er (Marina Square)</p>
 <p class="vaddr">6 Raffles Boulevard #02-200, Marina Square, Singapore</p>            <p class="vhours" data-hours='["11:00\u201321:30", "11:00\u201321:30", "11:00\u201321:30", "11:00\u201321:30", "11:00\u201322:00", "11:00\u201322:00", "11:00\u201322:00"]'><span class="vh-t">월–목 11:00–21:30 / 금–일 11:00–22:00</span><span class="vh-s">구글</span></p>
             <p class="vlinks">
-<a href="https://www.google.com/maps/search/?api=1&amp;query=Dian%20Xiao%20Er%20%28Marina%20Square%29%206%20Raffles%20Boulevard%20%2302-200%2C%20Marina%20Square%2C%20Singapore&amp;query_place_id=ChIJt7a1YKgZ2jERrc4R7ki0_fw" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94&amp;destination=Dian%20Xiao%20Er%20%28Marina%20Square%29%2C%206%20Raffles%20Boulevard%20%2302-200%2C%20Marina%20Square%2C%20Singapore&amp;destination_place_id=ChIJt7a1YKgZ2jERrc4R7ki0_fw&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
+<a href="https://www.google.com/maps/search/?api=1&amp;query=Dian%20Xiao%20Er%20%28Marina%20Square%29%206%20Raffles%20Boulevard%20%2302-200%2C%20Marina%20Square%2C%20Singapore&amp;query_place_id=ChIJt7a1YKgZ2jERrc4R7ki0_fw" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%A7%88%EB%A6%AC%EB%82%98%EB%B2%A0%EC%9D%B4%20%EC%9D%B8%EA%B7%BC%20%ED%98%B8%ED%85%94%2C%20Singapore&amp;destination=Dian%20Xiao%20Er%20%28Marina%20Square%29%2C%206%20Raffles%20Boulevard%20%2302-200%2C%20Marina%20Square%2C%20Singapore&amp;destination_place_id=ChIJt7a1YKgZ2jERrc4R7ki0_fw&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>            </p>
           </div>
           <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=Dian%20Xiao%20Er%20%28Marina%20Square%29%206%20Raffles%20Boulevard%20%2302-200%2C%20Marina%20Square%2C%20Singapore&amp;query_place_id=ChIJt7a1YKgZ2jERrc4R7ki0_fw" target="_blank" rel="noopener" aria-label="Dian Xiao Er (Marina Square) 지도 열기">
             <picture>
@@ -2175,7 +2184,7 @@
                 <p class="os-text">아이 몫은 새우 볶음밥과 두부 요리면 충분해요. 오리는 한약재 향이 있어서 아이 입에는 갈릴 수 있어요.</p>
               </div>
             </div>
-            <a class="os-cta" href="https://www.google.com/maps/search/?api=1&amp;query=Dian+Xiao+Er+Marina+Square" target="_blank" rel="noopener">메뉴판·사진 보기</a>
+            <a class="os-cta" href="https://www.google.com/maps/search/?api=1&amp;query=Dian+Xiao+Er+Marina+Square+Singapore" target="_blank" rel="noopener">메뉴판·사진 보기</a>
           </div>
         </details>
       </article>
@@ -2376,9 +2385,27 @@
         }
       }
     };
+    /* 누른 날짜는 그 자리에서 확정한다 - 스무스 스크롤이 끝나야 스파이가 날짜를 정하던
+       탓에 10/18 을 누르고 **바로** 지도 탭을 열면 10월 15일이 떴다(1.5초 뒤에야 10/18).
+       스크롤이 그 날에 닿거나 사용자가 스크롤하면(휠·터치) 스파이가 다시 주인이 된다. */
+    var pinned = null;
+    var wake = function () { pinned = null; };
+    row.addEventListener('click', function (e) {
+      /* 지도·맛집·정보 뷰의 날짜 클릭은 스크롤이 없다 (그 뷰가 직접 표시를 바꾼다) */
+      if (document.body.getAttribute('data-view') !== 'schedule') { return; }
+      var t = e.target;
+      while (t && t !== row && !(t.getAttribute && t.getAttribute('data-spy'))) { t = t.parentNode; }
+      if (!t || t === row) { return; }
+      pinned = t.getAttribute('data-spy');
+      setOn(pinned);
+    });
+    window.addEventListener('wheel', wake, { passive: true });
+    window.addEventListener('touchmove', wake, { passive: true });
     var io = new IntersectionObserver(function (entries) {
       for (var k = 0; k < entries.length; k++) {
-        if (entries[k].isIntersecting) { setOn(entries[k].target.id); }
+        if (!entries[k].isIntersecting) { continue; }
+        if (pinned) { if (entries[k].target.id === pinned) { pinned = null; } continue; }
+        setOn(entries[k].target.id);
       }
     }, { rootMargin: '-82px 0px -58% 0px', threshold: 0 });
     for (var m = 0; m < secs.length; m++) { io.observe(secs[m]); }
@@ -2892,7 +2919,12 @@ if ('serviceWorker' in navigator) {
     var fxUrl = card.getAttribute('data-fx-api') === 'erapi'
       ? 'https://open.er-api.com/v6/latest/' + base
       : 'https://api.frankfurter.dev/v1/latest?base=' + base + '&symbols=KRW';
-    fetch(fxUrl).then(function (r) {
+    /* no-cache: 브라우저 HTTP 캐시가 조용히 답하지 않게 서버에 매번 확인한다.
+       기본 정책으로 두면 비행기 모드에서도 옛 시세가 **"7/29 확인" 스탬프 없이**
+       올라와 라이브처럼 보였다(실측 재현). 오프라인이면 이 요청이 실패하고
+       fromCache 가 날짜 스탬프를 달아 정직하게 옛 값을 보여 준다(날씨 위젯의 폴백
+       표기와 같은 규칙) - 캐시도 없으면 위젯이 스스로 숨는 계약은 그대로다. */
+    fetch(fxUrl, { cache: 'no-cache' }).then(function (r) {
       if (!r.ok) { throw new Error('bad status'); }
       return r.json();
     }).then(function (j) {
