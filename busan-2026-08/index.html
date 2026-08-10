@@ -1,0 +1,2550 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>부산 해운대 2026.08.21–23</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./icon-180.png">
+<meta name="theme-color" content="#F2F3F6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101114" media="(prefers-color-scheme: dark)">
+<style>
+  /* ============================================================
+     테마 파일 - 화면의 생김새는 전부 여기 있다 (docs/design.md v5 앱 문법이 우선).
+     이 파일과 default.json 만 갈아 끼우면 디자인이 바뀐다 - scripts/ 는 무수정.
+     빌드가 index.html 안에 통째로 인라인한다 (첫 화면 왕복 0회).
+     ============================================================ */
+  /* v5 앱 문법 - 시스템 산세리프만 사용 (세리프·폰트 서브셋 파이프라인 미사용) */
+  :root{
+    /* 타이포 6단 - 크기는 이 여섯 개가 전부다. 중간값을 새로 만들지 않는다:
+       12~14px 사이에 여섯 단계가 몰려 있던 탓에 위계가 무너졌던 것이 감사 지적이다.
+       fs-1 예산·큰 숫자 / fs-2 시간 / fs-3 이름·제목 / fs-4 본문 / fs-5 캡션 / fs-6 미세.
+       (design.md 2장 규칙 3: 시간 19px·예산 26px 은 고정)
+       단위는 rem - px 고정이면 폰의 '글씨 크게' 설정이 화면에 닿지 않는다.
+       기준 16px 에서 26/19/16/14/13/12px (아래 두 단은 11->12, 12.5->13 상향). */
+    --fs-1:1.625rem; --fs-2:1.1875rem; --fs-3:1rem;
+    --fs-4:0.875rem; --fs-5:0.8125rem; --fs-6:0.75rem;
+    /* 라운드 (design.md 1장: 카드 20 · 썸네일 14 · 버튼 15 · 칩 999) */
+    --r-card:20px; --r-btn:15px; --r-thumb:14px; --r-sm:12px; --r-xs:7px; --r-pill:999px;
+    /* 구조 리듬 - 페이지·카드 단위 간격만 토큰이다 (컴포넌트 안 미세 간격은 리터럴) */
+    --sp-page:16px; --sp-card:18px; --sp-gap:12px; --sp-sect:24px;
+    --bg:#F2F3F6; --card:#FFFFFF; --ink:#191B1E; --ink-2:#5B6068; --sub:#8A8F98;
+    /* 캡션 두 색: 흰 카드에서만 4.5 를 넘고 캔버스 4.29·4.30·연회색 4.48 이었다.
+       -7 씩 내려 4.75/4.96/5.27 (본문 --ink-2 는 5.70 이라 위계 유지) */
+    --sub-ink:#676C75; --faint:#B4B8C0; --cap:#676C76; --div:#F5F6F8; --soft:#F7F8FA;
+    --pt:#7048E8; --pt-soft:#F4F1FD; --on-pt:#FFFFFF; --ok:#12B76A; --ok-ink:#067647;
+    /* --danger 는 제 배경 위 4.28 이었다(화상 경고문) - 배경을 밝히면 경고 상자가
+       사라지므로 글자를 내려 4.72 */
+    --warn:#96640A; --warn-bg:#FAF1DE; --danger:#D02417; --danger-bg:#FDEEEC;
+    --dday-bg:#191B1E; --dday-ink:#FFFFFF;
+    --sh-card:0 1px 3px rgba(25,27,30,.05),0 12px 32px rgba(25,27,30,.06);
+    --sh-float:0 2px 6px rgba(25,27,30,.06),0 14px 36px rgba(25,27,30,.12);
+    --bar-bg:rgba(242,243,246,.9);
+    --mono:ui-monospace,"SF Mono","JetBrains Mono","Roboto Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",Roboto,sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#101114; --card:#1A1C20; --ink:#ECEDEF; --ink-2:#9CA1AB; --sub:#787D87;
+      --sub-ink:#8B909A; --faint:#4A4E56; --cap:#8B909A; --div:#24262B; --soft:#202226;
+      /* 다크 --pt 는 카드(#1A1C20) 위 링크가 4.5 를 넘도록 #8B6CF0 -> #9075F1 -> #987DF9.
+         마지막 상향은 동선 버튼(보라 글자/연보라 바탕) 4.21 - --pt-soft 를 어둡게 하면
+         버튼 바탕이 카드와 구분되지 않아 글자를 올렸다 (4.66) */
+      /* 다크 --on-pt 는 잉크색 - 밝은 보라 위 흰 글씨는 3.50:1(AA 미달), 뒤집으면 5.97:1 */
+      --pt:#987DF9; --pt-soft:#2A2440; --on-pt:#101114; --ok:#3DCF8E; --ok-ink:#3DCF8E;
+      --warn:#E0B25C; --warn-bg:#2E2712; --danger:#F08578; --danger-bg:#3A211E;
+      --dday-bg:#E8B84B; --dday-ink:#101114;
+      --bar-bg:rgba(16,17,20,.88);
+    }
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  /* 링크 기본색 - 규칙이 붙지 않은 링크가 브라우저 기본 파랑(#0000EE)으로 떨어지면
+     다크에서 대비 1.82:1 이 되어 사실상 안 보인다 (실측: 식당 예약 전화 5건과
+     입국카드 URL 이 그랬다). 명시도가 가장 낮아 아래 컨텍스트별 규칙이 전부 이긴다.
+     보라 = 누를 수 있음 (design.md v5 규칙 1). */
+  a{color:var(--pt)}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+  @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:var(--fs-4);line-height:1.6;letter-spacing:-.01em;padding-bottom:calc(96px + env(safe-area-inset-bottom))}
+  ::selection{background:var(--pt-soft)}
+  [hidden]{display:none!important}
+  :focus-visible{outline:2px solid var(--pt);outline-offset:2px}
+  .wrap{max-width:680px;margin:0 auto;padding:0 var(--sp-page)}
+  .ic{width:14px;height:14px;vertical-align:-2px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  section[id],.day,.evcard{scroll-margin-top:82px}
+
+  /* ---------- 카드 ---------- */
+  .card{background:var(--card);border-radius:var(--r-card);box-shadow:var(--sh-card);padding:var(--sp-card);margin-top:var(--sp-gap)}
+  .sub{font-size:var(--fs-4);font-weight:700;letter-spacing:-.01em}
+  .card>.sub{margin-bottom:12px}
+  .hint{font-size:var(--fs-6);color:var(--cap);margin:-4px 0 6px}
+
+  /* ---------- 상단 ---------- */
+  .hero{position:relative;overflow:hidden;padding-top:30px;padding-bottom:18px}
+  .hero-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+  .eyebrow{font-size:var(--fs-5);font-weight:700;color:var(--ink-2)}
+  .pill-dday{display:inline-flex;align-items:center;border-radius:var(--r-pill);background:var(--dday-bg);color:var(--dday-ink);padding:7px 12px;font-size:var(--fs-6);font-weight:700;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .hero h1{font-size:var(--fs-1);font-weight:700;letter-spacing:-.02em;line-height:1.28;margin-top:10px}
+  .period{font-family:var(--mono);font-size:var(--fs-5);color:var(--ink-2);margin-top:7px;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .motif{position:absolute;right:14px;bottom:6px;z-index:-1;width:clamp(110px,22vw,150px);opacity:.14;color:var(--pt);pointer-events:none}
+  .motif svg{display:block;width:100%;height:auto}
+
+  /* ---------- 여행 정보 카드 ---------- */
+  .infocard{display:grid;gap:var(--sp-page)}
+  .ib-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+  .ib-h{font-size:var(--fs-5);font-weight:700;color:var(--cap)}
+  .ib-cap{font-size:var(--fs-6);color:var(--sub-ink);font-variant-numeric:tabular-nums}
+  .wx-row{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:2px;margin-top:9px}
+  .wx-c{display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 0;border-radius:var(--r-sm)}
+  .wx-w{font-size:var(--fs-6);font-weight:600;color:var(--cap)}
+  .wx-i{width:22px;height:22px;fill:none;stroke:var(--ink-2);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  .wx-hi{font-size:var(--fs-5);font-weight:700;font-variant-numeric:tabular-nums}
+  .wx-lo{font-size:var(--fs-6);color:var(--cap);font-variant-numeric:tabular-nums}
+  .wx-na{margin:auto 0;font-size:var(--fs-4);font-weight:600;color:var(--faint)}
+  .fx-main{font-size:var(--fs-2);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:7px}
+  .fx-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
+  .fx-cell{background:var(--soft);border-radius:var(--r-sm);padding:9px 8px;text-align:center}
+  .fx-b{display:block;font-size:var(--fs-6);font-weight:600;color:var(--cap)}
+  .fx-v{display:block;font-size:var(--fs-5);font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums}
+  .tinfo summary{display:flex;align-items:center;gap:7px;min-height:44px;border-radius:var(--r-thumb);background:var(--soft);padding:0 13px;font-size:var(--fs-4);font-weight:700;color:var(--pt);cursor:pointer;list-style:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+  .tinfo summary::-webkit-details-marker{display:none}
+  .tinfo summary .ic{width:12px;height:12px;color:var(--sub);transition:transform .15s ease}
+  .tinfo[open]>summary .ic{transform:rotate(90deg)}
+  .ti-row{padding:11px 2px}
+  .ti-row+.ti-row{border-top:1px solid var(--div)}
+  .ti-label{font-size:var(--fs-5);font-weight:700}
+  .ti-text{font-size:var(--fs-4);line-height:1.65;color:var(--ink-2);margin-top:2px;white-space:pre-line}
+
+  /* ---------- 머무는 곳 ---------- */
+  .stay+.stay{margin-top:14px;padding-top:14px;border-top:1px solid var(--div)}
+  .stay-name{font-size:var(--fs-3);font-weight:700;letter-spacing:-.015em}
+  .stay-addr{font-size:var(--fs-5);line-height:1.55;color:var(--ink-2);margin-top:3px}
+  .stay-addr a{display:inline-flex;align-items:center;gap:4px;min-height:40px;padding:0 6px;margin:-10px -2px;color:var(--pt);text-decoration:none;font-weight:700;white-space:nowrap;font-size:var(--fs-5)}
+  .stay-dates{font-size:var(--fs-5);color:var(--cap);margin-top:6px}
+
+  /* ---------- 일자 세그먼트 바 ---------- */
+  .daybar{position:sticky;top:0;z-index:30;background:var(--bar-bg);padding:10px 0}
+  @supports ((backdrop-filter:blur(10px)) or (-webkit-backdrop-filter:blur(10px))){
+    .daybar{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+  }
+  .dayrow{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:5px;max-width:680px;margin:0 auto;padding:0 16px}
+  .dayrow.scroll{display:flex;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .dayrow.scroll::-webkit-scrollbar{display:none}
+  .dayrow.scroll a{flex:0 0 56px}
+  .dayrow a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-height:50px;border-radius:var(--r-thumb);background:var(--card);box-shadow:0 1px 2px rgba(25,27,30,.04);text-decoration:none;-webkit-tap-highlight-color:transparent}
+  .db-d{font-size:var(--fs-4);font-weight:700;color:var(--ink);letter-spacing:-.01em;font-variant-numeric:tabular-nums;line-height:1.2}
+  .db-w{font-size:var(--fs-6);font-weight:600;color:var(--ink-2);line-height:1.2}
+  .dayrow a.on{background:var(--ink)}
+  .dayrow a.on .db-d{color:var(--card)}
+  .dayrow a.on .db-w{color:var(--card);opacity:.72}
+  .dayrow a.today::after{content:"";width:4px;height:4px;border-radius:50%;background:var(--ok);margin-top:1px}
+
+  /* ---------- 함께 정할 것 (tbd 요약 카드) ---------- */
+  .tbd{list-style:none;margin-top:2px}
+  .tbd li+li{border-top:1px solid var(--div)}
+  .tbd a{display:flex;align-items:center;gap:9px;min-height:44px;padding:3px 0;font-size:var(--fs-4);line-height:1.5;color:var(--ink);text-decoration:none}
+  .tbd a::before{content:"";flex:0 0 auto;width:7px;height:7px;border-radius:50%;background:var(--warn);opacity:.85}
+  .tbd a .ic{flex:0 0 auto;width:12px;height:12px;margin-left:auto;color:var(--pt)}
+  .tbd-note{font-size:var(--fs-6);color:var(--cap);margin-top:10px}
+
+  /* 후보 고르기 (D15) — 여러 후보가 한 화면에 서므로 카드가 아니라 줄로 만든다.
+     터치 타겟은 체크리스트 라벨과 같은 규칙(전체 줄이 눌린다). */
+  .pickbar{display:flex;align-items:center;gap:10px;margin-top:14px}
+  .pick-count{font-size:var(--fs-5);color:var(--ink-2);font-weight:600}
+  .pickcopy{margin-left:auto;border:0;border-radius:var(--r-btn);background:var(--pt);color:var(--on-pt);font-size:var(--fs-5);font-weight:700;padding:10px 14px;min-height:44px;font-family:inherit}
+  .pickcopy[disabled]{background:var(--soft);color:var(--faint)}
+  .picker{margin-top:14px;border-top:1px solid var(--div);padding-top:12px}
+  .pick-head{font-size:var(--fs-5);color:var(--ink-2);margin-bottom:8px}
+  .pick-head b{color:var(--ink)}
+  .pick-item{display:flex;align-items:flex-start;gap:10px;padding:10px 2px;min-height:44px;border-radius:var(--r-sm)}
+  .pick-item input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:var(--pt)}
+  .pick-body{display:flex;flex-direction:column;gap:3px;min-width:0}
+  .pick-name{font-size:var(--fs-4);font-weight:700;color:var(--ink)}
+  .pick-scores{display:flex;flex-wrap:wrap;gap:6px}
+  .pick-score{font-size:var(--fs-6);color:var(--cap);background:var(--soft);border-radius:var(--r-pill);padding:2px 8px;white-space:nowrap}
+  .pick-score b{color:var(--ink);font-size:var(--fs-5)}
+  .pick-meta{font-size:var(--fs-6);color:var(--cap)}
+  .pick-links{display:flex;gap:14px;padding:0 2px 12px 32px}
+  .pick-links a{font-size:var(--fs-6);color:var(--pt);font-weight:600;text-decoration:none;min-height:32px;display:inline-flex;align-items:center}
+  .picker .pick-item:has(input:checked){background:var(--pt-soft)}
+  /* 고르는 중인 후보 묶음 — 맛집 탭 맨 끝에 접어 둔다 */
+  .dn-fold{margin-top:22px}
+  .dn-fold summary{cursor:pointer;list-style:none}
+  .dn-fold summary::-webkit-details-marker{display:none}
+  .dn-fold summary::after{content:'';display:inline-block;width:7px;height:7px;margin-left:8px;border-right:2px solid var(--faint);border-bottom:2px solid var(--faint);transform:rotate(45deg) translateY(-2px)}
+  .dn-fold[open] summary::after{transform:rotate(-135deg) translateY(2px)}
+
+  /* ---------- 본문 문단 (notes 첫 문단) ---------- */
+  .lead{font-size:var(--fs-4);font-weight:400;line-height:1.7;color:var(--ink-2);white-space:pre-line}
+  /* |linkify 가 만든 산문 속 링크 - 원시 URL 이 나오는 자리라 word-break 이 없으면
+     화면을 넘긴다(ICA URL 396px > 375px). 선택자는 템플릿의 |linkify 자리와 1:1 */
+  .lead a,.box a,.ti-text a,.os-text a,.g-tips a,.l1-warn a,.dn-resv a{color:var(--pt);font-weight:600;text-decoration:underline;text-underline-offset:2px;word-break:break-all}
+
+  /* ---------- 접는 참고 ---------- */
+  .more{margin-top:8px}
+  .more summary{display:inline-flex;align-items:center;gap:5px;min-height:40px;font-size:var(--fs-5);font-weight:700;color:var(--pt);cursor:pointer;list-style:none;-webkit-user-select:none;user-select:none;padding:3px 0;-webkit-tap-highlight-color:transparent}
+  .more summary::-webkit-details-marker{display:none}
+  .more summary .ic{width:12px;height:12px;transition:transform .15s ease}
+  .more[open]>summary .ic{transform:rotate(90deg)}
+  .more .box{margin-top:6px;background:var(--soft);border-radius:var(--r-thumb);padding:11px 13px;font-size:var(--fs-4);line-height:1.7;color:var(--ink-2);white-space:pre-line}
+  .day-more .box{background:var(--card);box-shadow:var(--sh-card)}
+
+  /* ---------- 일자 섹션 ---------- */
+  .day{margin-top:36px}
+  .day-title{font-size:var(--fs-2);font-weight:700;letter-spacing:-.02em;line-height:1.3}
+  .day-theme{font-size:var(--fs-4);color:var(--ink-2);margin-top:4px}
+  .day-lead{margin-top:10px}
+  /* 가족 필터 - 일자 세그먼트 바(.dayrow)와 같은 문법: 선택된 칸만 잉크 배경 */
+  .pfilter{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:5px;margin-top:14px}
+  .pfbtn{min-height:42px;border:0;border-radius:var(--r-thumb);background:var(--card);box-shadow:0 1px 2px rgba(25,27,30,.04);color:var(--pt);font-family:inherit;font-size:var(--fs-5);font-weight:700;letter-spacing:-.01em;-webkit-tap-highlight-color:transparent}
+  .pfbtn.on{background:var(--ink);color:var(--card)}
+  .evs{margin-top:var(--sp-gap)}
+
+  /* ---------- 동선 지도 카드 ---------- */
+  .mapcard{padding:14px 14px 14px}
+  .daymap img{display:block;width:100%;height:auto;border-radius:var(--r-thumb)}
+  .daymap figcaption{font-size:var(--fs-6);line-height:1.6;color:var(--cap);margin-top:10px;padding:0 2px}
+  .daymap figcaption a{color:var(--pt);font-weight:700;text-decoration:none}
+  .maplegend{list-style:none;margin-top:11px;padding:0 2px}
+  .maplegend li{display:flex;align-items:center;gap:8px;font-size:var(--fs-5);line-height:1.45}
+  .maplegend li+li{margin-top:7px}
+  /* 마커 번호는 6단 밖 크기(10.5px)였다 - 토큰으로 되돌린다 */
+  .mlnum{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:var(--pt);color:var(--on-pt);font:700 var(--fs-6)/1 var(--mono)}
+  .mlnum.start{background:var(--card);color:var(--pt);border:1.5px solid var(--pt)}
+  .mltime{flex:0 0 auto;font:var(--fs-6)/1.45 var(--mono);color:var(--cap);font-variant-numeric:tabular-nums}
+  /* 가족별 동선 라벨 - 두 가족 동선이 갈리는 날에만 (누를 수 없는 회색 정보) */
+  .mlparty{font-size:var(--fs-5);font-weight:700;color:var(--ink-2);margin:0 2px 10px}
+  .routebtn{display:flex;align-items:center;justify-content:center;gap:7px;min-height:48px;margin-top:12px;border-radius:var(--r-btn);background:var(--pt-soft);color:var(--pt);font-size:var(--fs-4);font-weight:700;text-decoration:none;-webkit-tap-highlight-color:transparent}
+  .routebtn.solo{background:var(--card);box-shadow:var(--sh-card)}
+
+  /* ---------- 이벤트 카드 ---------- */
+  .evcard{position:relative;overflow:hidden;background:var(--card);border-radius:var(--r-card);box-shadow:var(--sh-card);padding:16px 18px 18px;margin-top:10px}
+  .evcard.now::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--pt)}
+  .ev-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .t{font-size:var(--fs-2);font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1.3}
+  .t-end{font-size:var(--fs-5);font-weight:600;color:var(--ink-2);font-variant-numeric:tabular-nums}
+  .t-tz{font-size:var(--fs-6);font-weight:600;color:var(--cap)}
+  .ev-flex{flex:1 1 auto}
+  .stchip{display:inline-flex;align-items:center;gap:5px;font-size:var(--fs-6);font-weight:600;color:var(--ink-2);white-space:nowrap}
+  .stdot{width:6px;height:6px;border-radius:50%;background:var(--ok)}
+  .tbdpill{display:inline-flex;align-items:center;border-radius:var(--r-pill);background:var(--warn-bg);color:var(--warn);padding:5px 10px;font-size:var(--fs-6);font-weight:600;line-height:1;white-space:nowrap}
+  /* 가족 칩 - 누를 수 없는 정보라 회색 (v5 규칙 1: 보라는 인터랙션 전용) */
+  .pchip{display:inline-flex;align-items:center;border-radius:var(--r-pill);background:var(--soft);color:var(--cap);padding:5px 10px;font-size:var(--fs-6);font-weight:600;line-height:1;white-space:nowrap}
+  .nowpill,.nextpill{display:inline-flex;align-items:center;border-radius:var(--r-pill);padding:5px 10px;font-size:var(--fs-6);font-weight:700;line-height:1;letter-spacing:.01em}
+  .nowpill{background:var(--pt);color:var(--on-pt)}
+  .nextpill{background:var(--soft);color:var(--ink-2)}
+  .ev-h{font-size:var(--fs-3);font-weight:700;letter-spacing:-.015em;line-height:1.35;margin-top:6px}
+  .ev-venue{display:flex;align-items:flex-start;gap:12px;margin-top:8px}
+  .ev-vmain{flex:1 1 auto;min-width:0}
+  .vname{font-size:var(--fs-4);font-weight:600;color:var(--ink-2);line-height:1.5}
+  /* 확인된 곳은 침묵 - 배지는 예외(미확인·폐업)에만 붙는다 */
+  .vwarn{display:inline-flex;align-items:center;margin-left:6px;border-radius:var(--r-pill);background:var(--warn-bg);color:var(--warn);padding:3px 8px;font-size:var(--fs-6);font-weight:700;line-height:1.2;white-space:nowrap}
+  /* 영업 자체는 확인됐고 영업시간만 못 얻은 곳 - 경고가 아니라 정보라 회색 (v5 규칙 1) */
+  .vnote{display:inline-flex;align-items:center;margin-left:6px;border-radius:var(--r-pill);background:var(--soft);color:var(--cap);padding:3px 8px;font-size:var(--fs-6);font-weight:600;line-height:1.2;white-space:nowrap}
+  /* 주소는 줄여 쓰지 않는다 - 택시 기사에게 보여 주는 줄이라 끝이 잘리면 기능이 사라진다 */
+  .vaddr{font-size:var(--fs-5);line-height:1.5;color:var(--cap);margin-top:2px;overflow-wrap:anywhere}
+  /* 영업시간 - 숫자가 주인공(잉크색 tabular-nums), 근거는 회색 캡션 (design v5 규칙 3) */
+  .vhours{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 7px;margin-top:3px}
+  .vh-t{font-size:var(--fs-5);font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .vh-s{font-size:var(--fs-6);color:var(--cap);font-variant-numeric:tabular-nums}
+  /* 맛집 한 줄 (D14 dining 구조 필드) - 거리·결제·수령지·아이 설비를 회색 한 줄로 압축.
+     누를 수 없는 정보라 보라를 쓰지 않고, 앰버는 현금만처럼 현장 사고가 나는 것만 (v5 규칙 1) */
+  .vmeta{font-size:var(--fs-6);line-height:1.6;color:var(--cap);margin-top:4px}
+  .vmeta .vm+.vm::before{content:" · ";color:var(--faint)}
+  .vmeta .vm-w{font-weight:700;color:var(--warn)}
+  .vlinks{display:flex;flex-wrap:wrap;gap:2px;margin-top:2px;margin-left:-8px}
+  .vlinks a{display:inline-flex;align-items:center;gap:4px;min-height:40px;padding:0 8px;font-size:var(--fs-5);font-weight:700;color:var(--pt);text-decoration:none;-webkit-tap-highlight-color:transparent}
+  .vlinks a .ic{width:13px;height:13px}
+  /* 숙소 안 식사 - 누를 수 없는 정보라 보라를 쓰지 않는다 (v5 규칙 1) */
+  .vwalk{display:inline-flex;align-items:center;gap:4px;min-height:40px;padding:0 8px;font-size:var(--fs-5);font-weight:600;color:var(--cap)}
+  .vwalk .ic{width:13px;height:13px}
+  .vthumb{position:relative;flex:0 0 auto;width:62px;height:62px;border-radius:var(--r-thumb);overflow:hidden;background:var(--soft)}
+  .vthumb img{display:block;width:62px;height:62px}
+  .vthumb::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:var(--pt);border:2.5px solid var(--card);box-shadow:0 1px 4px rgba(25,27,30,.35)}
+  .vt-go{position:absolute;right:4px;bottom:4px;width:16px;height:16px;padding:3px;border-radius:50%;background:var(--card);color:var(--pt);stroke-width:2.4;box-shadow:0 1px 3px rgba(25,27,30,.28)}
+  .closedbar{background:var(--danger-bg);color:var(--danger);font-size:var(--fs-5);font-weight:600;line-height:1.55;border-radius:var(--r-thumb);padding:11px 13px;margin-top:10px}
+  /* ---------- 1층 (onsite kind: warn/fact/todo - 접힘 밖) ---------- */
+  .l1{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+  .l1-warn{display:flex;align-items:flex-start;gap:7px;background:var(--warn-bg);color:var(--warn);font-size:var(--fs-5);font-weight:600;line-height:1.55;border-radius:var(--r-thumb);padding:10px 12px}
+  .l1-warn.danger{background:var(--danger-bg);color:var(--danger)}
+  .l1-warn>.ic{flex:0 0 auto;width:14px;height:14px;margin-top:3px}
+  .l1-facts{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:baseline;margin:2px 0 0}
+  .l1-facts dt{font-size:var(--fs-6);color:var(--cap);white-space:nowrap}
+  .l1-facts dd{margin:0}
+  .l1-v{font-size:var(--fs-2);font-weight:700;color:var(--ink);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .l1-n{font-size:var(--fs-6);color:var(--sub-ink)}
+  /* 1층 승격 항목이 카드에서 가장 약한 타이포이면 승격의 의미가 없다 */
+  .l1-todo{display:flex;align-items:flex-start;gap:9px;font-size:var(--fs-4);font-weight:500;line-height:1.55;color:var(--ink);min-height:40px}
+  .l1-todo input{width:20px;height:20px;margin-top:1px;accent-color:var(--pt);flex:0 0 auto}
+  .c-h{font-size:var(--fs-6);font-weight:600;color:var(--cap)}
+  .tr-eta{margin:6px 0 0;font-size:var(--fs-5);color:var(--ink-2)}
+  .tr-t{font-size:var(--fs-3);font-weight:700;color:var(--ink);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .tr-nd{font-size:var(--fs-6);font-weight:700;color:var(--cap)}
+  .g-facts{display:grid;grid-template-columns:auto 1fr;gap:6px 12px;align-items:baseline;margin:0 0 10px;padding:0 18px}
+  .g-facts dt{font-size:var(--fs-6);color:var(--cap);white-space:nowrap}
+  .g-facts dd{margin:0}
+  .g-tips{margin:8px 0 0;padding:0 18px 0 34px}
+  .g-tips li{font-size:var(--fs-4);line-height:1.65;color:var(--ink-2);margin-bottom:5px}
+  .gcard .l1-warn{margin:0 18px 8px}
+  .evcard .lead{margin-top:10px}
+  .evcard.empty{padding:22px 18px}
+  .noev{font-size:var(--fs-4);color:var(--cap);text-align:center}
+
+  /* ---------- 현장 가이드 (카드 하단 접이 영역) ---------- */
+  .os-band{height:8px;background:var(--soft);margin:16px -18px 0}
+  .onsite{margin:0 -18px -18px}
+  .onsite summary{display:flex;align-items:center;flex-wrap:wrap;gap:0 7px;min-height:52px;padding:6px 18px;font-size:var(--fs-4);font-weight:700;cursor:pointer;list-style:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+  .onsite summary::-webkit-details-marker{display:none}
+  .onsite summary>.ic{flex:0 0 auto;color:var(--sub)}
+  .os-sum{white-space:nowrap;color:var(--pt)}
+  /* 출처는 믿어도 되는 근거다 - 라벨 옆에서 96px(글씨 130% 는 48px)로 잘려
+     "멜리아 공식·20…"만 남았다. 폭을 나누는 대신 아래 줄을 통째로 쓴다 */
+  .os-src{flex:1 0 100%;order:1;font-size:var(--fs-6);font-weight:500;color:var(--cap);line-height:1.45;overflow-wrap:anywhere}
+  .os-chev{flex:0 0 auto;width:12px;height:12px;margin-left:auto;transition:transform .15s ease}
+  .onsite[open] .os-chev{transform:rotate(90deg)}
+  .os-box{padding:2px 18px 16px}
+  .os-menu{margin-top:2px}
+  .mrow{display:flex;align-items:center;gap:11px;padding:9px 0}
+  .mrow+.mrow{border-top:1px solid var(--div)}
+  .mtile{flex:0 0 auto;display:grid;place-items:center;width:40px;height:40px;border-radius:var(--r-sm);background:var(--pt-soft);color:var(--pt)}
+  .mtile .ic{width:19px;height:19px}
+  .mmain{flex:1 1 auto;min-width:0}
+  .mname{display:block;font-size:var(--fs-4);font-weight:600;line-height:1.45}
+  .mnote{display:block;font-size:var(--fs-5);color:var(--cap);line-height:1.5;margin-top:1px}
+  .mprice{flex:0 0 auto;font-size:var(--fs-4);font-weight:700;font-variant-numeric:tabular-nums}
+  .os-budget{background:var(--soft);border-radius:var(--r-thumb);padding:14px 16px;margin-top:10px}
+  .oblabel{font-size:var(--fs-5);font-weight:600;color:var(--cap)}
+  .obvalue{font-size:var(--fs-1);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;margin-top:2px}
+  .obcap{font-size:var(--fs-5);color:var(--cap);margin-top:3px;line-height:1.55}
+  .os-tip{display:flex;align-items:flex-start;gap:10px;background:var(--soft);border-radius:var(--r-thumb);padding:12px 13px;margin-top:10px}
+  .os-tic{flex:0 0 auto;width:16px;height:16px;color:var(--pt);margin-top:2px}
+  .os-tbody{flex:1 1 auto;min-width:0}
+  .os-label{font-size:var(--fs-5);font-weight:700}
+  .os-text{font-size:var(--fs-4);line-height:1.65;color:var(--ink-2);margin-top:2px;white-space:pre-line}
+  .os-illust{margin-top:10px;color:var(--pt)}
+  .os-illust svg{display:block;width:100%;max-width:220px;height:auto}
+  .os-cta{display:flex;align-items:center;justify-content:center;min-height:48px;border-radius:var(--r-btn);background:var(--pt);color:var(--on-pt);font-size:var(--fs-4);font-weight:700;text-decoration:none;margin-top:12px;-webkit-tap-highlight-color:transparent}
+  .os-cta.alt{background:var(--soft);color:var(--ink)}
+  /* 식당 현장 가이드로 가는 한 줄 - 상자는 맛집 탭 카드 한 곳에만 둔다 */
+  .os-jump{display:flex;align-items:center;gap:7px;min-height:52px;margin:0 -18px -18px;padding:6px 18px;font-size:var(--fs-4);font-weight:700;color:var(--pt);text-decoration:none;-webkit-tap-highlight-color:transparent}
+  .os-jump .os-chev{margin-left:auto}
+
+  /* ---------- 바로 걸기 ---------- */
+  .tel{list-style:none;margin-top:2px}
+  .tel li+li{border-top:1px solid var(--div)}
+  .tel a{display:flex;align-items:center;gap:12px;min-height:52px;padding:4px 0;text-decoration:none;color:var(--ink)}
+  .ticon{flex:0 0 auto;display:grid;place-items:center;width:40px;height:40px;border-radius:var(--r-sm);background:var(--soft);color:var(--ink-2)}
+  .ticon .ic{width:17px;height:17px}
+  .tel .who{flex:1 1 auto;min-width:0;font-size:var(--fs-4);font-weight:600;line-height:1.45}
+  .tel .num{font-family:var(--mono);font-size:var(--fs-5);font-weight:700;color:var(--pt);white-space:nowrap;font-variant-numeric:tabular-nums}
+
+  /* ---------- 준비물 체크리스트 ---------- */
+  .chk-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .prog{font-size:var(--fs-5);font-weight:700;color:var(--ink-2);font-variant-numeric:tabular-nums}
+  .pbar{height:4px;border-radius:var(--r-pill);background:var(--soft);overflow:hidden;margin-top:10px}
+  .pbar span{display:block;height:100%;width:0;border-radius:var(--r-pill);background:var(--ok);transition:width .2s ease}
+  .pbar+.hint{margin-top:8px}
+  .chk{list-style:none;margin-top:2px}
+  .chk li{display:grid;grid-template-columns:1fr auto;column-gap:10px;align-items:start;padding:11px 0}
+  .chk li+li{border-top:1px solid var(--div)}
+  .chk label{position:relative;display:grid;grid-template-columns:22px 1fr;column-gap:11px;align-items:start;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .chk input{position:absolute;top:0;left:0;width:22px;height:22px;margin:0;opacity:0}
+  .chk .box{width:22px;height:22px;border:1.5px solid var(--faint);border-radius:var(--r-xs);background:var(--card);display:grid;place-items:center;margin-top:1px;transition:background .12s ease,border-color .12s ease}
+  .chk .box .ic{width:12px;height:12px;stroke-width:2.6;color:#FFFFFF;opacity:0}
+  .chk input:checked + .box{background:var(--ok);border-color:var(--ok)}
+  .chk input:checked + .box .ic{opacity:1}
+  .chk input:focus-visible + .box{outline:2px solid var(--pt);outline-offset:2px}
+  .chk .txt{font-size:var(--fs-4);line-height:1.55}
+  .chk input:checked ~ .txt{color:var(--sub);text-decoration:line-through}
+  .due{font-size:var(--fs-6);font-weight:600;color:var(--ink-2);background:var(--soft);border-radius:var(--r-pill);padding:5px 10px;white-space:nowrap;margin-top:1px}
+  .due.late{background:var(--danger-bg);color:var(--danger);font-weight:700}
+
+  /* ---------- 푸터 ---------- */
+  footer{margin-top:40px;padding:0 2px;font-size:var(--fs-6);line-height:1.8;color:var(--cap)}
+  footer p{margin-bottom:8px}
+  footer .ic{width:13px;height:13px;color:var(--sub)}
+  footer a{color:var(--pt);font-weight:700;text-decoration:none}
+
+  /* ---------- 플로팅 바 ---------- */
+  .fab{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom));z-index:40;display:flex;gap:2px;background:var(--card);border-radius:var(--r-pill);box-shadow:var(--sh-float);padding:5px}
+  .fab a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:62px;min-height:44px;border-radius:var(--r-pill);color:var(--sub);text-decoration:none;-webkit-tap-highlight-color:transparent}
+  /* 탭이 6칸인 트립(맛집·정보 둘 다)만 작은 폰에서 칸을 좁힌다 - 바 폭은 칸 폭의 합이라
+     62px 그대로면 6칸이 375px 화면을 넘는다. 5칸 이하 트립은 이 규칙에 걸리지 않는다. */
+  @media (max-width:400px){.fab:has(a:nth-child(6)) a{min-width:52px}}
+  .fab a .ic{width:19px;height:19px}
+  .fab a span{font-size:var(--fs-6);font-weight:700;line-height:1;color:var(--sub-ink)}
+  .fab a.on{color:var(--ink);background:var(--soft)}
+  .fab a.on span{color:inherit}
+
+  /* ---------- 지도 모드 (플로팅 바 지도 탭 - body[data-view] 전환) ---------- */
+  .mappanel,.diningpanel,.infopanel{display:none}
+  body[data-view="map"] .hero,
+  body[data-view="map"] .overview,
+  body[data-view="map"] main.wrap>*:not(.mappanel){display:none}
+  body[data-view="map"] .mappanel{display:block;animation:mp-in .2s ease}
+  /* 맛집 모드 - 지도 모드와 같은 전환 방식 (본문 숨김·패널만·같은 페이드) */
+  body[data-view="dining"] .hero,
+  body[data-view="dining"] .overview,
+  body[data-view="dining"] .daybar,
+  body[data-view="dining"] main.wrap>*:not(.diningpanel){display:none}
+  body[data-view="dining"] .diningpanel{display:block;animation:mp-in .2s ease}
+  /* 여행 정보 모드 - 맛집 모드와 같은 전환 방식 */
+  body[data-view="info"] .hero,
+  body[data-view="info"] .overview,
+  body[data-view="info"] .daybar,
+  body[data-view="info"] main.wrap>*:not(.infopanel){display:none}
+  body[data-view="info"] .infopanel{display:block;animation:mp-in .2s ease}
+  @keyframes mp-in{from{opacity:0}to{opacity:1}}
+  @media (prefers-reduced-motion: reduce){body[data-view="map"] .mappanel,body[data-view="dining"] .diningpanel,body[data-view="info"] .infopanel{animation:none}}
+  .mp-title{font-size:var(--fs-2);font-weight:700;letter-spacing:-.02em;line-height:1.3;margin:14px 2px 0}
+  .mp-empty{padding:26px 18px}
+
+  /* ---------- 맛집 뷰 카드 (dining 탭) ---------- */
+  .dn-lead,.g-lead{font-size:var(--fs-5);line-height:1.6;color:var(--ink-2);margin:8px 2px 0}
+  .dn-sect{display:flex;align-items:baseline;gap:6px;font-size:var(--fs-5);font-weight:700;color:var(--cap);margin:var(--sp-sect) 2px 0}
+  .dn-sect-n{font-size:var(--fs-6);font-weight:600;color:var(--sub-ink);font-variant-numeric:tabular-nums}
+  .dn-sect-cap{font-size:var(--fs-6);line-height:1.55;color:var(--sub-ink);margin:4px 2px 0}
+  /* 칩 필터 - 무상태 토글 (선택된 칩만 잉크 배경, 세그먼트 바와 같은 문법) */
+  .dn-flt{display:flex;flex-wrap:wrap;gap:6px;margin:12px 2px 0}
+  .fchip{min-height:36px;border:0;border-radius:var(--r-pill);background:var(--card);box-shadow:0 1px 2px rgba(25,27,30,.04);color:var(--pt);font-family:inherit;font-size:var(--fs-5);font-weight:700;letter-spacing:-.01em;padding:0 14px;-webkit-tap-highlight-color:transparent}
+  .fchip.on{background:var(--ink);color:var(--card)}
+  .dncard{margin-top:var(--sp-gap)}
+  /* 방금 보던 일정의 그 식당 - 비교 기준을 고정해 주는 회색 표시 (누를 수 없음) */
+  .dn-now{display:inline-flex;align-items:center;border-radius:var(--r-pill);background:var(--soft);color:var(--cap);padding:5px 10px;font-size:var(--fs-6);font-weight:600;line-height:1}
+  .dn-head{display:flex;align-items:flex-start;gap:12px}
+  .dn-main{flex:1 1 auto;min-width:0}
+  .dn-name{font-size:var(--fs-3);font-weight:700;letter-spacing:-.015em;line-height:1.35}
+  .dn-emoji,.ev-emoji,.tr-emoji{font-style:normal}
+  .dn-area{font-size:var(--fs-5);color:var(--cap);line-height:1.5;margin-top:3px}
+  .dn-score{flex:0 0 auto;display:flex;align-items:baseline;gap:2px}
+  .dn-score-n{font-size:var(--fs-1);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1}
+  .dn-score-u{font-size:var(--fs-6);font-weight:600;color:var(--cap)}
+  .dn-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+  .dn-tag{display:inline-flex;align-items:center;border-radius:var(--r-pill);background:var(--soft);color:var(--ink-2);padding:5px 10px;font-size:var(--fs-6);font-weight:600;line-height:1}
+  .dn-chip{display:inline-flex;align-items:center;border-radius:var(--r-pill);background:var(--warn-bg);color:var(--warn);padding:5px 10px;font-size:var(--fs-6);font-weight:600;line-height:1}
+  .dn-menu{list-style:none;margin-top:11px}
+  .dn-mrow{display:flex;align-items:baseline;gap:11px;padding:7px 0}
+  .dn-mrow+.dn-mrow{border-top:1px solid var(--div)}
+  .dn-mname{flex:1 1 auto;min-width:0;font-size:var(--fs-4);font-weight:600;line-height:1.45}
+  .dn-mprice{flex:0 0 auto;font-size:var(--fs-4);font-weight:700;font-variant-numeric:tabular-nums}
+  .dn-resv{font-size:var(--fs-5);line-height:1.6;color:var(--cap);margin-top:10px}
+  .dn-links{display:flex;flex-wrap:wrap;gap:2px;margin-top:6px;margin-left:-8px}
+  .dn-links a{display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:0 8px;font-size:var(--fs-5);font-weight:700;color:var(--pt);text-decoration:none;-webkit-tap-highlight-color:transparent}
+  .dn-links a .ic{width:14px;height:14px}
+  .dn-open{display:inline-flex;align-items:center;gap:4px;min-height:40px;padding:0 8px;font-size:var(--fs-5);font-weight:700;color:var(--pt);text-decoration:none;-webkit-tap-highlight-color:transparent}
+  .dn-open .ic{width:13px;height:13px}
+
+  /* ---------- 여행 정보 뷰 카드 (info 탭 - guide[]) ---------- */
+  .gcard{padding:0;overflow:hidden}
+  .gcard summary{display:flex;align-items:center;gap:12px;min-height:64px;padding:11px 16px;cursor:pointer;list-style:none;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+  .gcard summary::-webkit-details-marker{display:none}
+  .g-ic{flex:0 0 auto;display:grid;place-items:center;width:40px;height:40px;border-radius:var(--r-sm);background:var(--pt-soft);font-size:var(--fs-2);line-height:1;font-style:normal}
+  .g-title{flex:1 1 auto;min-width:0;font-size:var(--fs-4);font-weight:700;letter-spacing:-.015em;line-height:1.4;color:var(--pt)}
+  .g-chev{flex:0 0 auto;width:12px;height:12px;color:var(--sub);transition:transform .15s ease}
+  .gcard[open] .g-chev{transform:rotate(90deg)}
+  .g-body{padding:0 16px 16px;font-size:var(--fs-4);line-height:1.75;color:var(--ink-2);white-space:pre-line}
+  .g-body a{color:var(--pt);font-weight:600;text-decoration:underline;text-underline-offset:2px;word-break:break-all}
+
+  /* ---------- 이동 배지 (events[].transit) ---------- */
+  .transit{background:var(--soft);border-radius:var(--r-thumb);padding:11px 13px;margin-top:10px}
+  .tr-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  .tr-main{font-size:var(--fs-4);font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+  .tr-ok{display:inline-flex;align-items:center;gap:4px;font-size:var(--fs-6);font-weight:600;color:var(--ink-2)}
+  .tr-ok .ic{width:13px;height:13px;color:var(--ok-ink)}
+  .tr-tent{display:inline-flex;align-items:center;border-radius:var(--r-pill);background:var(--warn-bg);color:var(--warn);padding:4px 9px;font-size:var(--fs-6);font-weight:600;line-height:1}
+  /* 차 안에서 누르는 버튼이라 다른 컨트롤(40~42px)보다 작으면 안 된다 */
+  .tr-route{display:inline-flex;align-items:center;gap:4px;margin-left:auto;min-height:44px;padding:0 8px;margin-right:-8px;font-size:var(--fs-5);font-weight:700;color:var(--pt);text-decoration:none;-webkit-tap-highlight-color:transparent}
+  .tr-route .ic{width:13px;height:13px}
+  .tr-more{margin-top:4px}
+  /* 이동 구간 지도 - 공항처럼 일자 지도 축척 밖의 두 점만 (2점이라 넓어도 읽힌다) */
+  .tr-map{display:block;margin-top:10px;text-decoration:none}
+  .tr-map img{display:block;width:100%;height:auto;border-radius:var(--r-thumb)}
+  .tr-mcap{display:flex;align-items:center;gap:5px;font-size:var(--fs-6);line-height:1.55;color:var(--pt);font-weight:700;margin-top:7px}
+  .tr-mcap .ic{flex:0 0 auto;width:12px;height:12px}
+
+  /* ---------- 탭 어포던스 (보라 = 누를 수 있다 · 눌림/호버 피드백) ---------- */
+  .vlinks a,.stay-addr a,.more summary,.tinfo summary,.onsite summary,.gcard summary,.tbd a,.tel a,.chk label,.routebtn,.os-cta,.dayrow a,.fab a,.vthumb,.tr-map,.daymap figcaption a,footer a,.lead a,.box a,.ti-text a,.os-text a,.g-body a,.dn-links a,.dn-open,.tr-route,.dn-resv a,.pfbtn,.fchip,.os-jump{transition:opacity .12s ease,background-color .12s ease,transform .12s ease}
+  .vlinks a:active,.stay-addr a:active,.more summary:active,.daymap figcaption a:active,footer a:active,.lead a:active,.box a:active,.ti-text a:active,.os-text a:active,.g-body a:active,.dn-links a:active,.dn-open:active,.tr-route:active,.tr-map:active,.dn-resv a:active{opacity:.6}
+  .tbd a:active,.tel a:active,.chk label:active{background:var(--soft);border-radius:var(--r-sm)}
+  .onsite summary:active,.gcard summary:active,.os-jump:active{background:var(--soft)}
+  .tinfo summary:active{background:var(--div);transform:scale(.98)}
+  .routebtn:active,.os-cta:active{transform:scale(.98)}
+  .dayrow a:active,.fab a:active,.pfbtn:active,.fchip:active{transform:scale(.94)}
+  .vthumb:active{transform:scale(.96)}
+  @media (hover:hover) and (pointer:fine){
+    .vlinks a,.stay-addr a,.more summary,.tinfo summary,.onsite summary,.gcard summary,.tbd a,.tel a,.chk label,.routebtn,.os-cta,.dayrow a,.fab a,.vthumb,.tr-map,.daymap figcaption a,footer a,.lead a,.box a,.ti-text a,.os-text a,.g-body a,.dn-links a,.dn-open,.tr-route,.dn-resv a,.pfbtn,.fchip,.os-jump{cursor:pointer}
+    .vlinks a:hover,.stay-addr a:hover,.more summary:hover,.daymap figcaption a:hover,footer a:hover,.lead a:hover,.box a:hover,.ti-text a:hover,.os-text a:hover,.g-body a:hover,.dn-links a:hover,.dn-open:hover,.tr-route:hover,.tr-map:hover,.dn-resv a:hover{opacity:.75}
+    .tbd a:hover,.tel a:hover,.chk label:hover{background:var(--soft);border-radius:var(--r-sm)}
+    .onsite summary:hover,.gcard summary:hover,.os-jump:hover{background:var(--soft)}
+    .tinfo summary:hover{background:var(--div)}
+    .dayrow a:not(.on):hover,.pfbtn:not(.on):hover,.fchip:not(.on):hover{background:var(--soft)}
+    .fab a:not(.on):hover{background:var(--soft)}
+    .routebtn:hover,.os-cta:hover,.vthumb:hover{opacity:.9}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .tinfo summary:active,.routebtn:active,.os-cta:active,.dayrow a:active,.fab a:active,.vthumb:active,.pfbtn:active,.fchip:active{transform:none}
+  }
+
+  /* ---------- 인쇄 ---------- */
+  @media print{
+    body{background:#FFFFFF;padding-bottom:0}
+    .daybar,.fab,.pill-dday{display:none}
+    /* 지도·맛집·정보 모드 상태로 인쇄해도 본문(일정)이 나오게 - 패널은 빼고 되살린다 */
+    .mappanel,body[data-view="map"] .mappanel,
+    .diningpanel,body[data-view="dining"] .diningpanel,
+    .infopanel,body[data-view="info"] .infopanel{display:none}
+    body[data-view="map"] .hero,
+    body[data-view="map"] .overview,
+    body[data-view="map"] main.wrap>*:not(.mappanel){display:block}
+    body[data-view="dining"] .hero,
+    body[data-view="dining"] .overview,
+    body[data-view="dining"] .daybar,
+    body[data-view="dining"] main.wrap>*:not(.diningpanel){display:block}
+    body[data-view="info"] .hero,
+    body[data-view="info"] .overview,
+    body[data-view="info"] .daybar,
+    body[data-view="info"] main.wrap>*:not(.infopanel){display:block}
+    .card,.evcard{box-shadow:none;border:1px solid #DDDDDD}
+    details>*{display:block}
+    .day{break-inside:avoid}
+  }
+</style>
+</head>
+<body data-view="schedule">
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 22s-7.5-5.7-7.5-11.7a7.5 7.5 0 0 1 15 0C19.5 16.3 12 22 12 22z"/><circle cx="12" cy="10.3" r="2.8"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M4.5 12.5l5 5L19.5 7"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="M9 5.5l6.5 6.5L9 18.5"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18.5h3"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8.2 2.8v4.4M15.8 2.8v4.4"/></symbol>
+  <symbol id="i-tel" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+  <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.2"/><path d="M15.7 8.3l-2.2 5.2-5.2 2.2 2.2-5.2z"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M8.5 6h12M8.5 12h12M8.5 18h12"/><path d="M3.8 6h.01M3.8 12h.01M3.8 18h.01"/></symbol>
+  <symbol id="i-map" viewBox="0 0 24 24"><path d="M9.3 4.4 4 6.2v13.4l5.3-1.8 5.4 1.8 5.3-1.8V4.4l-5.3 1.8z"/><path d="M9.3 4.4v13.4M14.7 6.2v13.4"/></symbol>
+  <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M4 8.8a2.3 2.3 0 0 1 2.3-2.3h11.4A2.3 2.3 0 0 1 20 8.8v1a2.2 2.2 0 0 0 0 4.4v1a2.3 2.3 0 0 1-2.3 2.3H6.3A2.3 2.3 0 0 1 4 15.2v-1a2.2 2.2 0 0 0 0-4.4z"/><path d="M14.2 6.5v2.1M14.2 11v2M14.2 15.4v2.1"/></symbol>
+  <symbol id="i-route" viewBox="0 0 24 24"><circle cx="6" cy="19" r="2.2"/><circle cx="18" cy="5" r="2.2"/><path d="M8.2 19H15a3.5 3.5 0 0 0 0-7H9a3.5 3.5 0 0 1 0-7h6.8"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-4.9-4.9"/></symbol>
+  <symbol id="i-qr" viewBox="0 0 24 24"><rect x="4" y="4" width="6.4" height="6.4" rx="1.2"/><rect x="13.6" y="4" width="6.4" height="6.4" rx="1.2"/><rect x="4" y="13.6" width="6.4" height="6.4" rx="1.2"/><path d="M13.6 13.6h2.6v2.6h-2.6zM20 14v2.2M14 20h2.2M17.6 17.6l2.4 2.4"/></symbol>
+  <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M12 3.2a5.8 5.8 0 0 1 3.5 10.4c-.6.5-.9 1.2-.9 2v.4h-5.2v-.4c0-.8-.3-1.5-.9-2A5.8 5.8 0 0 1 12 3.2z"/><path d="M9.8 19.4h4.4M10.6 21.6h2.8"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.2" r="3.3"/><path d="M3.6 20.2c.5-3.4 2.6-5.4 5.4-5.4s4.9 2 5.4 5.4"/><path d="M15.4 5.3a3.3 3.3 0 0 1 0 5.8M16.8 14.9c2.2.6 3.5 2.4 3.9 5.3"/></symbol>
+  <symbol id="i-fork" viewBox="0 0 24 24"><path d="M6.2 3v5.4a2.6 2.6 0 0 0 5.2 0V3M8.8 3v18"/><path d="M17.8 3c-2 .9-3.1 2.9-3.1 5.6 0 2.1.9 3.6 3.1 3.6V21"/></symbol>
+  <symbol id="i-wx-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.8v2.2M12 19v2.2M2.8 12h2.2M19 12h2.2M5.2 5.2l1.6 1.6M17.2 17.2l1.6 1.6M18.8 5.2l-1.6 1.6M6.8 17.2l-1.6 1.6"/></symbol>
+  <symbol id="i-wx-part" viewBox="0 0 24 24"><circle cx="8" cy="8" r="3"/><path d="M8 2.6v1.6M2.6 8h1.6M4.2 4.2l1.1 1.1M11.8 4.2l-1.1 1.1"/><path d="M9.5 20h8a3.2 3.2 0 0 0 .6-6.35 4.6 4.6 0 0 0-8.9-1.1A3.6 3.6 0 0 0 9.5 20z"/></symbol>
+  <symbol id="i-wx-cloud" viewBox="0 0 24 24"><path d="M7 19h9.5a3.7 3.7 0 0 0 .7-7.34 5.2 5.2 0 0 0-10.1-1.2A4.1 4.1 0 0 0 7 19z"/></symbol>
+  <symbol id="i-wx-rain" viewBox="0 0 24 24"><path d="M7 15h9.5a3.7 3.7 0 0 0 .7-7.34 5.2 5.2 0 0 0-10.1-1.2A4.1 4.1 0 0 0 7 15z"/><path d="M8.5 18l-1 3M12.5 18l-1 3M16.5 18l-1 3"/></symbol>
+  <symbol id="i-wx-shower" viewBox="0 0 24 24"><path d="M7 14.6h9.5a3.7 3.7 0 0 0 .7-7.34 5.2 5.2 0 0 0-10.1-1.2A4.1 4.1 0 0 0 7 14.6z"/><path d="M8.4 17.2l-.6 1.8M12.4 17.2l-.6 1.8M16.4 17.2l-.6 1.8M10.3 20.6l-.4 1.2M14.3 20.6l-.4 1.2"/></symbol>
+  <symbol id="i-wx-thunder" viewBox="0 0 24 24"><path d="M7 14.5h9.5a3.7 3.7 0 0 0 .7-7.34 5.2 5.2 0 0 0-10.1-1.2A4.1 4.1 0 0 0 7 14.5z"/><path d="M12.8 15.5l-2.3 3.6h2.6l-1.6 3.2"/></symbol>
+</svg>
+
+<header class="hero wrap">
+  <div class="hero-top">
+    <p class="eyebrow">우리 가족 여행 가이드</p>
+<span class="pill-dday" id="dday" hidden></span>  </div>
+  <h1>아침과 저녁에만 걷는 여름 부산</h1>
+  <p class="period">2026년 8월 21일 – 23일 · 성인 3, 유아 1 (토요일 낮은 성인 4)</p>
+</header>
+
+<nav class="daybar" aria-label="일자 이동">
+  <div class="dayrow" id="navrow">
+    <a href="#d1" data-spy="d1" aria-label="8월 21일 금요일"><span class="db-d">21</span><span class="db-w">금</span></a>
+    <a href="#d2" data-spy="d2" aria-label="8월 22일 토요일"><span class="db-d">22</span><span class="db-w">토</span></a>
+    <a href="#d3" data-spy="d3" aria-label="8월 23일 일요일"><span class="db-d">23</span><span class="db-w">일</span></a>
+  </div>
+</nav>
+
+<div class="wrap overview">
+
+  <section class="card infocard" id="tripinfo" data-wx-lat="35.154493099999996" data-wx-lng="129.14510199999998" data-wx-tz="Asia/Seoul" data-wx-start="2026-08-21" data-wx-end="2026-08-23" hidden>
+    <div class="ib" id="wx" hidden>
+      <div class="ib-head"><span class="ib-h">현지 날씨</span><span class="ib-cap" id="wxcap" hidden></span></div>
+      <div class="wx-row" id="wxrow"></div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 class="sub">머무는 곳</h2>
+    <div class="stay">
+      <p class="stay-name">한화리조트 해운대</p>
+      <p class="stay-addr">부산 해운대구 마린시티3로 52 (우동) <a href="https://www.google.com/maps/search/?api=1&amp;query=%ED%95%9C%ED%99%94%EB%A6%AC%EC%A1%B0%ED%8A%B8%20%ED%95%B4%EC%9A%B4%EB%8C%80%20%EB%B6%80%EC%82%B0%20%ED%95%B4%EC%9A%B4%EB%8C%80%EA%B5%AC%20%EB%A7%88%EB%A6%B0%EC%8B%9C%ED%8B%B03%EB%A1%9C%2052%20%28%EC%9A%B0%EB%8F%99%29&amp;query_place_id=ChIJE-cp562SaDURVkWeQcziN34" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도 보기</a></p>
+      <p class="stay-dates">8월 21일 체크인 · 8월 23일 체크아웃 (2박)</p>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 class="sub">여행 전 알아두기</h2>
+    <p class="lead">어머니 생신 기념 여행이에요. 금요일 저녁부터 일요일 아침까지 어머니가 함께하시고, 토요일 점심과 카페는 외삼촌도 오셔서 다섯이 움직입니다.</p>
+    <details class="more">
+      <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>더 알아두기</summary>
+      <div class="box">금요일 오후 기차로 내려가 일요일 아침 기차로 올라옵니다. 밖에 있는 시간은 아침과 해가 진 뒤로 몰았고, 가장 더운 한낮은 실내이거나 숙소예요. 물놀이는 하지 않고 금요일 저녁에 바닷가에서 발만 담급니다.
+
+식사는 대부분 후보를 여러 곳 올려 두었어요. 각자 마음에 드는 곳을 눌러 두시면 그걸 모아 정합니다.</div>
+    </details>
+  </section>
+
+</div>
+
+<main class="wrap">
+
+  <section class="mappanel" id="mappanel" role="region" aria-label="일자별 동선 지도">
+    <h2 class="mp-title" id="mp-title"></h2>
+    <div id="mp-body"></div>
+    <div class="card mp-empty" id="mp-empty" hidden>
+      <p class="noev">이 날은 장소가 등록된 일정이 없어 지도가 없어요. 시간표에서 일정을 확인하세요.</p>
+    </div>
+  </section>
+
+  <section class="diningpanel" id="diningpanel" role="region" aria-label="맛집 목록" data-src="./dining.html">
+    <div class="card mp-empty panel-fail" hidden>
+      <p class="noev">맛집 목록을 아직 내려받지 못했어요. 인터넷에 연결한 뒤 다시 열어 주세요.</p>
+    </div>
+  </section>
+
+  <section class="infopanel" id="infopanel" role="region" aria-label="여행 정보" data-src="./info.html">
+    <div class="card mp-empty panel-fail" hidden>
+      <p class="noev">여행 정보를 아직 내려받지 못했어요. 인터넷에 연결한 뒤 다시 열어 주세요.</p>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2 class="sub">함께 정할 것 6가지</h2>
+    <ul class="tbd">
+      <li><a href="#d1">8월 21일 18:00 — 어머니와 첫 저녁<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></a></li>
+      <li><a href="#d2">8월 22일 08:00 — 아침<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></a></li>
+      <li><a href="#d2">8월 22일 12:00 — 청사포 조개구이<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></a></li>
+      <li><a href="#d2">8월 22일 13:20 — 청사포 카페<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></a></li>
+      <li><a href="#d2">8월 22일 19:30 — 광안리 드론라이트쇼<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></a></li>
+      <li><a href="#d3">8월 23일 07:30 — 마지막 아침<svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg></a></li>
+    </ul>
+    <p class="tbd-note">정해지면 이 가이드와 캘린더가 함께 갱신돼요.</p>
+    <div class="pickbar">
+      <span id="pickout" class="pick-count"></span>
+      <button id="pickcopy" class="pickcopy" type="button" disabled>고른 것 복사</button>
+    </div>
+    <p class="tbd-note">고른 것은 이 폰에만 저장돼요. 복사해서 단톡방에 붙여 넣으면 서로 볼 수 있습니다.</p>
+  </section>
+
+  <section class="day" id="d1" data-date="2026-08-21" data-mapnote="이 날은 숙소와 공항을 오가는 것 말고는 지도에 이을 동선이 없어요. 오가는 길은 이동 카드의 경로 버튼에서 열 수 있어요.">
+    <h2 class="day-title">8월 21일 금요일</h2>
+<p class="day-theme">도착, 어머니와 첫 저녁</p><p class="lead day-lead">오후 기차로 내려가는 날이에요. 짐을 풀고 해운대 쪽으로 나가 저녁을 먹고, 바닷가를 걷다 들어옵니다.</p>    <details class="more day-more">
+      <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+      <div class="box">이날부터 어머니가 함께하세요. 생신 기념 여행이라 저녁 자리가 이번 여행의 시작점입니다.</div>
+    </details>
+    <div class="evs">
+      <article class="evcard" data-time="16:00" data-party="all">
+        <div class="ev-top">
+          <span class="t">16:00</span>
+          <span class="ev-flex"></span>
+<span class="stchip"><span class="stdot"></span>예약됨</span>        </div>
+        <h3 class="ev-h">부산역 도착</h3>
+<p class="lead">두 사람 다 반차를 쓰고 오후 기차로 내려갑니다. 짐을 챙겨 택시를 타면 숙소에 다섯 시 전에 닿아요.</p>        <div class="l1">
+          <dl class="l1-facts">
+            <dt>가는 기차</dt>
+            <dd><span class="l1-v">서울역 13:18 출발</span> <span class="l1-n">부산역 도착은 오후 4시 무렵이에요</span></dd>
+          </dl>
+          <label class="l1-todo"><input type="checkbox" data-todo="d1-e1-1"><span>예매 내역에서 열차 번호와 좌석, 도착 시각을 다시 보세요.</span></label>
+        </div>
+        <div class="os-band" aria-hidden="true"></div>
+        <details class="onsite">
+          <summary>
+            <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>
+            <span class="os-sum">현장 가이드 · 메뉴와 팁 1개</span>
+            <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+          </summary>
+          <div class="os-box">
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">역에서 숙소까지</p>
+                <p class="os-text">짐과 아이를 데리고 지하철을 갈아타는 것보다 택시가 낫습니다.</p>
+              </div>
+            </div>
+          </div>
+        </details>
+      </article>
+      <article class="evcard" data-time="16:20" data-party="all">
+        <div class="ev-top">
+          <span class="t">16:20</span>
+          <span class="ev-flex"></span>
+<span class="stchip"><span class="stdot"></span>예약됨</span>        </div>
+        <h3 class="ev-h">한화리조트 해운대 체크인</h3>
+        <div class="ev-venue">
+          <div class="ev-vmain">
+            <p class="vname">한화리조트 해운대</p>
+<p class="vaddr">부산 해운대구 마린시티3로 52 (우동)</p>            <p class="vlinks">
+<a href="https://www.google.com/maps/search/?api=1&amp;query=%ED%95%9C%ED%99%94%EB%A6%AC%EC%A1%B0%ED%8A%B8%20%ED%95%B4%EC%9A%B4%EB%8C%80%20%EB%B6%80%EC%82%B0%20%ED%95%B4%EC%9A%B4%EB%8C%80%EA%B5%AC%20%EB%A7%88%EB%A6%B0%EC%8B%9C%ED%8B%B03%EB%A1%9C%2052%20%28%EC%9A%B0%EB%8F%99%29&amp;query_place_id=ChIJE-cp562SaDURVkWeQcziN34" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a>            </p>
+          </div>
+          <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=%ED%95%9C%ED%99%94%EB%A6%AC%EC%A1%B0%ED%8A%B8%20%ED%95%B4%EC%9A%B4%EB%8C%80%20%EB%B6%80%EC%82%B0%20%ED%95%B4%EC%9A%B4%EB%8C%80%EA%B5%AC%20%EB%A7%88%EB%A6%B0%EC%8B%9C%ED%8B%B03%EB%A1%9C%2052%20%28%EC%9A%B0%EB%8F%99%29&amp;query_place_id=ChIJE-cp562SaDURVkWeQcziN34" target="_blank" rel="noopener" aria-label="한화리조트 해운대 지도 열기">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./thumb-d1-e2-dark.png">
+              <img src="./thumb-d1-e2.png" alt="" width="62" height="62" loading="lazy">
+            </picture>
+            <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
+          </a>
+        </div>
+        <div class="transit">
+          <div class="tr-row">
+            <span class="tr-main"><span class="tr-emoji" aria-hidden="true">🚗</span> 택시 · 30분</span>
+            <span class="tr-tent">확인 필요</span>
+<a class="tr-route" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%B6%80%EC%82%B0%EC%97%AD&amp;destination=%ED%95%9C%ED%99%94%EB%A6%AC%EC%A1%B0%ED%8A%B8%20%ED%95%B4%EC%9A%B4%EB%8C%80&amp;origin_place_id=ChIJqxrVY9jraDURTqBi-qe-mAI&amp;destination_place_id=ChIJE-cp562SaDURVkWeQcziN34&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>          </div>
+          <p class="tr-eta"><span class="tr-t">16:20</span> 출발 → <span class="tr-t">16:50</span> 도착</p>
+          <a class="tr-map" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EB%B6%80%EC%82%B0%EC%97%AD&amp;destination=%ED%95%9C%ED%99%94%EB%A6%AC%EC%A1%B0%ED%8A%B8%20%ED%95%B4%EC%9A%B4%EB%8C%80&amp;origin_place_id=ChIJqxrVY9jraDURTqBi-qe-mAI&amp;destination_place_id=ChIJE-cp562SaDURVkWeQcziN34&amp;travelmode=driving" target="_blank" rel="noopener">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./seg-d1-e2-dark.png">
+              <img src="./seg-d1-e2.png" alt="한화리조트 해운대 체크인 구간 지도" width="680" height="420" loading="lazy">
+            </picture>
+            <span class="tr-mcap"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>이 구간을 구글맵으로 열기</span>
+          </a>
+        </div>
+        <div class="l1">
+          <dl class="l1-facts">
+            <dt>체크인 / 체크아웃</dt>
+            <dd><span class="l1-v">15:00 / 11:00</span></dd>
+          </dl>
+          <label class="l1-todo"><input type="checkbox" data-todo="d1-e2-1"><span>아기침대를 받을 수 있는지, 요금이 붙는지 물어보세요.</span></label>
+          <label class="l1-todo"><input type="checkbox" data-todo="d1-e2-2"><span>우리 객실에 주방이 딸려 있는지 확인하세요. 아이 물을 끓일 수 있는지가 달라져요.</span></label>
+          <label class="l1-todo"><input type="checkbox" data-todo="d1-e2-3"><span>만 세 살은 소인이라 조식 요금이 따로 붙을 수 있어요. 금액과 유아 의자를 함께 물어보세요.</span></label>
+        </div>
+      </article>
+      <article class="evcard" data-time="18:00" data-party="all">
+        <div class="ev-top">
+          <span class="t">18:00</span>
+          <span class="ev-flex"></span>
+<span class="tbdpill">아직 정하지 않았어요</span>        </div>
+        <h3 class="ev-h">어머니와 첫 저녁</h3>
+<p class="lead">어머니가 합류하시는 첫 끼예요. 해운대 쪽으로 나가서 먹고 바닷가를 걷다 들어오는 흐름으로 잡았습니다.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">후보를 일곱 곳 올려 뒀어요. 각자 마음에 드는 곳을 눌러 두시면 그걸 보고 정하겠습니다.</div>
+        </details>
+        <div class="os-band" aria-hidden="true"></div>
+        <details class="onsite">
+          <summary>
+            <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>
+            <span class="os-sum">현장 가이드 · 메뉴와 팁 2개</span>
+            <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+          </summary>
+          <div class="os-box">
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">고를 때 보실 것</p>
+                <p class="os-text">구글과 카카오 점수를 같이 적어 뒀어요. 두 숫자가 크게 갈리는 곳은 그 자체가 신호입니다.</p>
+              </div>
+            </div>
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">표본을 보세요</p>
+                <p class="os-text">금수복국은 후기가 구글 7,697건에 카카오 538건이라 숫자를 믿을 만하고, 부산에뜬고등어는 점수가 높지만 66건과 35건뿐이에요.</p>
+              </div>
+            </div>
+          </div>
+        </details>
+        <div class="picker" data-pick="many" data-ev="d1-e3">
+          <p class="pick-head">
+마음에 드는 곳을 <b>여러 개</b> 골라도 돼요          </p>
+          <label class="pick-item">
+            <input type="checkbox"
+                   name="pick-d1-e3" value="busan-mackerel">
+            <span class="pick-body">
+              <span class="pick-name">🍚 부산에뜬고등어 해운대점</span>
+              <span class="pick-scores">
+<span class="pick-score"><b>4.8</b> 구글 66</span><span class="pick-score"><b>4.2</b> 카카오 35</span>              </span>
+<span class="pick-meta">숙소에서 택시 10분</span>            </span>
+          </label>
+          <div class="pick-links">
+            <a href="http://place.map.kakao.com/1401737846" target="_blank" rel="noopener">카카오맵</a>
+            <a href="#dining/busan-mackerel" data-dining="busan-mackerel">자세히</a>
+          </div>
+          <label class="pick-item">
+            <input type="checkbox"
+                   name="pick-d1-e3" value="geumsu-bokguk">
+            <span class="pick-body">
+              <span class="pick-name">🍚 금수복국 해운대본점</span>
+              <span class="pick-scores">
+<span class="pick-score"><b>4.2</b> 구글 7,697</span><span class="pick-score"><b>3.9</b> 카카오 538</span>              </span>
+<span class="pick-meta">숙소에서 택시 8분</span>            </span>
+          </label>
+          <div class="pick-links">
+            <a href="http://place.map.kakao.com/8708426" target="_blank" rel="noopener">카카오맵</a>
+            <a href="#dining/geumsu-bokguk" data-dining="geumsu-bokguk">자세히</a>
+          </div>
+          <label class="pick-item">
+            <input type="checkbox"
+                   name="pick-d1-e3" value="yeonhwari">
+            <span class="pick-body">
+              <span class="pick-name">🦞 연화리해물천국 엘시티점</span>
+              <span class="pick-scores">
+<span class="pick-score"><b>3.9</b> 구글 57</span><span class="pick-score"><b>4</b> 카카오 14</span>              </span>
+<span class="pick-meta">숙소에서 택시 10분 · 아기의자 있어요</span>            </span>
+          </label>
+          <div class="pick-links">
+            <a href="http://place.map.kakao.com/1599416884" target="_blank" rel="noopener">카카오맵</a>
+            <a href="#dining/yeonhwari" data-dining="yeonhwari">자세히</a>
+          </div>
+          <label class="pick-item">
+            <input type="checkbox"
+                   name="pick-d1-e3" value="gaya-milmyeon">
+            <span class="pick-body">
+              <span class="pick-name">🍚 해운대가야밀면</span>
+              <span class="pick-scores">
+<span class="pick-score"><b>4.1</b> 구글 2,450</span><span class="pick-score"><b>3.8</b> 카카오 279</span>              </span>
+<span class="pick-meta">숙소에서 택시 10분</span>            </span>
+          </label>
+          <div class="pick-links">
+            <a href="http://place.map.kakao.com/15555120" target="_blank" rel="noopener">카카오맵</a>
+            <a href="#dining/gaya-milmyeon" data-dining="gaya-milmyeon">자세히</a>
+          </div>
+          <label class="pick-item">
+            <input type="checkbox"
+                   name="pick-d1-e3" value="haeundae-milmyeon">
+            <span class="pick-body">
+              <span class="pick-name">🍚 해운대밀면</span>
+              <span class="pick-scores">
+<span class="pick-score"><b>4.1</b> 구글 1,571</span><span class="pick-score"><b>3.8</b> 카카오 278</span>              </span>
+<span class="pick-meta">숙소에서 택시 8분</span>            </span>
+          </label>
+          <div class="pick-links">
+            <a href="http://place.map.kakao.com/16722795" target="_blank" rel="noopener">카카오맵</a>
+            <a href="#dining/haeundae-milmyeon" data-dining="haeundae-milmyeon">자세히</a>
+          </div>
+          <label class="pick-item">
+            <input type="checkbox"
+                   name="pick-d1-e3" value="thebay101">
+            <span class="pick-body">
+              <span class="pick-name">🍕 더베이101</span>
+              <span class="pick-scores">
+<span class="pick-score"><b>4.1</b> 구글 14,987</span><span class="pick-score"><b>3.7</b> 카카오 132</span>              </span>
+<span class="pick-meta">숙소에서 도보 12분</span>            </span>
+          </label>
+          <div class="pick-links">
+            <a href="http://place.map.kakao.com/27457865" target="_blank" rel="noopener">카카오맵</a>
+            <a href="#dining/thebay101" data-dining="thebay101">자세히</a>
+          </div>
+          <label class="pick-item">
+            <input type="checkbox"
+                   name="pick-d1-e3" value="sangguk">
+            <span class="pick-body">
+              <span class="pick-name">🍚 상국이네</span>
+              <span class="pick-scores">
+<span class="pick-score"><b>3.4</b> 구글 1,995</span><span class="pick-score"><b>2.4</b> 카카오 494</span>              </span>
+<span class="pick-meta">숙소에서 택시 8분 · 아기의자 있어요</span>            </span>
+          </label>
+          <div class="pick-links">
+            <a href="http://place.map.kakao.com/9089301" target="_blank" rel="noopener">카카오맵</a>
+            <a href="#dining/sangguk" data-dining="sangguk">자세히</a>
+          </div>
+        </div>
+      </article>
+      <article class="evcard" data-time="19:40" data-party="all">
+        <div class="ev-top">
+          <span class="t">19:40</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">해운대 바닷가에서 발 담그기</h3>
+        <div class="transit">
+          <div class="tr-row">
+            <span class="tr-main"><span class="tr-emoji" aria-hidden="true">🚗</span> 도보 · 5분</span>
+            <span class="tr-tent">확인 필요</span>
+<a class="tr-route" href="https://www.google.com/maps/dir/?api=1&amp;origin=%ED%95%B4%EC%9A%B4%EB%8C%80%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5&amp;destination=%ED%95%B4%EC%9A%B4%EB%8C%80%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5&amp;origin_place_id=ChIJXwf-DlyNaDURmKxjwdWxY5k&amp;destination_place_id=ChIJXwf-DlyNaDURmKxjwdWxY5k&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>          </div>
+          <p class="tr-eta"><span class="tr-t">19:40</span> 출발 → <span class="tr-t">19:45</span> 도착</p>
+        </div>
+<p class="lead">저녁을 먹고 백사장으로 걸어 나가 발만 담급니다. 물놀이는 이번 여행에서 하지 않기로 했어요.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">해가 진 뒤라 낮보다 훨씬 견딜 만하고, 광안대교 야경이 정면으로 보입니다.</div>
+        </details>
+        <div class="l1">
+          <p class="l1-warn">
+            <svg class="ic" aria-hidden="true"><use href="#i-bulb"/></svg>열대야라 밤에도 크게 시원해지지 않아요. 지우가 지쳐 보이면 미루고 방에서 쉬어도 좋습니다.
+          </p>
+        </div>
+        <div class="os-band" aria-hidden="true"></div>
+        <details class="onsite">
+          <summary>
+            <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>
+            <span class="os-sum">현장 가이드 · 메뉴와 팁 1개</span>
+            <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+          </summary>
+          <div class="os-box">
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">챙길 것</p>
+                <p class="os-text">아쿠아슈즈나 샌들, 갈아입을 반바지, 수건 한 장이면 됩니다.</p>
+              </div>
+            </div>
+          </div>
+        </details>
+      </article>
+    </div>
+  </section>
+  <section class="day" id="d2" data-date="2026-08-22" data-mapnote="이 날은 지도에 찍힌 곳이 한 곳뿐이라 이을 동선이 없어요. 시간표에서 일정을 확인하세요.">
+    <h2 class="day-title">8월 22일 토요일</h2>
+<p class="day-theme">청사포에서 점심, 광안리에서 저녁</p><p class="lead day-lead">점심 무렵 외삼촌이 오셔서 청사포까지 태워 주세요. 조개구이를 먹고 카페에 들렀다가 지우 낮잠 시간에 맞춰 숙소로 돌아옵니다.</p>    <details class="more day-more">
+      <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+      <div class="box">낮잠 뒤에는 택시로 광안리에 넘어가 회를 먹고, 시간이 맞으면 드론쇼를 보고 돌아옵니다. 저녁에는 술이 들어가니 차를 쓰지 않아요.</div>
+    </details>
+    <a class="routebtn solo" data-party="all" href="https://www.google.com/maps/dir/?api=1&amp;origin=%ED%95%9C%ED%99%94%EB%A6%AC%EC%A1%B0%ED%8A%B8%20%ED%95%B4%EC%9A%B4%EB%8C%80%2C%20%EB%B6%80%EC%82%B0%20%ED%95%B4%EC%9A%B4%EB%8C%80%EA%B5%AC%20%EB%A7%88%EB%A6%B0%EC%8B%9C%ED%8B%B03%EB%A1%9C%2052%20%28%EC%9A%B0%EB%8F%99%29&amp;destination=%EC%94%A8%EB%9E%9C%EB%93%9C%ED%9A%8C%EC%84%BC%ED%83%80%20%E2%80%94%201%EC%B8%B5%20%EB%A7%88%EC%82%B0%EC%83%81%ED%9A%8C%2C%20%EB%B6%80%EC%82%B0%20%EC%88%98%EC%98%81%EA%B5%AC%20%EA%B4%91%EC%95%88%ED%95%B4%EB%B3%80%EB%A1%9C%20299&amp;origin_place_id=ChIJE-cp562SaDURVkWeQcziN34&amp;destination_place_id=ChIJ6-yYfQDtaDUR2chHxBlNmWM" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>오늘 동선 지도로 열기</a>
+    <div class="evs">
+      <article class="evcard" data-time="08:00" data-party="all">
+        <div class="ev-top">
+          <span class="t">08:00</span>
+          <span class="ev-flex"></span>
+<span class="tbdpill">아직 정하지 않았어요</span>        </div>
+        <h3 class="ev-h">아침</h3>
+<p class="lead">조식을 먹을지 밖에서 먹을지가 이날의 첫 갈림길이에요. 후보는 전부 걸어서 갈 거리입니다.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">지우가 늦게 일어나면 빵집 쪽이 편하고, 든든하게 시작하고 싶으면 곰탕이나 국밥 쪽이 낫습니다.</div>
+        </details>
+        <div class="l1">
+          <dl class="l1-facts">
+            <dt>리조트 조식</dt>
+            <dd><span class="l1-v">대인 33,000원 · 소인 19,800원</span> <span class="l1-n">정가 기준 · 사전 예약하면 조금 내려가요</span></dd>
+          </dl>
+        </div>
+        <div class="os-band" aria-hidden="true"></div>
+        <details class="onsite">
+          <summary>
+            <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>
+            <span class="os-sum">현장 가이드 · 메뉴와 팁 1개</span>
+            <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+          </summary>
+          <div class="os-box">
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">밖에서 먹으면</p>
+                <p class="os-text">세 명이 조식을 먹으면 8만원이 넘어요. 점심이 열두 시 조개구이라 아침은 가볍게 가도 됩니다.</p>
+              </div>
+            </div>
+          </div>
+        </details>
+        <div class="picker" data-pick="many" data-ev="d2-e1">
+          <p class="pick-head">
+마음에 드는 곳을 <b>여러 개</b> 골라도 돼요          </p>
+          <label class="pick-item">
+            <input type="checkbox"
+                   name="pick-d2-e1" value="geodae-gomtang">
+            <span class="pick-body">
+              <span class="pick-name">🍚 거대곰탕</span>
+              <span class="pick-scores">
+<span class="pick-score"><b>4.5</b> 구글 514</span><span class="pick-score"><b>4.4</b> 카카오 280</span>              </span>
+<span class="pick-meta">숙소에서 도보 8분 · 아기의자 없어요</span>            </span>
+          </label>
+          <div class="pick-links">
+            <a href="http://place.map.kakao.com/1211020458" target="_blank" rel="noopener">카카오맵</a>
+            <a href="#dining/geodae-gomtang" data-dining="geodae-gomtang">자세히</a>
+          </div>
+          <label class="pick-item">
+            <input type="checkbox"
+                   name="pick-d2-e1" value="subyeon-gukbap">
+            <span class="pick-body">
+              <span class="pick-name">🍚 수변최고돼지국밥 마린시티점</span>
+              <span class="pick-scores">
+<span class="pick-score"><b>4.3</b> 구글 46</span><span class="pick-score"><b>3</b> 카카오 40</span>              </span>
+<span class="pick-meta">숙소에서 도보 4분 · 아기의자 있어요</span>            </span>
+          </label>
+          <div class="pick-links">
+            <a href="http://place.map.kakao.com/1006877519" target="_blank" rel="noopener">카카오맵</a>
+            <a href="#dining/subyeon-gukbap" data-dining="subyeon-gukbap">자세히</a>
+          </div>
+          <label class="pick-item">
+            <input type="checkbox"
+                   name="pick-d2-e1" value="paris-baguette-marine">
+            <span class="pick-body">
+              <span class="pick-name">☕ 파리바게뜨 해운대마린점</span>
+              <span class="pick-scores">
+<span class="pick-score"><b>4</b> 구글 99</span><span class="pick-score"><b>4.1</b> 카카오 20</span>              </span>
+<span class="pick-meta">숙소에서 도보 5분</span>            </span>
+          </label>
+          <div class="pick-links">
+            <a href="http://place.map.kakao.com/12354782" target="_blank" rel="noopener">카카오맵</a>
+            <a href="#dining/paris-baguette-marine" data-dining="paris-baguette-marine">자세히</a>
+          </div>
+          <label class="pick-item">
+            <input type="checkbox"
+                   name="pick-d2-e1" value="obs-marine">
+            <span class="pick-body">
+              <span class="pick-name">☕ 옵스 마린시티점</span>
+              <span class="pick-scores">
+<span class="pick-score"><b>4.2</b> 구글 340</span><span class="pick-score"><b>3.5</b> 카카오 50</span>              </span>
+<span class="pick-meta">숙소에서 도보 9분</span>            </span>
+          </label>
+          <div class="pick-links">
+            <a href="http://place.map.kakao.com/8014614" target="_blank" rel="noopener">카카오맵</a>
+            <a href="#dining/obs-marine" data-dining="obs-marine">자세히</a>
+          </div>
+          <label class="pick-item">
+            <input type="checkbox"
+                   name="pick-d2-e1" value="jangeumi">
+            <span class="pick-body">
+              <span class="pick-name">🍚 장금이국수 마린시티점</span>
+              <span class="pick-scores">
+<span class="pick-score"><b>4</b> 구글 84</span><span class="pick-score"><b>2.6</b> 카카오 8</span>              </span>
+<span class="pick-meta">숙소에서 도보 5분</span>            </span>
+          </label>
+          <div class="pick-links">
+            <a href="http://place.map.kakao.com/1018924111" target="_blank" rel="noopener">카카오맵</a>
+            <a href="#dining/jangeumi" data-dining="jangeumi">자세히</a>
+          </div>
+        </div>
+      </article>
+      <article class="evcard" data-time="12:00" data-party="all">
+        <div class="ev-top">
+          <span class="t">12:00</span>
+          <span class="ev-flex"></span>
+<span class="tbdpill">아직 정하지 않았어요</span>        </div>
+        <h3 class="ev-h">청사포 조개구이</h3>
+        <div class="transit">
+          <div class="tr-row">
+            <span class="tr-main"><span class="tr-emoji" aria-hidden="true">🚗</span> 차 · 15분</span>
+            <span class="tr-tent">확인 필요</span>
+<a class="tr-route" href="https://www.google.com/maps/dir/?api=1&amp;origin=%ED%95%9C%ED%99%94%EB%A6%AC%EC%A1%B0%ED%8A%B8%20%ED%95%B4%EC%9A%B4%EB%8C%80&amp;destination=%ED%95%B4%EC%9A%B4%EB%8C%80%20%EC%B2%AD%EC%82%AC%ED%8F%AC&amp;origin_place_id=ChIJE-cp562SaDURVkWeQcziN34&amp;destination_place_id=ChIJGcDcTCeNaDURouI8V8vtsX0&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>          </div>
+          <p class="tr-eta"><span class="tr-t">12:00</span> 출발 → <span class="tr-t">12:15</span> 도착</p>
+          <a class="tr-map" href="https://www.google.com/maps/dir/?api=1&amp;origin=%ED%95%9C%ED%99%94%EB%A6%AC%EC%A1%B0%ED%8A%B8%20%ED%95%B4%EC%9A%B4%EB%8C%80&amp;destination=%ED%95%B4%EC%9A%B4%EB%8C%80%20%EC%B2%AD%EC%82%AC%ED%8F%AC&amp;origin_place_id=ChIJE-cp562SaDURVkWeQcziN34&amp;destination_place_id=ChIJGcDcTCeNaDURouI8V8vtsX0&amp;travelmode=driving" target="_blank" rel="noopener">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./seg-d2-e2-dark.png">
+              <img src="./seg-d2-e2.png" alt="청사포 조개구이 구간 지도" width="680" height="420" loading="lazy">
+            </picture>
+            <span class="tr-mcap"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>이 구간을 구글맵으로 열기</span>
+          </a>
+          <details class="more tr-more">
+            <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+            <div class="box">외삼촌 차로 갑니다. 카시트가 있어요.</div>
+          </details>
+        </div>
+<p class="lead">외삼촌이 점심 무렵 오셔서 여기까지 태워 주세요. 어른 넷에 지우까지 다섯이라 단체석이 되는 곳이 편합니다.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">네 곳 다 바다가 보이고 주차가 됩니다. 갈리는 건 평점과 아이 자리예요.</div>
+        </details>
+        <div class="l1">
+          <p class="l1-warn danger">
+            <svg class="ic" aria-hidden="true"><use href="#i-bulb"/></svg>조개뷰는 구글 4.9인데 카카오는 2.4예요. 도희네는 구글 4.4에 카카오 4.0으로 두 출처가 같은 방향입니다.
+          </p>
+          <dl class="l1-facts">
+            <dt>아기의자가 확인된 곳</dt>
+            <dd><span class="l1-v">도희네 · 조개뷰 · 제이제이가리비</span></dd>
+            <dt>지우가 먹을 것</dt>
+            <dd><span class="l1-v">도희네 해물라면 5,000원이 가장 쌉니다</span> <span class="l1-n">조개뷰는 칼국수 12,500원, 수민이네 뚝배기밥은 2인분 이상에 30분</span></dd>
+          </dl>
+        </div>
+        <div class="os-band" aria-hidden="true"></div>
+        <details class="onsite">
+          <summary>
+            <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>
+            <span class="os-sum">현장 가이드 · 메뉴와 팁 1개</span>
+            <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+          </summary>
+          <div class="os-box">
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">여기는 하나만 고릅니다</p>
+                <p class="os-text">자리가 한 번뿐이라 네 곳 중 하나를 정해야 해요.</p>
+              </div>
+            </div>
+          </div>
+        </details>
+        <div class="picker" data-pick="one" data-ev="d2-e2">
+          <p class="pick-head">
+이 중에서 <b>하나만</b> 골라 주세요          </p>
+          <label class="pick-item">
+            <input type="radio"
+                   name="pick-d2-e2" value="dohuine">
+            <span class="pick-body">
+              <span class="pick-name">🦞 도희네 조개구이</span>
+              <span class="pick-scores">
+<span class="pick-score"><b>4.4</b> 구글 1,603</span><span class="pick-score"><b>4</b> 카카오 255</span>              </span>
+<span class="pick-meta">숙소에서 차 15분 · 아기의자 있어요</span>            </span>
+          </label>
+          <div class="pick-links">
+            <a href="http://place.map.kakao.com/510744836" target="_blank" rel="noopener">카카오맵</a>
+            <a href="#dining/dohuine" data-dining="dohuine">자세히</a>
+          </div>
+          <label class="pick-item">
+            <input type="radio"
+                   name="pick-d2-e2" value="jogaeview">
+            <span class="pick-body">
+              <span class="pick-name">🦞 조개뷰 해운대본점</span>
+              <span class="pick-scores">
+<span class="pick-score"><b>4.9</b> 구글 2,669</span><span class="pick-score"><b>2.4</b> 카카오 21</span>              </span>
+<span class="pick-meta">숙소에서 차 15분 · 아기의자 있어요</span>            </span>
+          </label>
+          <div class="pick-links">
+            <a href="http://place.map.kakao.com/117705577" target="_blank" rel="noopener">카카오맵</a>
+            <a href="#dining/jogaeview" data-dining="jogaeview">자세히</a>
+          </div>
+          <label class="pick-item">
+            <input type="radio"
+                   name="pick-d2-e2" value="jj-scallop">
+            <span class="pick-body">
+              <span class="pick-name">🦞 제이제이가리비 청사포본점</span>
+              <span class="pick-scores">
+<span class="pick-score"><b>3.9</b> 구글 140</span><span class="pick-score"><b>3.4</b> 카카오 29</span>              </span>
+<span class="pick-meta">숙소에서 차 15분 · 아기의자 있어요</span>            </span>
+          </label>
+          <div class="pick-links">
+            <a href="http://place.map.kakao.com/930619386" target="_blank" rel="noopener">카카오맵</a>
+            <a href="#dining/jj-scallop" data-dining="jj-scallop">자세히</a>
+          </div>
+          <label class="pick-item">
+            <input type="radio"
+                   name="pick-d2-e2" value="sumini">
+            <span class="pick-body">
+              <span class="pick-name">🦞 수민이네</span>
+              <span class="pick-scores">
+<span class="pick-score"><b>3.7</b> 구글 2,517</span><span class="pick-score"><b>2.7</b> 카카오 96</span>              </span>
+<span class="pick-meta">숙소에서 차 14분</span>            </span>
+          </label>
+          <div class="pick-links">
+            <a href="http://place.map.kakao.com/7963998" target="_blank" rel="noopener">카카오맵</a>
+            <a href="#dining/sumini" data-dining="sumini">자세히</a>
+          </div>
+        </div>
+      </article>
+      <article class="evcard" data-time="13:20" data-party="all">
+        <div class="ev-top">
+          <span class="t">13:20</span>
+          <span class="ev-flex"></span>
+<span class="tbdpill">아직 정하지 않았어요</span>        </div>
+        <h3 class="ev-h">청사포 카페</h3>
+<p class="lead">조개구이집에서 걸어갈 거리에 카페가 있어요. 시원한 데서 커피 한 잔 하고 숙소로 돌아옵니다.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">시간이 남고 지우가 괜찮으면 다릿돌전망대에 십 분쯤 들렀다 와도 좋습니다.</div>
+        </details>
+        <div class="l1">
+          <p class="l1-warn">
+            <svg class="ic" aria-hidden="true"><use href="#i-bulb"/></svg>청사포 다릿돌전망대는 무료지만 바다 위 데크라 그늘이 없어요. 한낮에 세 살과 오래 있을 자리가 아닙니다.
+          </p>
+        </div>
+        <div class="os-band" aria-hidden="true"></div>
+        <details class="onsite">
+          <summary>
+            <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>
+            <span class="os-sum">현장 가이드 · 메뉴와 팁 1개</span>
+            <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+          </summary>
+          <div class="os-box">
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">외삼촌은 여기까지</p>
+                <p class="os-text">카페를 마지막으로 외삼촌과 헤어지고 숙소로 돌아옵니다.</p>
+              </div>
+            </div>
+          </div>
+        </details>
+        <div class="picker" data-pick="many" data-ev="d2-e3">
+          <p class="pick-head">
+마음에 드는 곳을 <b>여러 개</b> 골라도 돼요          </p>
+          <label class="pick-item">
+            <input type="checkbox"
+                   name="pick-d2-e3" value="orb-coffee">
+            <span class="pick-body">
+              <span class="pick-name">☕ 오브커피살롱</span>
+              <span class="pick-scores">
+<span class="pick-score"><b>4.8</b> 구글 73</span><span class="pick-score"><b>4.4</b> 카카오 14</span>              </span>
+<span class="pick-meta">숙소에서 차 15분</span>            </span>
+          </label>
+          <div class="pick-links">
+            <a href="http://place.map.kakao.com/1309776714" target="_blank" rel="noopener">카카오맵</a>
+            <a href="#dining/orb-coffee" data-dining="orb-coffee">자세히</a>
+          </div>
+          <label class="pick-item">
+            <input type="checkbox"
+                   name="pick-d2-e3" value="oldmug">
+            <span class="pick-body">
+              <span class="pick-name">☕ 올드머그</span>
+              <span class="pick-scores">
+<span class="pick-score"><b>4.5</b> 구글 556</span><span class="pick-score"><b>4</b> 카카오 93</span>              </span>
+<span class="pick-meta">숙소에서 차 17분</span>            </span>
+          </label>
+          <div class="pick-links">
+            <a href="http://place.map.kakao.com/370454381" target="_blank" rel="noopener">카카오맵</a>
+            <a href="#dining/oldmug" data-dining="oldmug">자세히</a>
+          </div>
+        </div>
+      </article>
+      <article class="evcard" data-time="14:15" data-party="all">
+        <div class="ev-top">
+          <span class="t">14:15</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">숙소로 돌아와 쉬기</h3>
+<p class="lead">지우 낮잠 시간이에요. 하루 중 가장 더운 때이기도 해서 이 시간에는 밖으로 나가지 않습니다.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">어른도 이때 같이 쉬어 둬야 저녁까지 버텨요. 지우가 안 자면 방에서 노는 대로 둡니다.</div>
+        </details>
+      </article>
+      <article class="evcard" data-time="17:30" data-party="all">
+        <div class="ev-top">
+          <span class="t">17:30</span>
+          <span class="ev-flex"></span>
+<span class="stchip"><span class="stdot"></span>확정</span>        </div>
+        <h3 class="ev-h"><span class="ev-emoji" aria-hidden="true">🦞</span> 광안리 — 씨랜드회센타</h3>
+        <div class="ev-venue">
+          <div class="ev-vmain">
+            <p class="vname">씨랜드회센타 — 1층 마산상회</p>
+<p class="vaddr">부산 수영구 광안해변로 299</p>            <p class="vmeta"><span class="vm">숙소에서 택시 15분</span></p>
+            <p class="vlinks">
+<a href="https://www.google.com/maps/search/?api=1&amp;query=%EC%94%A8%EB%9E%9C%EB%93%9C%ED%9A%8C%EC%84%BC%ED%83%80%20%E2%80%94%201%EC%B8%B5%20%EB%A7%88%EC%82%B0%EC%83%81%ED%9A%8C%20%EB%B6%80%EC%82%B0%20%EC%88%98%EC%98%81%EA%B5%AC%20%EA%B4%91%EC%95%88%ED%95%B4%EB%B3%80%EB%A1%9C%20299&amp;query_place_id=ChIJ6-yYfQDtaDUR2chHxBlNmWM" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>지도</a><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%ED%95%9C%ED%99%94%EB%A6%AC%EC%A1%B0%ED%8A%B8%20%ED%95%B4%EC%9A%B4%EB%8C%80%2C%20%EB%B6%80%EC%82%B0%20%ED%95%B4%EC%9A%B4%EB%8C%80%EA%B5%AC%20%EB%A7%88%EB%A6%B0%EC%8B%9C%ED%8B%B03%EB%A1%9C%2052%20%28%EC%9A%B0%EB%8F%99%29&amp;destination=%EC%94%A8%EB%9E%9C%EB%93%9C%ED%9A%8C%EC%84%BC%ED%83%80%20%E2%80%94%201%EC%B8%B5%20%EB%A7%88%EC%82%B0%EC%83%81%ED%9A%8C%2C%20%EB%B6%80%EC%82%B0%20%EC%88%98%EC%98%81%EA%B5%AC%20%EA%B4%91%EC%95%88%ED%95%B4%EB%B3%80%EB%A1%9C%20299&amp;origin_place_id=ChIJE-cp562SaDURVkWeQcziN34&amp;destination_place_id=ChIJ6-yYfQDtaDUR2chHxBlNmWM&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a><a href="https://search.naver.com/search.naver?query=%EC%94%A8%EB%9E%9C%EB%93%9C%ED%9A%8C%EC%84%BC%ED%83%80%20%E2%80%94%201%EC%B8%B5%20%EB%A7%88%EC%82%B0%EC%83%81%ED%9A%8C%20%EB%B6%80%EC%82%B0" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>네이버</a><a href="https://www.google.com/search?q=%EC%94%A8%EB%9E%9C%EB%93%9C%ED%9A%8C%EC%84%BC%ED%83%80%20%E2%80%94%201%EC%B8%B5%20%EB%A7%88%EC%82%B0%EC%83%81%ED%9A%8C%20Haeundae" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg>구글</a><a class="dn-open" href="#dining/d2-e5" data-dining="d2-e5"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg>다른 데 갈래</a>            </p>
+          </div>
+          <a class="vthumb" href="https://www.google.com/maps/search/?api=1&amp;query=%EC%94%A8%EB%9E%9C%EB%93%9C%ED%9A%8C%EC%84%BC%ED%83%80%20%E2%80%94%201%EC%B8%B5%20%EB%A7%88%EC%82%B0%EC%83%81%ED%9A%8C%20%EB%B6%80%EC%82%B0%20%EC%88%98%EC%98%81%EA%B5%AC%20%EA%B4%91%EC%95%88%ED%95%B4%EB%B3%80%EB%A1%9C%20299&amp;query_place_id=ChIJ6-yYfQDtaDUR2chHxBlNmWM" target="_blank" rel="noopener" aria-label="씨랜드회센타 — 1층 마산상회 지도 열기">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./thumb-d2-e5-dark.png">
+              <img src="./thumb-d2-e5.png" alt="" width="62" height="62" loading="lazy">
+            </picture>
+            <svg class="ic vt-go" aria-hidden="true"><use href="#i-chev"/></svg>
+          </a>
+        </div>
+        <details class="more resv">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>예약 안내</summary>
+          <div class="box">예약 없이 가는 워크인이에요. 1층 마산상회에서 회를 뜨고 2층 초장집으로 올라가요.</div>
+        </details>
+        <div class="transit">
+          <div class="tr-row">
+            <span class="tr-main"><span class="tr-emoji" aria-hidden="true">🚗</span> 택시 · 15분</span>
+            <span class="tr-tent">확인 필요</span>
+<a class="tr-route" href="https://www.google.com/maps/dir/?api=1&amp;origin=%ED%95%9C%ED%99%94%EB%A6%AC%EC%A1%B0%ED%8A%B8%20%ED%95%B4%EC%9A%B4%EB%8C%80&amp;destination=%EC%94%A8%EB%9E%9C%EB%93%9C%ED%9A%8C%EC%84%BC%ED%83%80&amp;origin_place_id=ChIJE-cp562SaDURVkWeQcziN34&amp;destination_place_id=ChIJmTQy50GNaDURx_QA0WyEbyo&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>          </div>
+          <p class="tr-eta"><span class="tr-t">17:30</span> 출발 → <span class="tr-t">17:45</span> 도착</p>
+          <a class="tr-map" href="https://www.google.com/maps/dir/?api=1&amp;origin=%ED%95%9C%ED%99%94%EB%A6%AC%EC%A1%B0%ED%8A%B8%20%ED%95%B4%EC%9A%B4%EB%8C%80&amp;destination=%EC%94%A8%EB%9E%9C%EB%93%9C%ED%9A%8C%EC%84%BC%ED%83%80&amp;origin_place_id=ChIJE-cp562SaDURVkWeQcziN34&amp;destination_place_id=ChIJmTQy50GNaDURx_QA0WyEbyo&amp;travelmode=driving" target="_blank" rel="noopener">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./seg-d2-e5-dark.png">
+              <img src="./seg-d2-e5.png" alt="광안리 — 씨랜드회센타 구간 지도" width="680" height="420" loading="lazy">
+            </picture>
+            <span class="tr-mcap"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>이 구간을 구글맵으로 열기</span>
+          </a>
+          <details class="more tr-more">
+            <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+            <div class="box">술이 들어가니 차를 두고 택시로 갑니다.</div>
+          </details>
+        </div>
+<p class="lead">단골집이라 여기는 고르지 않고 확정했어요. 1층에서 회를 뜨고 2층으로 올라가 먹는 방식입니다.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">민락수변공원이 바로 옆이라 먹고 나와서 걸어서 드론쇼 자리를 잡을 수 있어요.</div>
+        </details>
+        <div class="l1">
+          <dl class="l1-facts">
+            <dt>먹는 순서</dt>
+            <dd><span class="l1-v">1층 마산상회에서 회 → 2층 초장집</span></dd>
+          </dl>
+        </div>
+        <div class="os-band" aria-hidden="true"></div>
+        <details class="onsite">
+          <summary>
+            <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>
+            <span class="os-sum">현장 가이드 · 메뉴와 팁 1개</span>
+            <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+          </summary>
+          <div class="os-box">
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">드론쇼 시간에 맞추려면</p>
+                <p class="os-text">여덟 시 공연을 보려면 일곱 시 반쯤 일어나 수변공원으로 나가면 됩니다.</p>
+              </div>
+            </div>
+          </div>
+        </details>
+      </article>
+      <article class="evcard" data-time="19:30" data-party="all">
+        <div class="ev-top">
+          <span class="t">19:30</span>
+          <span class="ev-flex"></span>
+<span class="tbdpill">아직 정하지 않았어요</span>        </div>
+        <h3 class="ev-h">광안리 드론라이트쇼</h3>
+        <div class="transit">
+          <div class="tr-row">
+            <span class="tr-main"><span class="tr-emoji" aria-hidden="true">🚗</span> 도보 · 8분</span>
+            <span class="tr-tent">확인 필요</span>
+<a class="tr-route" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EC%94%A8%EB%9E%9C%EB%93%9C%ED%9A%8C%EC%84%BC%ED%83%80&amp;destination=%EB%AF%BC%EB%9D%BD%EC%88%98%EB%B3%80%EA%B3%B5%EC%9B%90&amp;origin_place_id=ChIJmTQy50GNaDURx_QA0WyEbyo&amp;destination_place_id=ChIJdeSNUzXtaDURXJLasMAd0Fg&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>          </div>
+          <p class="tr-eta"><span class="tr-t">19:30</span> 출발 → <span class="tr-t">19:38</span> 도착</p>
+          <a class="tr-map" href="https://www.google.com/maps/dir/?api=1&amp;origin=%EC%94%A8%EB%9E%9C%EB%93%9C%ED%9A%8C%EC%84%BC%ED%83%80&amp;destination=%EB%AF%BC%EB%9D%BD%EC%88%98%EB%B3%80%EA%B3%B5%EC%9B%90&amp;origin_place_id=ChIJmTQy50GNaDURx_QA0WyEbyo&amp;destination_place_id=ChIJdeSNUzXtaDURXJLasMAd0Fg&amp;travelmode=driving" target="_blank" rel="noopener">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./seg-d2-e6-dark.png">
+              <img src="./seg-d2-e6.png" alt="광안리 드론라이트쇼 구간 지도" width="680" height="420" loading="lazy">
+            </picture>
+            <span class="tr-mcap"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>이 구간을 구글맵으로 열기</span>
+          </a>
+        </div>
+<p class="lead">이날 공연이 네이버웹툰 편이라 마루는 강쥐 같은 캐릭터가 드론으로 밤하늘에 그려져요. 지우 나이에 맞는 소재라 넣어 뒀습니다.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">안 보기로 해도 아쉬울 게 없어요. 바로 택시를 타고 들어와 케이크를 하면 됩니다.</div>
+        </details>
+        <div class="l1">
+          <p class="l1-warn">
+            <svg class="ic" aria-hidden="true"><use href="#i-bulb"/></svg>8시 공연이 끝나고 돌아오면 9시가 넘어요. 그날 지우 상태를 보고 정하세요.
+          </p>
+          <dl class="l1-facts">
+            <dt>공연</dt>
+            <dd><span class="l1-v">저녁 8시 · 10시</span> <span class="l1-n">무료예요</span></dd>
+            <dt>자리</dt>
+            <dd><span class="l1-v">민락수변공원</span> <span class="l1-n">식당에서 걸어 나가면 바로예요</span></dd>
+          </dl>
+        </div>
+      </article>
+      <article class="evcard" data-time="21:00" data-party="all">
+        <div class="ev-top">
+          <span class="t">21:00</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">어머니 생신 케이크</h3>
+<p class="lead">이번 여행의 이유예요. 밖에서 하지 않고 객실에서 조용히 합니다.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">드론쇼를 접었다면 한 시간쯤 일찍 시작하면 됩니다. 초와 성냥은 케이크를 살 때 함께 챙기세요.</div>
+        </details>
+        <div class="l1">
+          <p class="l1-warn">
+            <svg class="ic" aria-hidden="true"><use href="#i-bulb"/></svg>매장에 있는 케이크가 그날 다를 수 있어요. 원하는 것이 있으면 낮에 전화로 맞춰 두세요.
+          </p>
+          <dl class="l1-facts">
+            <dt>가까운 빵집</dt>
+            <dd><span class="l1-v">파리바게뜨 해운대마린점 · 07:00~23:00</span> <span class="l1-n">숙소에서 걸어서 5분이에요</span></dd>
+          </dl>
+          <label class="l1-todo"><input type="checkbox" data-todo="d2-e7-1"><span>낮에 미리 사서 객실 냉장고에 넣어 두면 저녁에 챙길 일이 없어요.</span></label>
+        </div>
+      </article>
+    </div>
+  </section>
+  <section class="day" id="d3" data-date="2026-08-23" data-mapnote="이 날은 숙소와 공항을 오가는 것 말고는 지도에 이을 동선이 없어요. 오가는 길은 이동 카드의 경로 버튼에서 열 수 있어요.">
+    <h2 class="day-title">8월 23일 일요일</h2>
+<p class="day-theme">아침 기차로 올라가는 날</p><p class="lead day-lead">오전 10시 28분 기차라 이날은 아침에 움직이는 것이 전부예요. 밥을 먹고 짐을 챙겨 부산역으로 갑니다.</p>    <details class="more day-more">
+      <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+      <div class="box">더운 시간대가 오기 전에 기차를 타는 일정이라, 이날은 폭염을 신경 쓸 일이 없어요.</div>
+    </details>
+    <div class="evs">
+      <article class="evcard" data-time="07:30" data-party="all">
+        <div class="ev-top">
+          <span class="t">07:30</span>
+          <span class="ev-flex"></span>
+<span class="tbdpill">아직 정하지 않았어요</span>        </div>
+        <h3 class="ev-h">마지막 아침</h3>
+<p class="lead">여덟 시 반에는 나서야 해서 일찍 먹고 짐 쌀 시간을 벌어 둡니다.</p>        <details class="more">
+          <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+          <div class="box">거대곰탕과 파리바게뜨가 일곱 시에 열고, 수변최고돼지국밥은 일요일에도 아침에 열어요.</div>
+        </details>
+        <div class="l1">
+          <p class="l1-warn">
+            <svg class="ic" aria-hidden="true"><use href="#i-bulb"/></svg>대박해장은 열 시, 전주남문토종순대국은 열한 시에 열어서 이날은 못 갑니다.
+          </p>
+        </div>
+        <div class="os-band" aria-hidden="true"></div>
+        <details class="onsite">
+          <summary>
+            <svg class="ic" aria-hidden="true"><use href="#i-compass"/></svg>
+            <span class="os-sum">현장 가이드 · 메뉴와 팁 1개</span>
+            <svg class="ic os-chev" aria-hidden="true"><use href="#i-chev"/></svg>
+          </summary>
+          <div class="os-box">
+            <div class="os-tip">
+              <svg class="ic os-tic" aria-hidden="true"><use href="#i-bulb"/></svg>
+              <div class="os-tbody">
+                <p class="os-label">토요일과 다른 곳으로</p>
+                <p class="os-text">같은 집을 이틀 연속 가지 않으려면 토요일에 고른 곳을 빼고 정하세요.</p>
+              </div>
+            </div>
+          </div>
+        </details>
+        <div class="picker" data-pick="many" data-ev="d3-e1">
+          <p class="pick-head">
+마음에 드는 곳을 <b>여러 개</b> 골라도 돼요          </p>
+          <label class="pick-item">
+            <input type="checkbox"
+                   name="pick-d3-e1" value="geodae-gomtang">
+            <span class="pick-body">
+              <span class="pick-name">🍚 거대곰탕</span>
+              <span class="pick-scores">
+<span class="pick-score"><b>4.5</b> 구글 514</span><span class="pick-score"><b>4.4</b> 카카오 280</span>              </span>
+<span class="pick-meta">숙소에서 도보 8분 · 아기의자 없어요</span>            </span>
+          </label>
+          <div class="pick-links">
+            <a href="http://place.map.kakao.com/1211020458" target="_blank" rel="noopener">카카오맵</a>
+            <a href="#dining/geodae-gomtang" data-dining="geodae-gomtang">자세히</a>
+          </div>
+          <label class="pick-item">
+            <input type="checkbox"
+                   name="pick-d3-e1" value="subyeon-gukbap">
+            <span class="pick-body">
+              <span class="pick-name">🍚 수변최고돼지국밥 마린시티점</span>
+              <span class="pick-scores">
+<span class="pick-score"><b>4.3</b> 구글 46</span><span class="pick-score"><b>3</b> 카카오 40</span>              </span>
+<span class="pick-meta">숙소에서 도보 4분 · 아기의자 있어요</span>            </span>
+          </label>
+          <div class="pick-links">
+            <a href="http://place.map.kakao.com/1006877519" target="_blank" rel="noopener">카카오맵</a>
+            <a href="#dining/subyeon-gukbap" data-dining="subyeon-gukbap">자세히</a>
+          </div>
+          <label class="pick-item">
+            <input type="checkbox"
+                   name="pick-d3-e1" value="paris-baguette-marine">
+            <span class="pick-body">
+              <span class="pick-name">☕ 파리바게뜨 해운대마린점</span>
+              <span class="pick-scores">
+<span class="pick-score"><b>4</b> 구글 99</span><span class="pick-score"><b>4.1</b> 카카오 20</span>              </span>
+<span class="pick-meta">숙소에서 도보 5분</span>            </span>
+          </label>
+          <div class="pick-links">
+            <a href="http://place.map.kakao.com/12354782" target="_blank" rel="noopener">카카오맵</a>
+            <a href="#dining/paris-baguette-marine" data-dining="paris-baguette-marine">자세히</a>
+          </div>
+          <label class="pick-item">
+            <input type="checkbox"
+                   name="pick-d3-e1" value="obs-marine">
+            <span class="pick-body">
+              <span class="pick-name">☕ 옵스 마린시티점</span>
+              <span class="pick-scores">
+<span class="pick-score"><b>4.2</b> 구글 340</span><span class="pick-score"><b>3.5</b> 카카오 50</span>              </span>
+<span class="pick-meta">숙소에서 도보 9분</span>            </span>
+          </label>
+          <div class="pick-links">
+            <a href="http://place.map.kakao.com/8014614" target="_blank" rel="noopener">카카오맵</a>
+            <a href="#dining/obs-marine" data-dining="obs-marine">자세히</a>
+          </div>
+        </div>
+      </article>
+      <article class="evcard" data-time="08:50" data-party="all">
+        <div class="ev-top">
+          <span class="t">08:50</span>
+          <span class="ev-flex"></span>
+        </div>
+        <h3 class="ev-h">체크아웃하고 부산역으로</h3>
+        <div class="transit">
+          <div class="tr-row">
+            <span class="tr-main"><span class="tr-emoji" aria-hidden="true">🚗</span> 택시 · 30분</span>
+            <span class="tr-tent">확인 필요</span>
+<a class="tr-route" href="https://www.google.com/maps/dir/?api=1&amp;origin=%ED%95%9C%ED%99%94%EB%A6%AC%EC%A1%B0%ED%8A%B8%20%ED%95%B4%EC%9A%B4%EB%8C%80&amp;destination=%EB%B6%80%EC%82%B0%EC%97%AD&amp;origin_place_id=ChIJE-cp562SaDURVkWeQcziN34&amp;destination_place_id=ChIJqxrVY9jraDURTqBi-qe-mAI&amp;travelmode=driving" target="_blank" rel="noopener"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>경로</a>          </div>
+          <p class="tr-eta"><span class="tr-t">08:50</span> 출발 → <span class="tr-t">09:20</span> 도착</p>
+          <a class="tr-map" href="https://www.google.com/maps/dir/?api=1&amp;origin=%ED%95%9C%ED%99%94%EB%A6%AC%EC%A1%B0%ED%8A%B8%20%ED%95%B4%EC%9A%B4%EB%8C%80&amp;destination=%EB%B6%80%EC%82%B0%EC%97%AD&amp;origin_place_id=ChIJE-cp562SaDURVkWeQcziN34&amp;destination_place_id=ChIJqxrVY9jraDURTqBi-qe-mAI&amp;travelmode=driving" target="_blank" rel="noopener">
+            <picture>
+              <source media="(prefers-color-scheme: dark)" srcset="./seg-d3-e2-dark.png">
+              <img src="./seg-d3-e2.png" alt="체크아웃하고 부산역으로 구간 지도" width="680" height="420" loading="lazy">
+            </picture>
+            <span class="tr-mcap"><svg class="ic" aria-hidden="true"><use href="#i-route"/></svg>이 구간을 구글맵으로 열기</span>
+          </a>
+          <details class="more tr-more">
+            <summary><svg class="ic" aria-hidden="true"><use href="#i-chev"/></svg>참고</summary>
+            <div class="box">일요일 오전이라 길이 막히는 시간대는 아니에요.</div>
+          </details>
+        </div>
+<p class="lead">부산역까지 택시로 30분 안팎이에요. 아이와 짐이 있으니 여유를 두고 아홉 시 전에 나섭니다.</p>        <div class="l1">
+          <dl class="l1-facts">
+            <dt>체크아웃</dt>
+            <dd><span class="l1-v">11:00</span> <span class="l1-n">기차 시간 때문에 아홉 시 전에 나옵니다</span></dd>
+          </dl>
+          <label class="l1-todo"><input type="checkbox" data-todo="d3-e2-1"><span>충전기와 세면대 위 물건, 냉장고에 넣어 둔 것을 마지막으로 확인하세요.</span></label>
+        </div>
+      </article>
+      <article class="evcard" data-time="10:28" data-party="all">
+        <div class="ev-top">
+          <span class="t">10:28</span>
+          <span class="ev-flex"></span>
+<span class="stchip"><span class="stdot"></span>예약됨</span>        </div>
+        <h3 class="ev-h">부산역 출발 — 서울행 기차</h3>
+<p class="lead">두 시간 반 남짓 걸려 서울역에 오후 한 시에 닿아요. 남은 하루가 통째로 남는 일정입니다.</p>        <div class="l1">
+          <p class="l1-warn">
+            <svg class="ic" aria-hidden="true"><use href="#i-bulb"/></svg>서울역 도착이 오후 한 시라 점심이 기차 안에서 해결됩니다. 지우가 먹을 것을 미리 챙기세요.
+          </p>
+          <dl class="l1-facts">
+            <dt>출발 / 도착</dt>
+            <dd><span class="l1-v">부산역 10:28 · 서울역 13:04</span></dd>
+            <dt>좌석</dt>
+            <dd><span class="l1-v">유아동반석</span></dd>
+          </dl>
+          <label class="l1-todo"><input type="checkbox" data-todo="d3-e3-1"><span>역에 닿으면 전광판에서 승강장 번호부터 보세요. 아이와 짐을 데리고 옮기는 데 시간이 걸립니다.</span></label>
+        </div>
+      </article>
+    </div>
+  </section>
+
+
+  <section class="card" id="checklist">
+    <div class="chk-head">
+      <h2 class="sub">준비물 체크리스트</h2>
+      <span class="prog" id="chkprog" data-total="14" hidden></span>
+    </div>
+    <div class="pbar" aria-hidden="true"><span id="pfill"></span></div>
+    <p class="hint">탭하면 완료 표시가 이 폰에 저장돼요</p>
+    <ul class="chk">
+      <li>
+        <label>
+          <input type="checkbox" data-key="1d2ab700">
+          <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <span class="txt">식당 후보 골라서 회신받기 (금 저녁·토 아침·토 점심·토 카페·일 아침)</span>
+        </label>
+<span class="due" data-due="2026-08-16">8/16까지</span>      </li>
+      <li>
+        <label>
+          <input type="checkbox" data-key="2b2cf2af">
+          <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <span class="txt">숙소에 전화해서 아기침대·취사 가능 객실(15평형)·조식 소인 요금·유아의자 확인</span>
+        </label>
+<span class="due" data-due="2026-08-18">8/18까지</span>      </li>
+      <li>
+        <label>
+          <input type="checkbox" data-key="2129b133">
+          <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <span class="txt">기차 승차권 확인 — 8/21 서울역 13:18 출발, 8/23 부산역 10:28 출발</span>
+        </label>
+<span class="due" data-due="2026-08-18">8/18까지</span>      </li>
+      <li>
+        <label>
+          <input type="checkbox" data-key="8cae836d">
+          <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <span class="txt">고른 조개구이집에 전화 — 다섯 명 자리·아기의자·지우가 먹을 사이드</span>
+        </label>
+<span class="due" data-due="2026-08-19">8/19까지</span>      </li>
+      <li>
+        <label>
+          <input type="checkbox" data-key="ae0fa76c">
+          <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <span class="txt">어머니 생신 케이크 어디서 살지 정하기 (미리 주문할지 당일 살지)</span>
+        </label>
+<span class="due" data-due="2026-08-20">8/20까지</span>      </li>
+      <li>
+        <label>
+          <input type="checkbox" data-key="4398d4c2">
+          <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <span class="txt">케이크 초와 성냥</span>
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" data-key="bbd072c3">
+          <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <span class="txt">일요일 기차에서 먹을 지우 점심·간식</span>
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" data-key="9f0c6aad">
+          <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <span class="txt">지우 아쿠아슈즈와 갈아입을 반바지 (발 담그기용)</span>
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" data-key="a76b2dff">
+          <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <span class="txt">수건 한 장</span>
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" data-key="c56bd1cc">
+          <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <span class="txt">모자 3개와 아이용 선크림</span>
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" data-key="77077ff7">
+          <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <span class="txt">늘 먹던 해열제와 체온계</span>
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" data-key="ba2c7ea1">
+          <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <span class="txt">유모차를 가져갈지 아기띠로 할지 정하기</span>
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" data-key="31881df5">
+          <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <span class="txt">휴대용 선풍기와 쿨링 타월</span>
+        </label>
+      </li>
+      <li>
+        <label>
+          <input type="checkbox" data-key="9df93a34">
+          <span class="box"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <span class="txt">지우 알레르기·못 먹는 것 정리해 두기</span>
+        </label>
+      </li>
+    </ul>
+  </section>
+
+  <footer>
+    <p>이 가이드는 여행 계획 파일에서 자동으로 만들어졌어요. 예약번호 같은 개인정보는 담지 않습니다.</p>
+<p>2026년 8월 10일에 업데이트됐어요.</p><p><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg> <a href="./busan-2026-08.ics" download>여행 일정 전체를 내 캘린더 앱에 저장할 수 있어요.</a></p>    <p><svg class="ic" aria-hidden="true"><use href="#i-home"/></svg> 폰 홈 화면에 추가해 두면 비행기 모드에서도 열려요. (브라우저 공유 메뉴의 '홈 화면에 추가')</p>
+    <p>지도 데이터 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> 기여자</p>
+  </footer>
+
+</main>
+
+<nav class="fab" id="fab" aria-label="빠른 이동">
+  <a href="#" data-fab="top" class="on" aria-pressed="true"><svg class="ic" aria-hidden="true"><use href="#i-list"/></svg><span>일정</span></a>
+  <a href="#" data-fab="map" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-map"/></svg><span>지도</span></a>
+  <a href="#" data-fab="dining" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-fork"/></svg><span>맛집</span></a>
+  <a href="#" data-fab="info" aria-pressed="false"><svg class="ic" aria-hidden="true"><use href="#i-bulb"/></svg><span>정보</span></a>
+  <a href="./busan-2026-08.ics" download data-fab="cal"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg><span>캘린더</span></a>
+  <a href="#checklist" data-fab="chk"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>체크</span></a>
+</nav>
+
+<script>
+/* 후보 고르기 (D15) — 선택은 이 폰의 localStorage 에만 남는다. 서버가 없으니
+   가족끼리 보이게 하는 유일한 길은 사람이 옮기는 것이고, 그래서 '고른 것 복사'가
+   같이 있다. 체크리스트와 같은 저장 방식을 쓴다. */
+(function () {
+  var pickers = document.querySelectorAll('.picker');
+  if (!pickers.length) { return; }
+  var KEY = 'tp-pick-busan-2026-08';
+  var read = function () {
+    try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { return {}; }
+  };
+  var save = function (state) {
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+  };
+  var state = read();
+  for (var i = 0; i < pickers.length; i++) {
+    (function (box) {
+      var evid = box.getAttribute('data-ev');
+      var chosen = state[evid] || [];
+      var inputs = box.querySelectorAll('input');
+      for (var j = 0; j < inputs.length; j++) {
+        if (chosen.indexOf(inputs[j].value) !== -1) { inputs[j].checked = true; }
+        inputs[j].addEventListener('change', function () {
+          var picked = [];
+          var all = box.querySelectorAll('input');
+          for (var k = 0; k < all.length; k++) {
+            if (all[k].checked) { picked.push(all[k].value); }
+          }
+          var s = read();
+          if (picked.length) { s[evid] = picked; } else { delete s[evid]; }
+          save(s);
+          paint();
+        });
+      }
+    })(pickers[i]);
+  }
+  var btn = document.getElementById('pickcopy');
+  var out = document.getElementById('pickout');
+  var paint = function () {
+    var s = read(), n = 0;
+    for (var k in s) { if (s.hasOwnProperty(k) && s[k].length) { n++; } }
+    if (out) {
+      out.textContent = n ? ('고른 자리 ' + n + ' / ' + pickers.length)
+                          : ('고를 자리 ' + pickers.length + '곳');
+    }
+    if (btn) { btn.disabled = !n; }
+  };
+  paint();
+  if (btn) {
+    btn.addEventListener('click', function () {
+      var s = read(), lines = ['[' + document.title + ' — 고른 것]'];
+      for (var i = 0; i < pickers.length; i++) {
+        var box = pickers[i], evid = box.getAttribute('data-ev');
+        var chosen = s[evid] || [];
+        if (!chosen.length) { continue; }
+        var names = [];
+        for (var j = 0; j < chosen.length; j++) {
+          var inp = box.querySelector('input[value="' + chosen[j] + '"]');
+          var nm = inp && inp.parentNode.querySelector('.pick-name');
+          if (nm) { names.push(nm.textContent.trim()); }
+        }
+        var card = box.closest('article');
+        var t = card && card.querySelector('.t');
+        var ttl = card && card.querySelector('.ev-h');
+        lines.push((t ? t.textContent.trim() + ' ' : '')
+                   + (ttl ? ttl.textContent.trim() : evid) + ' — ' + names.join(', '));
+      }
+      var text = lines.join('\n');
+      var done = function () {
+        btn.textContent = '복사했어요';
+        setTimeout(function () { btn.textContent = '고른 것 복사'; }, 1600);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () { window.prompt('복사하세요', text); });
+      } else { window.prompt('복사하세요', text); }
+    });
+  }
+})();
+</script>
+
+<script>
+(function () {
+  var el = document.getElementById('dday');
+  if (!el) { return; }
+  var start = new Date(2026, 8 - 1, 21);
+  var end = new Date(2026, 8 - 1, 23);
+  var now = new Date();
+  var d0 = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  var days = Math.round((start - d0) / 86400000);
+  var text = null;
+  if (days > 0) { text = 'D-' + days; }
+  else if (days === 0) { text = '오늘 출발'; }
+  else if (d0 <= end) { text = '여행 ' + (Math.abs(days) + 1) + '일차'; }
+  /* 여행이 끝난 뒤에는 칩을 띄우지 않는다 */
+  if (text) { el.textContent = text; el.hidden = false; }
+})();
+</script>
+<script>
+(function () {
+  var boxes = document.querySelectorAll('input[data-key]');
+  for (var i = 0; i < boxes.length; i++) {
+    (function (box) {
+      if (box.disabled) { return; } /* trip.yaml done:true 고정 - localStorage보다 우선 */
+      var key = 'trip-pilot:busan-2026-08:chk:' + box.getAttribute('data-key');
+      try { if (localStorage.getItem(key) === '1') { box.checked = true; } } catch (e) {}
+      box.addEventListener('change', function () {
+        try {
+          if (box.checked) { localStorage.setItem(key, '1'); }
+          else { localStorage.removeItem(key); }
+        } catch (e) {}
+      });
+    })(boxes[i]);
+  }
+})();
+</script>
+<script>
+(function () {
+  try {
+    var pills = document.querySelectorAll('.chk li:not(.done) .due[data-due]');
+    if (!pills.length) { return; }
+    var now = new Date();
+    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    for (var i = 0; i < pills.length; i++) {
+      var p = pills[i].getAttribute('data-due').split('-');
+      var due = new Date(+p[0], +p[1] - 1, +p[2]);
+      if (due < today) {
+        pills[i].classList.add('late');
+        pills[i].textContent = '기한 지남';
+      }
+    }
+  } catch (e) {}
+})();
+</script>
+<script>
+(function () {
+  /* 영업시간 - 요일마다 다른 곳만 오늘 값으로 바꾼다. 정적 사이트라 빌드 시점 요일은
+     의미가 없어서, 요일 배열을 카드에 심어 두고 열람 시점에 고른다 (오프라인 동작).
+     맛집 카드는 조각 패널로 나중에 붙으므로 같은 함수를 훅으로도 등록한다. */
+  var apply = function (root) {
+    try {
+      var rows = (root || document).querySelectorAll('.vhours[data-hours]');
+      var idx = (new Date().getDay() + 6) % 7;   /* 배열은 월요일부터 */
+      for (var i = 0; i < rows.length; i++) {
+        var week = null;
+        try { week = JSON.parse(rows[i].getAttribute('data-hours')); } catch (e) { week = null; }
+        if (!week || week.length !== 7 || !week[idx]) { continue; }
+        var t = rows[i].querySelector('.vh-t');
+        if (t) { t.textContent = '오늘 ' + week[idx]; }
+      }
+    } catch (e) {}
+  };
+  apply(document);
+  (window.tpPanelHooks = window.tpPanelHooks || []).push(apply);
+})();
+</script>
+<script>
+(function () {
+  try {
+    if (!('IntersectionObserver' in window)) { return; }
+    var row = document.getElementById('navrow');
+    if (!row) { return; }
+    var links = row.querySelectorAll('a[data-spy]');
+    var secs = document.querySelectorAll('section.day');
+    if (!links.length || !secs.length) { return; }
+    var setOn = function (id) {
+      for (var j = 0; j < links.length; j++) {
+        if (links[j].getAttribute('data-spy') === id) {
+          links[j].classList.add('on');
+          links[j].setAttribute('aria-current', 'true');
+          var L = links[j].offsetLeft, W = links[j].offsetWidth;
+          if (L < row.scrollLeft + 12) { row.scrollLeft = L - 12; }
+          else if (L + W > row.scrollLeft + row.clientWidth - 12) { row.scrollLeft = L + W - row.clientWidth + 12; }
+        } else {
+          links[j].classList.remove('on');
+          links[j].removeAttribute('aria-current');
+        }
+      }
+    };
+    /* 누른 날짜는 그 자리에서 확정한다 - 스무스 스크롤이 끝나야 스파이가 날짜를 정하던
+       탓에 10/18 을 누르고 **바로** 지도 탭을 열면 10월 15일이 떴다(1.5초 뒤에야 10/18).
+       스크롤이 그 날에 닿거나 사용자가 스크롤하면(휠·터치) 스파이가 다시 주인이 된다. */
+    var pinned = null;
+    var wake = function () { pinned = null; };
+    row.addEventListener('click', function (e) {
+      /* 지도·맛집·정보 뷰의 날짜 클릭은 스크롤이 없다 (그 뷰가 직접 표시를 바꾼다) */
+      if (document.body.getAttribute('data-view') !== 'schedule') { return; }
+      var t = e.target;
+      while (t && t !== row && !(t.getAttribute && t.getAttribute('data-spy'))) { t = t.parentNode; }
+      if (!t || t === row) { return; }
+      pinned = t.getAttribute('data-spy');
+      setOn(pinned);
+    });
+    window.addEventListener('wheel', wake, { passive: true });
+    window.addEventListener('touchmove', wake, { passive: true });
+    var io = new IntersectionObserver(function (entries) {
+      for (var k = 0; k < entries.length; k++) {
+        if (!entries[k].isIntersecting) { continue; }
+        if (pinned) { if (entries[k].target.id === pinned) { pinned = null; } continue; }
+        setOn(entries[k].target.id);
+      }
+    }, { rootMargin: '-82px 0px -58% 0px', threshold: 0 });
+    for (var m = 0; m < secs.length; m++) { io.observe(secs[m]); }
+  } catch (e) {}
+})();
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  try {
+    navigator.serviceWorker.register('./sw.js').catch(function () {});
+    /* 새 판을 배포하면 새 SW 가 즉시 제어권을 잡는다(sw.js 의 skipWaiting+clients.claim).
+       그 순간 한 번만 자동 새로고침해, 배포 후 새로고침 한 번이면 새 판이 뜨게 한다.
+       최초 설치(기존 controller 없음)는 방금 네트워크에서 받은 최신판이라 건너뛰고,
+       sessionStorage 플래그가 무한 리로드를 막는다 (플래그를 못 쓰면 리로드도 안 한다). */
+    var hadSw = !!navigator.serviceWorker.controller;
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+      if (!hadSw) { hadSw = true; return; }
+      var ok = false;
+      try {
+        ok = sessionStorage.getItem('tp-sw-reloaded-busan-2026-08') !== '1';
+        if (ok) { sessionStorage.setItem('tp-sw-reloaded-busan-2026-08', '1'); }
+      } catch (e) { ok = false; }
+      if (ok) { location.reload(); }
+    });
+  } catch (e) {}
+}
+</script>
+<script>
+(function () {
+  /* 준비 진행률 - YAML done + 이 폰에서 체크한 것(localStorage 복원분)을 합산 */
+  try {
+    var prog = document.getElementById('chkprog');
+    if (!prog) { return; }
+    var fill = document.getElementById('pfill');
+    var total = parseInt(prog.getAttribute('data-total'), 10) || 0;
+    var boxes = document.querySelectorAll('input[data-key]');
+    var update = function () {
+      var done = 0;
+      for (var i = 0; i < boxes.length; i++) { if (boxes[i].checked) { done++; } }
+      prog.textContent = '준비 ' + done + '/' + total;
+      prog.hidden = false;
+      if (fill && total > 0) { fill.style.width = Math.round(done * 100 / total) + '%'; }
+    };
+    for (var j = 0; j < boxes.length; j++) { boxes[j].addEventListener('change', update); }
+    update();
+  } catch (e) {}
+})();
+</script>
+<script>
+(function () {
+  /* 오늘로 자동 이동 + 지금/다음 일정 하이라이트 - 여행 기간 밖이면 아무것도 안 함.
+
+     가족(party, docs/schema.md D13)별로 따로 계산한다. 문서 순서로만 훑으면 두 가족
+     일정이 섞인 날에 남의 가족 카드에 '지금'이 붙는다 - 나트랑 10/17 18:00 은 영락네
+     '시내 해산물'과 영두네 '이른 저녁'이 동시에 시작해서, 영락네 폰이 영두네 카드에
+     착지하고 '다음'까지 영두네 것으로 떴다. 공동 일정(all)은 모든 가족의 타임라인에
+     함께 들어가고, 필터가 '전체'면 가족마다 각자의 지금·다음을 단다. */
+  try {
+    var now = new Date();
+    var iso = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2);
+    var sec = document.querySelector('section.day[data-date="' + iso + '"]');
+    if (!sec) { return; }
+    var link = document.querySelector('#navrow a[data-spy="' + sec.id + '"]');
+    if (link) { link.classList.add('today'); }
+    var hm = ('0' + now.getHours()).slice(-2) + ':' + ('0' + now.getMinutes()).slice(-2);
+    var rows = sec.querySelectorAll('article.evcard[data-time]');
+    var partyOf = function (row) { return row.getAttribute('data-party') || 'all'; };
+    var mark = function (row, cls, txt) {
+      var top = row.querySelector('.ev-top');
+      if (!top || row.querySelector('.' + cls)) { return; }
+      var s = document.createElement('span');
+      s.className = cls;
+      s.textContent = txt;
+      top.insertBefore(s, top.firstChild);
+    };
+    /* 계산 대상 가족 - 한 가족을 고르면 그 가족만, '전체'면 그날 있는 가족 전부
+       (공동 일정뿐인 날은 묶음이 하나라 예전과 똑같이 동작한다) */
+    var groupsFor = function (active) {
+      if (active && active !== 'all') { return [active]; }
+      var out = [], seen = {};
+      for (var i = 0; i < rows.length; i++) {
+        var p = partyOf(rows[i]);
+        if (p !== 'all' && !seen[p]) { seen[p] = 1; out.push(p); }
+      }
+      return out.length ? out : ['all'];
+    };
+    var apply = function (active) {
+      var old = sec.querySelectorAll('.nowpill, .nextpill');
+      for (var o = 0; o < old.length; o++) { old[o].parentNode.removeChild(old[o]); }
+      for (var r = 0; r < rows.length; r++) { rows[r].classList.remove('now'); }
+      var gs = groupsFor(active), nows = [], nexts = [];
+      for (var g = 0; g < gs.length; g++) {
+        var mine = [];
+        for (var i = 0; i < rows.length; i++) {
+          var p = partyOf(rows[i]);
+          if (gs[g] === 'all' || p === gs[g] || p === 'all') { mine.push(rows[i]); }
+        }
+        var cur = -1;
+        for (var k = 0; k < mine.length; k++) {
+          if (mine[k].getAttribute('data-time') <= hm) { cur = k; }
+        }
+        if (cur < 0) { continue; }
+        nows.push(mine[cur]);
+        if (cur + 1 < mine.length) { nexts.push(mine[cur + 1]); }
+      }
+      for (var n = 0; n < nows.length; n++) {
+        nows[n].classList.add('now');
+        mark(nows[n], 'nowpill', '지금');
+      }
+      /* 다른 가족이 '지금'으로 쓰는 공동 일정 카드에는 '다음'을 겹쳐 붙이지 않는다 */
+      for (var x = 0; x < nexts.length; x++) {
+        if (!nexts[x].classList.contains('now')) { mark(nexts[x], 'nextpill', '다음'); }
+      }
+      return sec.querySelector('article.evcard.now');
+    };
+    sec.tpNow = apply;   /* 가족 필터가 바뀌면 다시 계산한다 (아래 필터 스크립트) */
+    var first = apply('all');   /* 필터 기본값은 늘 '전체' (D13 무상태) */
+    if (!location.hash) {
+      /* 진행 중인 일정이 있으면 가장 이른 '지금' 카드로, 아직 시작 전이면 그날 상단으로 */
+      var target = first || sec;
+      var smooth = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+      target.scrollIntoView(smooth ? { behavior: 'smooth', block: 'start' } : { block: 'start' });
+    }
+  } catch (e) {}
+})();
+</script>
+<script>
+(function () {
+  /* 가족 필터 - 그날 party 가 섞인 날에만 렌더된 토글 (docs/schema.md D13).
+     무상태다: URL 해시·localStorage 를 쓰지 않고 기본은 늘 '전체'.
+     공동 일정(party=all)은 어느 가족을 골라도 남는다 - 두 가족이 함께 가는 자리라서.
+     토글 대상은 시간표 카드만이 아니라 그날의 [data-party] 전부다 - 동선 지도 카드와
+     '동선 지도로 열기' 버튼이 빠져 있어서, 영두네 탭에서도 위쪽 지도는 영락네 동선이고
+     버튼은 빈원더스 딥링크였다 (필터 버튼 자신은 .pfbtn 으로 제외한다). */
+  try {
+    var groups = document.querySelectorAll('.pfilter');
+    for (var i = 0; i < groups.length; i++) {
+      (function (group) {
+        var day = group.closest ? group.closest('section.day') : null;
+        if (!day) { return; }
+        var btns = group.querySelectorAll('button[data-party]');
+        var cards = day.querySelectorAll('[data-party]:not(.pfbtn)');
+        var apply = function (sel) {
+          for (var c = 0; c < cards.length; c++) {
+            var p = cards[c].getAttribute('data-party');
+            cards[c].hidden = !(sel === 'all' || p === 'all' || p === sel);
+          }
+          for (var b = 0; b < btns.length; b++) {
+            var on = btns[b].getAttribute('data-party') === sel;
+            if (on) { btns[b].classList.add('on'); } else { btns[b].classList.remove('on'); }
+            btns[b].setAttribute('aria-pressed', on ? 'true' : 'false');
+          }
+          /* 오늘이면 '지금·다음'도 고른 가족 기준으로 다시 계산한다 (위 스크립트가 등록) */
+          if (day.tpNow) { day.tpNow(sel); }
+        };
+        for (var k = 0; k < btns.length; k++) {
+          (function (btn) {
+            btn.addEventListener('click', function () {
+              apply(btn.getAttribute('data-party'));
+            });
+          })(btns[k]);
+        }
+      })(groups[i]);
+    }
+  } catch (e) {}
+})();
+</script>
+<script>
+(function () {
+  /* 플로팅 바 + 뷰 전환 - 일정(schedule)/지도(map) 두 뷰를 body[data-view] 로 오간다.
+     지도 모드: 본문을 숨기고 지도 패널만 보이며, 세그먼트 바는 날짜 선택기가 된다.
+     JS 없는 환경은 data-view="schedule" 고정이라 기존 앵커 동작이 그대로 남는다. */
+  try {
+    var fab = document.getElementById('fab');
+    if (!fab) { return; }
+    var body = document.body;
+    var links = fab.querySelectorAll('a[data-fab]');
+    var row = document.getElementById('navrow');
+    var dayLinks = row ? row.querySelectorAll('a[data-spy]') : [];
+    var mpTitle = document.getElementById('mp-title');
+    var mpBody = document.getElementById('mp-body');
+    var mpEmpty = document.getElementById('mp-empty');
+    var mpEmptyP = mpEmpty ? mpEmpty.querySelector('.noev') : null;
+    var mpEmptyText = mpEmptyP ? mpEmptyP.textContent : ''; /* 기본 문구 - 일자별 문구가 없을 때 */
+    var smooth = !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    var savedY = 0;
+    var pushed = false; /* enterMap 이 쌓은 히스토리 항목 - 뒤로가기 한 번 = 지도 닫기 */
+    var isMap = function () { return body.getAttribute('data-view') === 'map'; };
+    var jump = function (y) {
+      /* 뷰 전환 스크롤은 항상 즉시 - html 의 scroll-behavior:smooth 를 잠깐 끈다 */
+      var h = document.documentElement;
+      var prev = h.style.scrollBehavior;
+      h.style.scrollBehavior = 'auto';
+      window.scrollTo(0, y);
+      h.style.scrollBehavior = prev;
+    };
+    var setOn = function (k) {
+      for (var i = 0; i < links.length; i++) {
+        if (links[i].getAttribute('data-fab') === k) { links[i].classList.add('on'); }
+        else { links[i].classList.remove('on'); }
+      }
+    };
+    var pressed = function () {
+      /* aria-pressed 는 클릭 하이라이트가 아니라 현재 뷰를 말한다 */
+      var panel = isMap() || isDining() || isInfo();
+      for (var i = 0; i < links.length; i++) {
+        var k = links[i].getAttribute('data-fab');
+        if (k === 'top') { links[i].setAttribute('aria-pressed', panel ? 'false' : 'true'); }
+        else if (k === 'map') { links[i].setAttribute('aria-pressed', isMap() ? 'true' : 'false'); }
+        else if (k === 'dining') { links[i].setAttribute('aria-pressed', isDining() ? 'true' : 'false'); }
+        else if (k === 'info') { links[i].setAttribute('aria-pressed', isInfo() ? 'true' : 'false'); }
+      }
+    };
+    var go = function (el) {
+      el.scrollIntoView(smooth ? { behavior: 'smooth', block: 'start' } : { block: 'start' });
+    };
+    var runHooks = function (root) {
+      /* 조각 패널이 붙은 뒤에 돌려야 하는 초기화들 (영업시간 '오늘' 치환·칩 필터) */
+      var hs = window.tpPanelHooks || [];
+      for (var i = 0; i < hs.length; i++) { try { hs[i](root); } catch (e) {} }
+    };
+    var showFail = function (el) {
+      var f = el.querySelector('.panel-fail');
+      if (f) { f.hidden = false; }
+    };
+    var loadPanel = function (el, done) {
+      /* 맛집·정보 탭 본문은 별도 조각 파일이다 - 첫 화면을 가볍게 하려고 떼어냈고
+         (docs/design.md 4장), 서비스워커가 프리캐시하므로 두 번째부터는 비행기
+         모드에서도 캐시에서 붙는다. 아직 못 받았으면 안내 문구만 남긴다. */
+      if (!el) { if (done) { done(); } return; }
+      if (el.getAttribute('data-loaded') === '1') { if (done) { done(); } return; }
+      var src = el.getAttribute('data-src');
+      if (!src) { if (done) { done(); } return; }
+      if (!window.fetch) { showFail(el); return; }
+      el.setAttribute('data-loaded', '1');   /* 중복 요청 방지 */
+      /* no-cache: 브라우저 HTTP 캐시를 건너뛰지 않고 서버에 변경 여부만 묻는다.
+         기본 정책으로 두면 배포 직후 재방문에서 이전 조각이 그대로 붙는다 -
+         실측으로 맛집 카드 21곳의 place_id 가 화면에서 빠져 있었다. 오프라인에서는
+         서비스워커가 먼저 응답하므로 이 옵션이 비행기 모드 동작을 막지 않는다. */
+      fetch(src, { cache: 'no-cache' }).then(function (r) {
+        if (!r.ok) { throw new Error('bad status'); }
+        return r.text();
+      }).then(function (t) {
+        el.insertAdjacentHTML('beforeend', t);
+        var f = el.querySelector('.panel-fail');
+        if (f) { f.hidden = true; }
+        runHooks(el);
+        if (done) { done(); }
+      }).catch(function () {
+        el.setAttribute('data-loaded', '');   /* 다음 진입에 다시 시도 */
+        showFail(el);
+      });
+    };
+    var markDay = function (anchor) {
+      for (var i = 0; i < dayLinks.length; i++) {
+        if (dayLinks[i].getAttribute('data-spy') === anchor) {
+          dayLinks[i].classList.add('on');
+          dayLinks[i].setAttribute('aria-current', 'true');
+          var L = dayLinks[i].offsetLeft, W = dayLinks[i].offsetWidth;
+          if (L < row.scrollLeft + 12) { row.scrollLeft = L - 12; }
+          else if (L + W > row.scrollLeft + row.clientWidth - 12) { row.scrollLeft = L + W - row.clientWidth + 12; }
+        } else {
+          dayLinks[i].classList.remove('on');
+          dayLinks[i].removeAttribute('aria-current');
+        }
+      }
+    };
+    var showDay = function (anchor) {
+      if (!anchor || !mpBody) { return; }
+      var sec = document.getElementById(anchor);
+      if (!sec) { return; }
+      var title = sec.querySelector('.day-title');
+      if (mpTitle) { mpTitle.textContent = title ? title.textContent : ''; }
+      while (mpBody.firstChild) { mpBody.removeChild(mpBody.firstChild); }
+      /* 가족별로 갈린 날은 지도 카드가 둘이다 - 지도 탭엔 필터가 없으니 둘 다 싣는다
+         (카드마다 '영락네 동선' 라벨이 붙어 있어 어느 쪽인지 읽힌다) */
+      var mcs = sec.querySelectorAll('.mapcard');
+      for (var c = 0; c < mcs.length; c++) {
+        var clone = mcs[c].cloneNode(true); /* 이미지 URL 이 같아 추가 다운로드 없음 */
+        var rb = clone.querySelector('.routebtn');
+        if (rb && rb.lastChild && rb.lastChild.nodeType === 3) {
+          rb.lastChild.nodeValue = '이 동선을 구글맵으로 열기';
+        }
+        clone.removeAttribute('data-party'); /* 지도 탭은 필터 밖 - 늘 보이게 */
+        mpBody.appendChild(clone);
+      }
+      if (mpEmpty) {
+        mpEmpty.hidden = mcs.length > 0;
+        /* 한 곳에만 머문 날은 "장소가 없어서"가 아니다 - 일자별 문구가 있으면 그걸로 */
+        if (!mcs.length && mpEmptyP) { mpEmptyP.textContent = sec.getAttribute('data-mapnote') || mpEmptyText; }
+      }
+      markDay(anchor);
+    };
+    var defaultAnchor = function () {
+      /* 여행 중이면 오늘, 아니면 지도가 있는 첫 날 (그마저 없으면 첫 날) */
+      var now = new Date();
+      var iso = now.getFullYear() + '-' + ('0' + (now.getMonth() + 1)).slice(-2) + '-' + ('0' + now.getDate()).slice(-2);
+      var secs = document.querySelectorAll('section.day');
+      var firstMap = null;
+      for (var i = 0; i < secs.length; i++) {
+        if (secs[i].getAttribute('data-date') === iso) { return secs[i].id; }
+        if (!firstMap && secs[i].querySelector('.mapcard')) { firstMap = secs[i].id; }
+      }
+      if (firstMap) { return firstMap; }
+      return secs.length ? secs[0].id : null;
+    };
+    var spyAnchor = function () {
+      /* 스크롤 스파이가 켠 현재 보던 일자 - 지도 진입 기준 (재진입 포함 일관화) */
+      var on = row ? row.querySelector('a[data-spy].on') : null;
+      return on ? on.getAttribute('data-spy') : null;
+    };
+    var enterMap = function () {
+      if (isMap()) { jump(0); return; }
+      if (isDining() || isInfo()) {
+        /* 패널 간 전환(맛집·정보->지도) - 이미 쌓인 히스토리 항목을 재사용한다 (새 push 없음).
+           히스토리 항목은 하나로 유지돼 뒤로가기 한 번이면 일정으로 복귀한다. */
+        body.setAttribute('data-view', 'map');
+        showDay(spyAnchor() || defaultAnchor());
+        try { history.replaceState({ v: 'map' }, '', location.pathname + location.search); } catch (e) {}
+        jump(0);
+        setOn('map');
+        pressed();
+        return;
+      }
+      savedY = window.pageYOffset || 0;
+      body.setAttribute('data-view', 'map');
+      showDay(spyAnchor() || defaultAnchor());
+      /* 히스토리에 지도 모드를 쌓는다 - 폰의 뒤로가기가 페이지 이탈 대신 지도 닫기가 된다.
+         브라우저 자동 스크롤 복원이 exitMap 의 자리 복귀와 겨루지 않게 pop 처리까지 manual */
+      try { history.scrollRestoration = 'manual'; } catch (e) {}
+      try { history.pushState({ v: 'map' }, ''); pushed = true; } catch (e) { pushed = false; }
+      jump(0);
+      setOn('map');
+      pressed();
+    };
+    var exitMap = function () {
+      if (!isMap()) { return false; }
+      body.setAttribute('data-view', 'schedule');
+      for (var i = 0; i < dayLinks.length; i++) { dayLinks[i].removeAttribute('aria-current'); }
+      jump(savedY); /* 지도 탭을 누르기 전 보던 자리로 복귀 (스크롤 스파이가 하이라이트 복원) */
+      setOn('top');
+      pressed();
+      return true;
+    };
+    var leaveMap = function () {
+      /* 버튼으로 나가는 경로 - 지도용 히스토리 항목도 함께 걷어 스택을 원상 복구 */
+      if (!isMap()) { return false; }
+      exitMap();
+      if (pushed) { pushed = false; try { history.back(); } catch (e) {} }
+      return true;
+    };
+    /* 맛집 뷰 - 지도 뷰와 같은 히스토리 방식(push=뒤로가기 복귀). 경로 딥링크는 무상태:
+       맥락 이벤트 id 를 URL 해시(#dining/<id>)로만 전달하고, 출발지는 그 이벤트 직전
+       장소(ORIGINS)로, 없으면 숙소(HOME)로 잡는다 (localStorage 미사용). */
+    var HOME = "한화리조트 해운대, 부산 해운대구 마린시티3로 52 (우동)";
+    var HOME_PID = "ChIJE-cp562SaDURVkWeQcziN34";
+    var ORIGINS = {"d2-e5": "한화리조트 해운대, 부산 해운대구 마린시티3로 52 (우동)"};
+    var ORIGIN_PIDS = {"d2-e5": "ChIJE-cp562SaDURVkWeQcziN34"};
+    var DINING_OF = {"d2-e5": "seeland-masan"};
+    var dpanel = document.getElementById('diningpanel');
+    var isDining = function () { return body.getAttribute('data-view') === 'dining'; };
+    var focusDining = function (key) {
+      /* 방금 보던 일정의 그 식당을 짚어 준다 - 비교 기준이 화면에 고정돼야 고르기 쉽다 */
+      if (!dpanel) { return; }
+      var old = dpanel.querySelectorAll('.dn-now');
+      for (var i = 0; i < old.length; i++) { old[i].parentNode.removeChild(old[i]); }
+      /* key 는 두 가지가 온다: 확정 끼니는 **이벤트 id**(DINING_OF 로 식당을 찾는다),
+         후보의 '자세히'는 **dining id** 자체다. 둘 다 받지 않으면 후보에서 눌렀을 때
+         여기서 조용히 빠져나가 맛집 탭 맨 위에 떨어진다 (2026-08-10 실사용 발견). */
+      var fromEvent = !!(key && DINING_OF[key]);
+      var did = key ? (DINING_OF[key] || key) : null;
+      var card = did ? document.getElementById('dn-' + did) : null;
+      if (!card) { return; }
+      /* 후보 묶음은 기본으로 접혀 있다 - 접힌 안쪽은 레이아웃이 0 이라 스크롤이 먹지 않는다.
+         열고 나서 옮긴다 (같은 실사용에서 카드 높이가 0 으로 측정됐다). */
+      var fold = card.closest ? card.closest('details') : null;
+      if (fold && !fold.open) { fold.open = true; }
+      var tags = card.querySelector('.dn-tags');
+      if (tags && fromEvent) {
+        var chip = document.createElement('span');
+        chip.className = 'dn-now';
+        chip.textContent = '지금 이 일정';
+        tags.insertBefore(chip, tags.firstChild);
+      }
+      void card.offsetTop;   /* 접힘을 연 뒤 레이아웃을 확정시키고 옮긴다 */
+      /* 즉시 이동한다 - 부드럽게 할 이유가 없다. (a) 방금 탭이 통째로 바뀌어 눈이 따라갈
+         연속 동작이 아니고 (b) 거리가 1만 픽셀을 넘는 일이 흔하며 (c) 바로 앞에서 부른
+         jump(0) 의 부드러운 스크롤과 경합해 목적지에서 0 으로 끌려오는 일이 생긴다. */
+      card.scrollIntoView({ behavior: 'instant', block: 'start' });
+    };
+    var applyDiningOrigin = function (key) {
+      if (!dpanel) { return; }
+      var origin = (key && ORIGINS[key]) ? ORIGINS[key] : HOME;
+      /* place_id 를 함께 실어야 한다 - 이름만 넘기면 구글맵이 여는 사람의 현재 위치로
+         이름을 해석해 한국 장소를 연다(실측 사고). 빌드가 정적 href 에 박아 둔 고정을
+         이 재조립이 지우고 있었다 - 정적 12/12 였는데 런타임 0/12 였다. */
+      var opid = (key && ORIGIN_PIDS[key]) ? ORIGIN_PIDS[key] : HOME_PID;
+      var cards = dpanel.querySelectorAll('[data-dn-point]');
+      for (var i = 0; i < cards.length; i++) {
+        var dest = cards[i].getAttribute('data-dn-point');
+        var dpid = cards[i].getAttribute('data-dn-pid');
+        var a = cards[i].querySelector('.dn-route');
+        if (!a || !dest) { continue; }
+        var url = 'https://www.google.com/maps/dir/?api=1';
+        if (origin) { url += '&origin=' + encodeURIComponent(origin); }
+        if (opid) { url += '&origin_place_id=' + encodeURIComponent(opid); }
+        url += '&destination=' + encodeURIComponent(dest);
+        if (dpid) { url += '&destination_place_id=' + encodeURIComponent(dpid); }
+        a.href = url + '&travelmode=driving';
+      }
+    };
+    var diningHash = function (key) { return key ? '#dining/' + key : '#dining'; };
+    /* 조각 패널이 붙은 뒤에 경로 출발지·'지금 이 일정' 표시를 얹는다 (비동기 1회) */
+    var fillDining = function (key) {
+      loadPanel(dpanel, function () { applyDiningOrigin(key); focusDining(key); });
+    };
+    var enterDining = function (key) {
+      if (isDining()) { jump(0); fillDining(key); return; }
+      if (isMap() || isInfo()) {
+        /* 패널 간 전환(지도·정보->맛집) - 히스토리 항목 재사용 (새 push 없음) */
+        body.setAttribute('data-view', 'dining');
+        try { history.replaceState({ v: 'dining' }, '', diningHash(key)); } catch (e) {}
+        jump(0);
+        fillDining(key);
+        setOn('dining');
+        pressed();
+        return;
+      }
+      savedY = window.pageYOffset || 0;
+      body.setAttribute('data-view', 'dining');
+      try { history.scrollRestoration = 'manual'; } catch (e) {}
+      try { history.pushState({ v: 'dining' }, '', diningHash(key)); pushed = true; } catch (e) { pushed = false; }
+      jump(0);
+      fillDining(key);
+      setOn('dining');
+      pressed();
+    };
+    var exitDining = function () {
+      if (!isDining()) { return false; }
+      body.setAttribute('data-view', 'schedule');
+      jump(savedY);
+      setOn('top');
+      pressed();
+      return true;
+    };
+    var leaveDining = function () {
+      if (!isDining()) { return false; }
+      exitDining();
+      if (pushed) { pushed = false; try { history.back(); } catch (e) {} }
+      return true;
+    };
+    /* "다른 데 갈래"(.dn-open)와 식당 현장 가이드 한 줄(.os-jump) 둘 다 같은 딥링크다 */
+    var openers = document.querySelectorAll('[data-dining]');
+    for (var oi = 0; oi < openers.length; oi++) {
+      (function (a) {
+        a.addEventListener('click', function (e) {
+          e.preventDefault();
+          enterDining(a.getAttribute('data-dining'));
+        });
+      })(openers[oi]);
+    }
+    /* 여행 정보 뷰 - 지도·맛집 뷰와 같은 히스토리 방식(push=뒤로가기 복귀).
+       카드가 정적 마크업이라 채울 내용이 없고 뷰 전환만 한다. */
+    var ipanel = document.getElementById('infopanel');
+    var isInfo = function () { return body.getAttribute('data-view') === 'info'; };
+    var enterInfo = function () {
+      if (isInfo()) { jump(0); loadPanel(ipanel); return; }
+      if (isMap() || isDining()) {
+        /* 패널 간 전환(지도·맛집->정보) - 히스토리 항목 재사용 (새 push 없음) */
+        body.setAttribute('data-view', 'info');
+        try { history.replaceState({ v: 'info' }, '', location.pathname + location.search); } catch (e) {}
+        jump(0);
+        loadPanel(ipanel);
+        setOn('info');
+        pressed();
+        return;
+      }
+      savedY = window.pageYOffset || 0;
+      body.setAttribute('data-view', 'info');
+      try { history.scrollRestoration = 'manual'; } catch (e) {}
+      try { history.pushState({ v: 'info' }, ''); pushed = true; } catch (e) { pushed = false; }
+      jump(0);
+      loadPanel(ipanel);
+      setOn('info');
+      pressed();
+    };
+    var exitInfo = function () {
+      if (!isInfo()) { return false; }
+      body.setAttribute('data-view', 'schedule');
+      jump(savedY);
+      setOn('top');
+      pressed();
+      return true;
+    };
+    var leaveInfo = function () {
+      if (!isInfo()) { return false; }
+      exitInfo();
+      if (pushed) { pushed = false; try { history.back(); } catch (e) {} }
+      return true;
+    };
+    for (var i = 0; i < links.length; i++) {
+      (function (a) {
+        var k = a.getAttribute('data-fab');
+        a.addEventListener('click', function (e) {
+          if (k === 'cal') { return; } /* .ics 다운로드는 브라우저 기본 동작 */
+          e.preventDefault();
+          if (k === 'top') {
+            if (!leaveMap() && !leaveDining() && !leaveInfo()) {
+              if (smooth) { try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (err) { window.scrollTo(0, 0); } }
+              else { window.scrollTo(0, 0); }
+            }
+            setOn('top');
+          } else if (k === 'map') {
+            enterMap();
+          } else if (k === 'dining') {
+            enterDining(null);
+          } else if (k === 'info') {
+            enterInfo();
+          } else if (k === 'chk') {
+            leaveMap(); leaveDining(); leaveInfo(); /* 패널 모드였다면 일정 뷰로 돌아간 뒤 이동 */
+            var c = document.getElementById('checklist');
+            if (c) { go(c); }
+            setOn('chk');
+          }
+        });
+      })(links[i]);
+    }
+    if (row) {
+      row.addEventListener('click', function (e) {
+        if (!isMap()) { return; } /* 일정 모드 - 세그먼트 바는 기존 앵커 스크롤 그대로 */
+        var t = e.target;
+        while (t && t !== row && !(t.getAttribute && t.getAttribute('data-spy'))) { t = t.parentNode; }
+        if (!t || t === row) { return; }
+        e.preventDefault(); /* 지도 모드 - 앵커 이동 대신 날짜 전환 */
+        showDay(t.getAttribute('data-spy'));
+        jump(0);
+      });
+    }
+    window.addEventListener('popstate', function () {
+      /* 패널 모드에서 뒤로가기 - 패널만 닫고 보던 자리로. 일정 모드의 pop 은 기본 동작 */
+      if (isMap()) { pushed = false; exitMap(); }
+      else if (isDining()) { pushed = false; exitDining(); }
+      else if (isInfo()) { pushed = false; exitInfo(); }
+      try { history.scrollRestoration = 'auto'; } catch (e) {}
+    });
+    window.addEventListener('hashchange', function () {
+      /* 지도 모드에서 #dN 해시 이동 - 일정 뷰로 돌아간 뒤 그 자리로 스크롤 */
+      if (!isMap()) { return; }
+      leaveMap();
+      var id = location.hash.slice(1);
+      var el = id ? document.getElementById(id) : null;
+      if (el) { go(el); }
+    });
+  } catch (e) {}
+})();
+</script>
+<script>
+(function () {
+  /* 맛집 칩 필터 - 무상태(URL·저장소를 쓰지 않는다). 같은 칩을 한 번 더 누르면 해제되고,
+     남는 카드가 없는 묶음은 머리글까지 함께 숨는다. 묶음 개수는 남은 수로 갱신한다.
+     칩은 조각 패널(dining.html) 안에 있어, 패널이 붙은 뒤 훅으로 한 번만 초기화된다. */
+  var init = function (panel) {
+  if (!panel || panel.id !== 'diningpanel') { return; }
+  try {
+    var chips = panel.querySelectorAll('.fchip[data-filter]');
+    if (!chips.length) { return; }
+    var cur = null;
+    var apply = function () {
+      var kids = panel.children;
+      var head = null, cap = null, shown = 0;
+      var flush = function () {
+        if (!head) { return; }
+        head.hidden = shown === 0;
+        if (cap) { cap.hidden = shown === 0; }
+        var n = head.querySelector('.dn-sect-n');
+        if (n) { n.textContent = shown + '곳'; }
+      };
+      for (var i = 0; i < kids.length; i++) {
+        var el = kids[i];
+        if (el.className.indexOf('dn-sect-cap') >= 0) { cap = el; }
+        else if (el.className.indexOf('dn-sect') >= 0) { flush(); head = el; cap = null; shown = 0; }
+        else if (el.className.indexOf('dncard') >= 0) {
+          var tags = (el.getAttribute('data-dn-tags') || '').split('|');
+          var on = !cur || tags.indexOf(cur) >= 0;
+          el.hidden = !on;
+          if (on) { shown++; }
+        }
+      }
+      flush();
+      for (var c = 0; c < chips.length; c++) {
+        var sel = chips[c].getAttribute('data-filter') === cur;
+        if (sel) { chips[c].classList.add('on'); } else { chips[c].classList.remove('on'); }
+        chips[c].setAttribute('aria-pressed', sel ? 'true' : 'false');
+      }
+    };
+    for (var k = 0; k < chips.length; k++) {
+      (function (btn) {
+        btn.addEventListener('click', function () {
+          var v = btn.getAttribute('data-filter');
+          cur = (cur === v) ? null : v;
+          apply();
+        });
+      })(chips[k]);
+    }
+  } catch (e) {}
+  };
+  (window.tpPanelHooks = window.tpPanelHooks || []).push(init);
+})();
+</script>
+<script>
+(function () {
+  /* 여행 정보 위젯 - 날씨·환율은 열람 시점에 받아오고, 실패하면 캐시를 쓰고,
+     캐시도 없으면 통째로 숨긴다 (docs/schema.md D7 - 실패 시 숨김 원칙) */
+  var card = document.getElementById('tripinfo');
+  if (!card) { return; }
+  var reveal = function (el) { el.hidden = false; card.hidden = false; };
+  var fmt = function (n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); };
+  (function () {
+    var wx = document.getElementById('wx');
+    if (!wx) { return; }
+    var lat = card.getAttribute('data-wx-lat');
+    var lng = card.getAttribute('data-wx-lng');
+    if (!lat || !lng) { return; }
+    var KEY = 'tp-wx-busan-2026-08';
+    var WD = ['일', '월', '화', '수', '목', '금', '토'];
+    var parse = function (s) { var p = s.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); };
+    var pad = function (n) { return ('0' + n).slice(-2); };
+    var iso = function (d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
+    var start = parse(card.getAttribute('data-wx-start'));
+    var end = parse(card.getAttribute('data-wx-end'));
+    var icon = function (c) {
+      if (c <= 1) { return 'sun'; }
+      if (c === 2) { return 'part'; }
+      if (c === 3 || c === 45 || c === 48) { return 'cloud'; }
+      if (c >= 95) { return 'thunder'; }
+      if (c >= 80) { return 'shower'; }
+      if (c >= 51) { return 'rain'; }
+      return 'cloud';
+    };
+    var render = function (d, cap) {
+      /* 여행 전 기간을 칸으로 깔고, 예보가 도착한 날짜만 채운다 (없는 칸은 회색 —) */
+      var got = {};
+      for (var i = 0; i < d.time.length; i++) { got[d.time[i]] = i; }
+      var row = document.getElementById('wxrow');
+      var h = '';
+      var missing = false;
+      for (var day = new Date(start.getTime()); day <= end; day.setDate(day.getDate() + 1)) {
+        var k = iso(day);
+        h += '<div class="wx-c"><span class="wx-w">' + WD[day.getDay()] + '</span>';
+        if (k in got) {
+          h += '<svg class="wx-i" aria-hidden="true"><use href="#i-wx-' + icon(d.weather_code[got[k]]) + '"/></svg>'
+            + '<span class="wx-hi">' + Math.round(d.temperature_2m_max[got[k]]) + '°</span>'
+            + '<span class="wx-lo">' + Math.round(d.temperature_2m_min[got[k]]) + '°</span>';
+        } else {
+          missing = true;
+          h += '<span class="wx-na" aria-label="예보 없음">—</span>';
+        }
+        h += '</div>';
+      }
+      row.innerHTML = h;
+      var capEl = document.getElementById('wxcap');
+      if (cap) {
+        capEl.textContent = cap + ' 확인';
+        capEl.hidden = false;
+      } else if (missing) {
+        capEl.textContent = '먼 날짜는 예보가 아직 없어요';
+        capEl.hidden = false;
+      }
+      reveal(wx);
+    };
+    var fromCache = function () {
+      try {
+        var c = JSON.parse(localStorage.getItem(KEY));
+        if (c && c.data && c.data.time) {
+          var t = new Date(c.ts);
+          render(c.data, (t.getMonth() + 1) + '/' + t.getDate());
+        }
+      } catch (e) {}
+    };
+    if (!window.fetch) { fromCache(); return; }
+    /* open-meteo 예보는 오늘부터 16일까지만 - 기간을 겹치는 구간으로 클램프해서
+       범위 밖 요청(400)으로 위젯 전체가 숨는 일을 막는다 */
+    var now = new Date();
+    var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    var horizon = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 15);
+    var fs = start > today ? start : today;
+    var fe = end < horizon ? end : horizon;
+    if (fs > fe) { fromCache(); return; } /* 전 기간이 범위 밖 - 기존대로 숨김(캐시만) */
+    var url = 'https://api.open-meteo.com/v1/forecast?latitude=' + lat + '&longitude=' + lng
+      + '&daily=weather_code,temperature_2m_max,temperature_2m_min'
+      + '&timezone=' + encodeURIComponent(card.getAttribute('data-wx-tz'))
+      + '&start_date=' + iso(fs) + '&end_date=' + iso(fe);
+    fetch(url).then(function (r) {
+      if (!r.ok) { throw new Error('bad status'); }
+      return r.json();
+    }).then(function (j) {
+      if (!j.daily || !j.daily.time) { throw new Error('bad shape'); }
+      render(j.daily, null);
+      try { localStorage.setItem(KEY, JSON.stringify({ ts: Date.now(), data: j.daily })); } catch (e) {}
+    }).catch(fromCache);
+  })();
+  (function () {
+    var fx = document.getElementById('fx');
+    if (!fx) { return; }
+    var base = card.getAttribute('data-fx-base');
+    var sym = card.getAttribute('data-fx-symbol');
+    if (!base) { return; }
+    /* 표시 단위·눈금은 빌드가 통화별로 정해 준다 - 동(1 ₫ ≈ 0.06원)처럼 1 단위가
+       너무 작은 통화를 '1 ₫ ≈ 0원'으로 쓰면 아무 감각도 주지 못한다 */
+    var unit = parseFloat(card.getAttribute('data-fx-unit')) || 1;
+    var unitLabel = card.getAttribute('data-fx-unit-label') || ('1 ' + sym);
+    var cells = [];
+    try { cells = JSON.parse(card.getAttribute('data-fx-cells') || '[]'); } catch (e) {}
+    var KEY = 'tp-fx-busan-2026-08';
+    var render = function (rate, cap) {
+      /* 원화는 10원 단위 반올림 - 시세는 감각용이지 송금용이 아니다 */
+      document.getElementById('fxmain').textContent = unitLabel + ' ≈ ' + fmt(Math.round(rate * unit / 10) * 10) + '원';
+      var h = '';
+      for (var i = 0; i < cells.length; i++) {
+        h += '<span class="fx-cell"><span class="fx-b">' + cells[i].label + '</span>'
+          + '<span class="fx-v">' + fmt(Math.round(rate * cells[i].amount / 10) * 10) + '원</span></span>';
+      }
+      document.getElementById('fxgrid').innerHTML = h;
+      if (cap) {
+        var capEl = document.getElementById('fxcap');
+        capEl.textContent = cap + ' 확인';
+        capEl.hidden = false;
+      }
+      reveal(fx);
+    };
+    var fromCache = function () {
+      try {
+        var c = JSON.parse(localStorage.getItem(KEY));
+        if (c && c.rate) {
+          var t = new Date(c.ts);
+          render(c.rate, (t.getMonth() + 1) + '/' + t.getDate());
+        }
+      } catch (e) {}
+    };
+    if (!window.fetch) { fromCache(); return; }
+    /* frankfurter(ECB 고시)에 없는 통화(동·대만달러)는 open.er-api.com 에서 받는다.
+       두 응답 모두 {rates:{KRW:n}} 라 아래 처리는 그대로 쓴다. 실패하면 캐시,
+       캐시도 없으면 칩이 스스로 숨는다 (실패 시 숨김 원칙). */
+    var fxUrl = card.getAttribute('data-fx-api') === 'erapi'
+      ? 'https://open.er-api.com/v6/latest/' + base
+      : 'https://api.frankfurter.dev/v1/latest?base=' + base + '&symbols=KRW';
+    /* no-cache: 브라우저 HTTP 캐시가 조용히 답하지 않게 서버에 매번 확인한다.
+       기본 정책으로 두면 비행기 모드에서도 옛 시세가 **"7/29 확인" 스탬프 없이**
+       올라와 라이브처럼 보였다(실측 재현). 오프라인이면 이 요청이 실패하고
+       fromCache 가 날짜 스탬프를 달아 정직하게 옛 값을 보여 준다(날씨 위젯의 폴백
+       표기와 같은 규칙) - 캐시도 없으면 위젯이 스스로 숨는 계약은 그대로다. */
+    fetch(fxUrl, { cache: 'no-cache' }).then(function (r) {
+      if (!r.ok) { throw new Error('bad status'); }
+      return r.json();
+    }).then(function (j) {
+      var rate = j && j.rates && j.rates.KRW;
+      if (!rate) { throw new Error('bad shape'); }
+      render(rate, null);
+      try { localStorage.setItem(KEY, JSON.stringify({ ts: Date.now(), rate: rate })); } catch (e) {}
+    }).catch(fromCache);
+  })();
+})();
+</script>
+</body>
+</html>
