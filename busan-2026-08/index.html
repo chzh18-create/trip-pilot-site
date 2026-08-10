@@ -165,8 +165,15 @@
   .pick-score{font-size:var(--fs-6);color:var(--cap);background:var(--soft);border-radius:var(--r-pill);padding:2px 8px;white-space:nowrap}
   .pick-score b{color:var(--ink);font-size:var(--fs-5)}
   .pick-meta{font-size:var(--fs-6);color:var(--cap)}
-  .pick-links{display:flex;gap:14px;padding:0 2px 12px 32px}
-  .pick-links a{font-size:var(--fs-6);color:var(--pt);font-weight:600;text-decoration:none;min-height:32px;display:inline-flex;align-items:center}
+  /* 후보 줄의 링크는 44px 규칙을 지킨다 — 이름을 누르면 선택이 토글되므로 상세로
+     가는 길은 이 두 링크뿐이다. 세로 32px·가로 36px 이던 때 폰에서 "눌러도 안 넘어간다"는
+     보고가 실제로 나왔다. 좌우 여백을 링크 안쪽으로 옮겨 글자 위치는 그대로 두고
+     누르는 면적만 넓힌다.
+     주의: 이 파일은 페이지에 인라인되므로 주석에 날짜를 쓰지 않는다 — 공유본(share)
+     익명화 검사가 연도 문자열을 잡는다(test_67). */
+  .pick-links{display:flex;gap:4px;padding:0 2px 8px 22px}
+  .pick-links a{font-size:var(--fs-6);color:var(--pt);font-weight:600;text-decoration:none;min-height:44px;padding:0 10px;display:inline-flex;align-items:center}
+  .pick-links a::after{content:'›';margin-left:5px;font-weight:700}
   .picker .pick-item:has(input:checked){background:var(--pt-soft)}
   /* 고르는 중인 후보 묶음 — 맛집 탭 맨 끝에 접어 둔다 */
   .dn-fold{margin-top:22px}
@@ -2328,7 +2335,29 @@ if ('serviceWorker' in navigator) {
       else if (isInfo()) { pushed = false; exitInfo(); }
       try { history.scrollRestoration = 'auto'; } catch (e) {}
     });
+    /* #dining/<id> 는 딥링크다 - 클릭 핸들러가 아니라 주소만으로도 열려야 한다.
+       핸들러가 어떤 이유로든 안 걸린 폰에서는 '자세히' 를 눌러도 해시만 바뀌고
+       화면은 그대로였다(폰 실측). 그 자리를 여기서 받는다. 링크의 기본 동작이
+       이미 해시를 바꿔 두었으므로 새 히스토리 항목을 밀지 않는다. */
+    var hashDiningKey = function () {
+      var h = location.hash || '';
+      if (h === '#dining') { return ''; }
+      return h.indexOf('#dining/') === 0 ? h.slice(8) : null;
+    };
+    var openFromHash = function () {
+      /* fillDining 은 맛집이 있는 여행에서만 정의된다 - 없는 여행에서 #dining 을
+         직접 입력해도 조용히 무시한다 */
+      var key = hashDiningKey();
+      if (key === null || isDining() || typeof fillDining !== 'function') { return false; }
+      body.setAttribute('data-view', 'dining');
+      jump(0);
+      fillDining(key);
+      setOn('dining');
+      pressed();
+      return true;
+    };
     window.addEventListener('hashchange', function () {
+      if (openFromHash()) { return; }
       /* 지도 모드에서 #dN 해시 이동 - 일정 뷰로 돌아간 뒤 그 자리로 스크롤 */
       if (!isMap()) { return; }
       leaveMap();
@@ -2336,6 +2365,7 @@ if ('serviceWorker' in navigator) {
       var el = id ? document.getElementById(id) : null;
       if (el) { go(el); }
     });
+    openFromHash();   /* 주소에 이미 #dining/... 이 있는 채로 열린 경우 */
   } catch (e) {}
 })();
 </script>
