@@ -1,7 +1,7 @@
 /* trip-pilot service worker - build_site.py 가 생성 (직접 수정 금지) */
-const CACHE_NAME = "tp-nhatrang-2026-10-9c3772aa";
+const CACHE_NAME = "tp-nhatrang-2026-10-5db74626";
 const CACHE_RE = /^tp-nhatrang-2026-10-[0-9a-f]{8}$/;
-const PRECACHE = ["./", "./index.html", "./manifest.webmanifest", "./icon-180.png", "./icon-192.png", "./icon-512.png", "./nhatrang-2026-10.ics", "./map-d2-yeongdu.png", "./map-d2-yeongdu-dark.png", "./map-d3-yeongrak.png", "./map-d3-yeongrak-dark.png", "./map-d4.png", "./map-d4-dark.png", "./seg-d1-e3.png", "./seg-d1-e3-dark.png", "./seg-d5-e6.png", "./seg-d5-e6-dark.png", "./thumb-d1-e4.png", "./thumb-d1-e4-dark.png", "./thumb-d1-e7.png", "./thumb-d1-e7-dark.png", "./thumb-d2-e6.png", "./thumb-d2-e6-dark.png", "./thumb-d3-e3.png", "./thumb-d3-e3-dark.png", "./thumb-d3-e6.png", "./thumb-d3-e6-dark.png", "./thumb-d4-e6.png", "./thumb-d4-e6-dark.png", "./thumb-dining-costa-seafood.png", "./thumb-dining-costa-seafood-dark.png", "./thumb-dining-goguryeo.png", "./thumb-dining-goguryeo-dark.png", "./thumb-dining-louisiane-brewhouse.png", "./thumb-dining-louisiane-brewhouse-dark.png", "./thumb-dining-jj-seafood.png", "./thumb-dining-jj-seafood-dark.png", "./thumb-dining-an-thoi.png", "./thumb-dining-an-thoi-dark.png", "./thumb-dining-nem-nuong-dvq.png", "./thumb-dining-nem-nuong-dvq-dark.png", "./thumb-dining-lac-canh.png", "./thumb-dining-lac-canh-dark.png", "./thumb-dining-la-cala.png", "./thumb-dining-la-cala-dark.png", "./thumb-dining-vons-chicken.png", "./thumb-dining-vons-chicken-dark.png", "./thumb-dining-tem-nua.png", "./thumb-dining-tem-nua-dark.png", "./thumb-dining-k-mart.png", "./thumb-dining-k-mart-dark.png", "./dining.html", "./info.html"];
+const PRECACHE = ["./", "./index.html", "./manifest.webmanifest", "./icon-180.png", "./icon-192.png", "./icon-512.png", "./nhatrang-2026-10.ics", "./map-d1.png", "./map-d1-dark.png", "./map-d2.png", "./map-d2-dark.png", "./map-d3-yeongrak.png", "./map-d3-yeongrak-dark.png", "./map-d4.png", "./map-d4-dark.png", "./seg-d1-e3.png", "./seg-d1-e3-dark.png", "./seg-d2-e4.png", "./seg-d2-e4-dark.png", "./seg-d3-e2.png", "./seg-d3-e2-dark.png", "./seg-d5-e6.png", "./seg-d5-e6-dark.png", "./thumb-d1-e9.png", "./thumb-d1-e9-dark.png", "./thumb-d1-e5.png", "./thumb-d1-e5-dark.png", "./thumb-d1-e7.png", "./thumb-d1-e7-dark.png", "./thumb-d2-e6.png", "./thumb-d2-e6-dark.png", "./thumb-d3-e3.png", "./thumb-d3-e3-dark.png", "./thumb-d3-e6.png", "./thumb-d3-e6-dark.png", "./thumb-d4-e6.png", "./thumb-d4-e6-dark.png", "./thumb-dining-costa-seafood.png", "./thumb-dining-costa-seafood-dark.png", "./thumb-dining-goguryeo.png", "./thumb-dining-goguryeo-dark.png", "./thumb-dining-louisiane-brewhouse.png", "./thumb-dining-louisiane-brewhouse-dark.png", "./thumb-dining-jj-seafood.png", "./thumb-dining-jj-seafood-dark.png", "./thumb-dining-an-thoi.png", "./thumb-dining-an-thoi-dark.png", "./thumb-dining-nem-nuong-dvq.png", "./thumb-dining-nem-nuong-dvq-dark.png", "./thumb-dining-lac-canh.png", "./thumb-dining-lac-canh-dark.png", "./thumb-dining-la-cala.png", "./thumb-dining-la-cala-dark.png", "./thumb-dining-vons-chicken.png", "./thumb-dining-vons-chicken-dark.png", "./thumb-dining-k-mart.png", "./thumb-dining-k-mart-dark.png", "./dining.html", "./info.html"];
 
 self.addEventListener('install', (event) => {
   /* cache.addAll 은 브라우저 HTTP 캐시를 그대로 쓴다 - 캐시명이 바뀌어 새 캐시를
@@ -36,8 +36,10 @@ self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') { return; }
   if (new URL(req.url).origin !== self.location.origin) { return; }
+  /* ignoreSearch: 카톡·브라우저가 ?x=1 을 붙여 열어도 프리캐시한 같은 파일로 답한다 -
+     기본값(search 포함 비교)이면 비행기 모드에서 index.html?… 이 캐시 미스였다 */
   event.respondWith(
-    caches.match(req).then((hit) => {
+    caches.match(req, { ignoreSearch: true }).then((hit) => {
       if (hit) { return hit; }
       return fetch(req).then((res) => {
         if (res && res.ok) {
