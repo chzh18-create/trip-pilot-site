@@ -390,6 +390,8 @@
   .ticon{flex:0 0 auto;display:grid;place-items:center;width:40px;height:40px;border-radius:var(--r-sm);background:var(--soft);color:var(--ink-2)}
   .ticon .ic{width:1.125rem;height:1.125rem}
   .tel .who{flex:1 1 auto;min-width:0;font-size:var(--fs-4);font-weight:600;line-height:1.45}
+  .tel .who{overflow-wrap:anywhere}  /* 200% 에서 이름 열이 아이콘·번호 사이에 끼어 붕괴하던 것(2층 P2) - 낱말 안에서도 꺾이게 */
+  .tel a{flex-wrap:wrap}
   .tel .num{font-family:var(--mono);font-size:var(--fs-5);font-weight:700;color:var(--pt);white-space:nowrap;font-variant-numeric:tabular-nums}
   /* 묶음(R13) - 응급만 펼침, 병원·영사·숙소는 접힘 머리글 (토스 ListHeader 문법) */
   .cg-h{font-size:var(--fs-6);font-weight:700;color:var(--cap);margin-top:2px}
