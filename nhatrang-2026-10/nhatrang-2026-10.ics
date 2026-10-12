@@ -19,8 +19,38 @@ TZOFFSETTO:+0900
 END:STANDARD
 END:VTIMEZONE
 BEGIN:VEVENT
+UID:nhatrang-2026-10/d1-e12@trip-pilot
+DTSTAMP:20261012T022416Z
+DTSTART;TZID=Asia/Seoul:20261015T032000
+DTEND;TZID=Asia/Seoul:20261015T042000
+SUMMARY:집 출발 — 자차
+END:VEVENT
+BEGIN:VEVENT
+UID:nhatrang-2026-10/d1-e13@trip-pilot
+DTSTAMP:20261012T022416Z
+DTSTART;TZID=Asia/Seoul:20261015T043000
+DTEND;TZID=Asia/Seoul:20261015T053000
+SUMMARY:인천공항 T1 공식 발렛
+DESCRIPTION:차량을 맡기고 귀국 때 수령할 안내를 휴대폰에
+  저장해요.
+END:VEVENT
+BEGIN:VEVENT
+UID:nhatrang-2026-10/d1-e14@trip-pilot
+DTSTAMP:20261012T022416Z
+DTSTART;TZID=Asia/Seoul:20261015T044000
+DTEND;TZID=Asia/Seoul:20261015T054000
+SUMMARY:베트남항공 출국 수속
+END:VEVENT
+BEGIN:VEVENT
+UID:nhatrang-2026-10/d1-e15@trip-pilot
+DTSTAMP:20261012T022416Z
+DTSTART;TZID=Asia/Seoul:20261015T051000
+DTEND;TZID=Asia/Seoul:20261015T061000
+SUMMARY:출국 심사와 탑승 준비
+END:VEVENT
+BEGIN:VEVENT
 UID:nhatrang-2026-10/d1-e1@trip-pilot
-DTSTAMP:20260919T130927Z
+DTSTAMP:20261012T022416Z
 DTSTART;TZID=Asia/Seoul:20261015T065000
 DTEND;TZID=Asia/Seoul:20261015T075000
 SUMMARY:인천공항 제1여객터미널 출발 — 영락네
@@ -29,43 +59,43 @@ DESCRIPTION:베트남항공 VN441이에요. 인천공항 제1여객터미
 END:VEVENT
 BEGIN:VEVENT
 UID:nhatrang-2026-10/d1-e2@trip-pilot
-DTSTAMP:20260919T130927Z
+DTSTAMP:20261012T022416Z
 DTSTART;TZID=Asia/Ho_Chi_Minh:20261015T094500
 DTEND;TZID=Asia/Ho_Chi_Minh:20261015T104500
 SUMMARY:깜라인 국제공항(CXR) 도착 — 영락네
 END:VEVENT
 BEGIN:VEVENT
 UID:nhatrang-2026-10/d1-e3@trip-pilot
-DTSTAMP:20260919T130927Z
+DTSTAMP:20261012T022416Z
 DTSTART;TZID=Asia/Ho_Chi_Minh:20261015T103000
 DTEND;TZID=Asia/Ho_Chi_Minh:20261015T113000
 SUMMARY:공항에서 롯데마트 골드코스트로
 END:VEVENT
 BEGIN:VEVENT
 UID:nhatrang-2026-10/d1-e9@trip-pilot
-DTSTAMP:20260919T130927Z
+DTSTAMP:20261012T022416Z
 DTSTART;TZID=Asia/Ho_Chi_Minh:20261015T111500
 DTEND;TZID=Asia/Ho_Chi_Minh:20261015T121500
 SUMMARY:롯데마트에 짐 맡기기
 LOCATION:롯데마트 골드코스트점\, 골드코스트몰 3~4층\, 01 T
  rần Hưng Đạo\, Lộc Thọ\, Nha Trang\, Khánh Hòa
-DESCRIPTION:캐리어 같은 큰 짐을 맡기고 몸을 가볍게 한 다
- 음 점심을 먹으러 가요.
+DESCRIPTION:짐을 맡긴 뒤 골드코스트의 환전 안내에서 받을
+  총액을 확인해요. 환전을 마치면 점심과 장보기를 이어
+ 가요.
 END:VEVENT
 BEGIN:VEVENT
 UID:nhatrang-2026-10/d1-e4@trip-pilot
-DTSTAMP:20260919T130927Z
+DTSTAMP:20261012T022416Z
 DTSTART;TZID=Asia/Ho_Chi_Minh:20261015T113000
 DTEND;TZID=Asia/Ho_Chi_Minh:20261015T123000
 SUMMARY:도착 첫 점심 — 골드코스트 근처
-DESCRIPTION:촌촌킴이나 롯데마트 안 식당가 중에서 골라요.
-  촌촌킴은 롯데마트에서 걸어서 5분 거리의 베트남 가정
- 식집으로\, 돼지고기 간장조림과 모닝글로리\, 짜조가 
- 대표 메뉴예요.
+DESCRIPTION:촌촌킴·안토이·씀모이·롯데마트 식당가가 후
+ 보예요. 장보기 동선을 보고 한 곳을 고르며 아직 식당
+ 을 확정하거나 예약한 상태는 아니에요.
 END:VEVENT
 BEGIN:VEVENT
 UID:nhatrang-2026-10/d1-e10@trip-pilot
-DTSTAMP:20260919T130927Z
+DTSTAMP:20261012T022416Z
 DTSTART;TZID=Asia/Ho_Chi_Minh:20261015T124000
 DTEND;TZID=Asia/Ho_Chi_Minh:20261015T134000
 SUMMARY:롯데마트 장보기
@@ -74,119 +104,47 @@ DESCRIPTION:빌라에서 먹을 우유와 생수\, 과일\, 간식을 사
 END:VEVENT
 BEGIN:VEVENT
 UID:nhatrang-2026-10/d1-e11@trip-pilot
-DTSTAMP:20260919T130927Z
+DTSTAMP:20261012T022416Z
 DTSTART;TZID=Asia/Ho_Chi_Minh:20261015T134000
 DTEND;TZID=Asia/Ho_Chi_Minh:20261015T144000
 SUMMARY:리조트로 이동
-DESCRIPTION:빌라에 들어가면 지우부터 낮잠을 재워요. 새벽
- 부터 움직인 날이라 오후는 쉬는 게 목표예요.
+DESCRIPTION:빌라에 들어가면 지우 컨디션에 맞춰 쉬어요. 
+ 새벽부터 움직인 날이라 오후는 휴식 중심이에요.
 END:VEVENT
 BEGIN:VEVENT
 UID:nhatrang-2026-10/d1-e5@trip-pilot
-DTSTAMP:20260919T130927Z
+DTSTAMP:20261012T022416Z
 DTSTART;TZID=Asia/Ho_Chi_Minh:20261015T150000
 DTEND;TZID=Asia/Ho_Chi_Minh:20261015T160000
 SUMMARY:빌라 르 코라이 체크인
 LOCATION:빌라 르 코라이 (Villa Le Corail\, A Gran Meliá)\, Bãi Tiê
  n\, Đường Đệ\, Bắc Nha Trang\, Khánh Hòa\, Vietnam
-DESCRIPTION:체크인은 오후 3시예요. 얼리 체크인과 아기침
- 대\, 레이트 체크아웃을 프런트에서 확인하세요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d1-e6@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261015T160000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261015T170000
-SUMMARY:빌라 전용 풀에서 첫 물놀이
-DESCRIPTION:긴 이동 뒤라 무리하지 않고 가볍게 놀아요.
+DESCRIPTION:오후 3시 체크인 예정이에요. 두 빌라의 오후 6
+ 시 체크아웃과 조식\, 배달 수령 장소를 확인하세요.
 END:VEVENT
 BEGIN:VEVENT
 UID:nhatrang-2026-10/d1-e7@trip-pilot
-DTSTAMP:20260919T130927Z
+DTSTAMP:20261012T022416Z
 DTSTART;TZID=Asia/Ho_Chi_Minh:20261015T180000
 DTEND;TZID=Asia/Ho_Chi_Minh:20261015T190000
-SUMMARY:첫 저녁 — 일미오 피자·파스타 배달
-DESCRIPTION:새벽 비행과 긴 이동으로 지친 날이라 빌라에서
-  배달로 편하게 먹어요. 우리 리조트까지 실제로 온 후
- 기가 있는 곳이라 첫날에 안전해요. 아이들이 낯가림 없
- 이 잘 먹는 메뉴예요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d2-e1@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Seoul:20261016T065000
-DTEND;TZID=Asia/Seoul:20261016T075000
-SUMMARY:인천공항 제1여객터미널 출발 — 영두네
-DESCRIPTION:베트남항공 VN441이에요. 인천공항 제1여객터미
- 널에서 출발해요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d2-e7@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261016T080000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261016T090000
-SUMMARY:조식 — 나투라
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d2-e8@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261016T090000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261016T100000
-SUMMARY:빌라 풀과 전용 해변
-DESCRIPTION:영두네가 오는 동안 아이들과 놀아요. 2층 키즈
- 클럽도 둘러봐요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d2-e2@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261016T094500
-DTEND;TZID=Asia/Ho_Chi_Minh:20261016T104500
-SUMMARY:깜라인 국제공항(CXR) 도착 — 영두네
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d2-e4@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261016T103000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261016T113000
-SUMMARY:공항에서 리조트로
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d2-e9@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261016T113000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261016T123000
-SUMMARY:점심 — 나투라
-DESCRIPTION:영두네가 도착하기 전에 가볍게 먹어요.
+SUMMARY:첫 저녁 — 리조트에서 배달 식사
+DESCRIPTION:배달K나 그랩 푸드에서 리조트 주소와 주문 가
+ 능한 매장을 확인해요. 배달비·도착 예상 시각·수령 장
+ 소를 주문 전에 확인하고 빌라에서 먹어요. 정보 탭의 
+ 배달과 장보기에도 후보 목록이 있어요.
 END:VEVENT
 BEGIN:VEVENT
 UID:nhatrang-2026-10/d2-e5@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261016T120000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261016T130000
+DTSTAMP:20261012T022416Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20261016T110000
+DTEND;TZID=Asia/Ho_Chi_Minh:20261016T120000
 SUMMARY:두 가족 합류
-DESCRIPTION:영두네는 아직 체크인 전이라 로비에 짐을 맡기
- 고 만나요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d2-e11@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261016T121500
-DTEND;TZID=Asia/Ho_Chi_Minh:20261016T131500
-SUMMARY:도착 첫 점심 — 나투라
-DESCRIPTION:새벽부터 움직여 리조트에 막 도착한 참이라\, 
- 짐을 맡기자마자 리조트 안에서 먼저 먹어요. 즉석 쌀국
- 수와 계란은 은솔이도 잘 먹어요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d2-e10@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261016T133000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261016T143000
-SUMMARY:두 가족 오후 — 빌라 풀과 해변
+DESCRIPTION:영두네와 오전 11시에 만나 함께 리조트에서 보
+ 내요.
 END:VEVENT
 BEGIN:VEVENT
 UID:nhatrang-2026-10/d2-e3@trip-pilot
-DTSTAMP:20260919T130927Z
+DTSTAMP:20261012T022416Z
 DTSTART;TZID=Asia/Ho_Chi_Minh:20261016T150000
 DTEND;TZID=Asia/Ho_Chi_Minh:20261016T160000
 SUMMARY:빌라 르 코라이 체크인
@@ -194,279 +152,61 @@ LOCATION:빌라 르 코라이 (Villa Le Corail\, A Gran Meliá)\, Bãi Tiê
  n\, Đường Đệ\, Bắc Nha Trang\, Khánh Hòa\, Vietnam
 END:VEVENT
 BEGIN:VEVENT
-UID:nhatrang-2026-10/d2-e12@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261016T151500
-DTEND;TZID=Asia/Ho_Chi_Minh:20261016T170000
-SUMMARY:은솔이 낮잠 — 빌라
-DESCRIPTION:새벽 비행기로 온 날이라 방에 들어가자마자 재
- 워요. 저녁에 시내로 나가려면 이 시간이 꼭 있어야 해
- 요.
+UID:nhatrang-2026-10/d4-e8@trip-pilot
+DTSTAMP:20261012T022416Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20261018T170000
+DTEND;TZID=Asia/Ho_Chi_Minh:20261018T180000
+SUMMARY:야시장 나들이와 기념품 쇼핑
+DESCRIPTION:기념품 예산을 정해 두고 아이들이 지치면 쉬어
+ 가요. 루이지애나 방문 시각은 현장에서 정해요.
 END:VEVENT
 BEGIN:VEVENT
-UID:nhatrang-2026-10/d2-e6@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261016T183000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261016T193000
-SUMMARY:다 같이 첫 저녁 — 마담프엉
-DESCRIPTION:영두네가 합류한 날이라 시내로 나가 함께 먹어
- 요. 쌀국수와 볶음밥처럼 아이들이 먹기 순한 메뉴가 많
- 고 반주로 맥주 한잔 곁들이기 좋아요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d3-e1@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261017T070000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261017T080000
-SUMMARY:이른 조식 — 나투라
-DESCRIPTION:빈원더스로 일찍 나서는 날이라 문 여는 시각에
-  맞춰 먹어요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d3-e2@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261017T080000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261017T090000
-SUMMARY:케이블카 승강장으로 출발
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d3-e8@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261017T083000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261017T093000
-SUMMARY:느긋한 조식 — 나투라
-DESCRIPTION:영락네가 나선 뒤 서두르지 않고 먹어요. 즉석 
- 쌀국수와 계란은 은솔이도 잘 먹어요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d3-e3@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261017T090000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261017T100000
-SUMMARY:빈원더스 입장 — 케이블카
-LOCATION:빈원더스 나트랑 (VinWonders Nha Trang)\, Đảo Hòn Tre\, 
- Vĩnh Nguyên\, Nha Trang\, Khánh Hòa\, Vietnam
-DESCRIPTION:케이블카 운행 여부를 확인했는지 보세요. 운휴
- 면 무료 스피드보트로 섬에 들어가요.\n케이블카를 타고
-  혼째 섬으로 들어가요. 오전에는 동물 먹이주기와 버드
- 쇼\, 아쿠아리움을 보고 낮에는 물놀이를 해요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d3-e9@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261017T093000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261017T103000
-SUMMARY:빌라 전용 풀과 전용 해변
-DESCRIPTION:21개월은 물에 오래 있으면 금세 지치니\, 삼십 
- 분쯤 놀고 그늘에서 쉬기를 번갈아 하면 좋아요. 파도가
-  잔잔하면 바다에도 나가 봐요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d3-e10@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261017T114500
-DTEND;TZID=Asia/Ho_Chi_Minh:20261017T124500
-SUMMARY:이른 점심 — 나투라
-DESCRIPTION:은솔이 낮잠 전에 미리 먹어요. 수영장 옆 살 풀
-  바는 낮 열두 시부터 열어요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d3-e4@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261017T120000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261017T130000
-SUMMARY:빈원더스 점심 — 코랄 뷔페
-DESCRIPTION:지우가 지치기 전에 섬 안에서 해결해요. 오후 1
- 시 전에 앉는 게 좋아요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d3-e11@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261017T130000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261017T150000
-SUMMARY:은솔이 낮잠 — 빌라
-DESCRIPTION:두 시간쯤 자는 동안 어른들은 번갈아 테라스에
- 서 쉬어요. 낮의 로비 테이아는 커피와 디저트 라운지라
-  한 사람씩 다녀오기 좋아요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d3-e12@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261017T153000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261017T163000
-SUMMARY:키즈클럽과 전용 해변
-DESCRIPTION:낮잠에서 깨면 2층에 올라가 놀아요. 해가 누그
- 러지면 모래놀이를 해도 좋아요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d3-e5@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261017T170000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261017T180000
-SUMMARY:케이블카로 섬에서 나오기
-DESCRIPTION:물놀이를 마치고 시내 식당가로 향해요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d3-e6@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261017T180000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261017T190000
-SUMMARY:저녁 — 시내 해산물 (나온 김에)
-DESCRIPTION:섬에서 나오는 길이 식당가와 이어져요. 리조트
- 로 바로 돌아가지 않고 들러서 먹고 들어가요. 이번 여
- 행에 한 번은 랍스터를 이렇게 챙겨요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d3-e13@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261017T180000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261017T190000
-SUMMARY:이른 저녁 — 나투라
-DESCRIPTION:은솔이 잘 시간이 일러 어른들도 함께 일찍 먹
- 어요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d3-e14@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261017T193000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261017T203000
-SUMMARY:은솔이 재우기
-DESCRIPTION:종일 논 날이라 일찍 재워요. 재운 뒤 어른들은 
- 테라스에서 룸서비스로 조용한 저녁을 즐겨도 좋아요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d3-e7@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261017T200000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261017T210000
-SUMMARY:리조트 복귀
-DESCRIPTION:지우가 차에서 잠들면 그대로 빌라로 옮겨 재워
- 요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d4-e1@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261018T080000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261018T090000
-SUMMARY:조식 — 나투라
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d4-e2@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261018T100000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261018T110000
-SUMMARY:빌라 전용 풀과 전용 해변
-DESCRIPTION:파도가 있는 바다보다 빌라 풀이 아이들에게 안
- 전해요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d4-e3@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261018T123000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261018T133000
-SUMMARY:점심 — 나투라
-DESCRIPTION:리조트에서 쉬는 날이라 멀리 나가지 않아요. 
- 수영장 옆 살 풀 바도 이 시간에는 열려 있어요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d4-e7@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261018T133000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261018T153000
-SUMMARY:은솔이 낮잠 — 빌라
-DESCRIPTION:리조트에서 쉬는 날이라 낮잠 시간을 온전히 지
- 켜요. 어른들은 번갈아 테라스에서 쉬어요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d4-e4@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261018T140000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261018T150000
-SUMMARY:키즈클럽
-DESCRIPTION:은솔이가 자는 동안 지우가 2층에서 놀아요. 오
- 전에는 만들기 놀이가 있어요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d4-e5@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261018T160000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261018T170000
-SUMMARY:스파
-DESCRIPTION:어른들이 한 사람씩 번갈아 다녀와요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d4-e6@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261018T180000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261018T190000
-SUMMARY:저녁 — 씀모이가든
-DESCRIPTION:에어컨이 시원한 대형 가든형 식당이라 여섯 명
- 이 나눠 먹기 좋아요. 반주로 맥주 한잔 곁들이기 좋아
- 요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d5-e1@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261019T080000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261019T090000
-SUMMARY:조식 — 나투라
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d5-e3@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261019T123000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261019T133000
-SUMMARY:점심 — 나투라
-DESCRIPTION:식사 뒤에도 빌라에서 쉬었다 나올 수 있어요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d5-e4@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261019T130000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261019T140000
-SUMMARY:빌라 전용 풀에서 마지막 휴식
-DESCRIPTION:오후 6시까지 방을 그대로 쓸 수 있어서\, 짐을 
- 맡기지 않고 물놀이를 마지막까지 이어가요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d5-e8@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261019T140000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261019T160000
-SUMMARY:두 아이 낮잠 — 빌라
-DESCRIPTION:밤 아홉 시 반 비행기라 잠들기까지 아주 긴 하
- 루예요. 이 시간에 재워 두면 공항과 기내에서 훨씬 수
- 월해요.
+UID:nhatrang-2026-10/d5-e9@trip-pilot
+DTSTAMP:20261012T022416Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20261019T160000
+DTEND;TZID=Asia/Ho_Chi_Minh:20261019T170000
+SUMMARY:배달 저녁 주문
+DESCRIPTION:오후 5시 식사에 맞춰 주문해요. 앱 도착 예상 
+ 시각과 리조트 수령 장소를 확인하세요.
 END:VEVENT
 BEGIN:VEVENT
 UID:nhatrang-2026-10/d5-e5@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261019T160000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261019T170000
-SUMMARY:이른 저녁 — 룸서비스
-DESCRIPTION:주문하고 받기까지 30~45분 걸리니 3시 반쯤 미리
-  시켜 두면 시간이 딱 맞아요.
+DTSTAMP:20261012T022416Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20261019T170000
+DTEND;TZID=Asia/Ho_Chi_Minh:20261019T180000
+SUMMARY:저녁 — 배달 식사
+DESCRIPTION:귀국용 옷으로 갈아입고 두 기내 가방을 따로 
+ 챙겨요. 후보 목록과 주문 안내는 정보 탭에서 다시 볼 
+ 수 있어요.
 END:VEVENT
 BEGIN:VEVENT
 UID:nhatrang-2026-10/d5-e2@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Ho_Chi_Minh:20261019T173000
-DTEND;TZID=Asia/Ho_Chi_Minh:20261019T180000
+DTSTAMP:20261012T022416Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20261019T180000
+DTEND;TZID=Asia/Ho_Chi_Minh:20261019T190000
 SUMMARY:체크아웃
-DESCRIPTION:예약에 무료 레이트 체크아웃이 들어 있어 오후
-  6시까지 빌라를 쓸 수 있어요. 짐 싣는 시간을 벌려고 30
- 분 일찍 나와요.
+DESCRIPTION:오후 6시 레이트 체크아웃 후 예약 밴으로 공항
+ 에 가요.
 END:VEVENT
 BEGIN:VEVENT
 UID:nhatrang-2026-10/d5-e6@trip-pilot
-DTSTAMP:20260919T130927Z
+DTSTAMP:20261012T022416Z
 DTSTART;TZID=Asia/Ho_Chi_Minh:20261019T180000
 DTEND;TZID=Asia/Ho_Chi_Minh:20261019T190000
 SUMMARY:공항으로 이동
 END:VEVENT
 BEGIN:VEVENT
+UID:nhatrang-2026-10/d5-e10@trip-pilot
+DTSTAMP:20261012T022416Z
+DTSTART;TZID=Asia/Ho_Chi_Minh:20261019T190000
+DTEND;TZID=Asia/Ho_Chi_Minh:20261019T200000
+SUMMARY:깜라인 공항 출국 수속과 대기
+DESCRIPTION:공유 시트의 수속 예정 시각이에요. 차량 도착
+ 에 따라 달라질 수 있어요.
+END:VEVENT
+BEGIN:VEVENT
 UID:nhatrang-2026-10/d5-e7@trip-pilot
-DTSTAMP:20260919T130927Z
+DTSTAMP:20261012T022416Z
 DTSTART;TZID=Asia/Ho_Chi_Minh:20261019T213500
 DTEND;TZID=Asia/Ho_Chi_Minh:20261019T223500
 SUMMARY:깜라인 공항 출발 — 두 가족 함께
@@ -475,22 +215,12 @@ DESCRIPTION:베트남항공 VN440이에요. 다음 날 새벽 인천에 도
 END:VEVENT
 BEGIN:VEVENT
 UID:nhatrang-2026-10/d6-e1@trip-pilot
-DTSTAMP:20260919T130927Z
+DTSTAMP:20261012T022416Z
 DTSTART;TZID=Asia/Seoul:20261020T043000
 DTEND;TZID=Asia/Seoul:20261020T053000
 SUMMARY:인천공항 제1여객터미널 도착
-DESCRIPTION:고생 많으셨어요. 입국 심사와 짐 찾기를 마치
- 면 5시 전후가 돼요. 유모차부터 찾아 아이들을 태우고 
- 천천히 나오세요.
-END:VEVENT
-BEGIN:VEVENT
-UID:nhatrang-2026-10/d6-e2@trip-pilot
-DTSTAMP:20260919T130927Z
-DTSTART;TZID=Asia/Seoul:20261020T051400
-DTEND;TZID=Asia/Seoul:20261020T061400
-SUMMARY:집으로 — 공항철도 첫차나 택시
-DESCRIPTION:짐과 유모차가 많으면 택시가 편해요. 새벽 시
- 간대에 몇 대나 대기하는지는 그때 현장에서 확인하세
- 요.
+DESCRIPTION:짐과 유모차를 찾은 뒤 발렛 안내를 확인해 차
+ 량을 수령해요. 이동 중 필요한 지우 겉옷과 여벌은 케
+ 어 가방에 둡니다.
 END:VEVENT
 END:VCALENDAR
